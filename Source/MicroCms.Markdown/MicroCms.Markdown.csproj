@@ -7,7 +7,7 @@
     <ProjectGuid>{FB9BEB73-D928-4972-9B73-C3F71C7DDF75}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MicroCms.Markdown</RootNamespace>
+    <RootNamespace>MicroCms</RootNamespace>
     <AssemblyName>MicroCms.Markdown</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

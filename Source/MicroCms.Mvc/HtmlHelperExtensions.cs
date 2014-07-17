@@ -11,7 +11,12 @@ namespace System
 {
     public static class HtmlHelperExtensions
     {
-        public static IHtmlString RenderItem(this HtmlHelper helper, ContentItem item, string separator)
+        public static IHtmlString RenderContent(this HtmlHelper helper, string contentType, string value)
+        {
+            return helper.RenderPart(new ContentPart(contentType, value));
+        }
+
+        public static IHtmlString RenderItem(this HtmlHelper helper, ContentItem item, string separator = "<br/>")
         {
             return new HtmlString(String.Join(separator, helper.RenderParts(item.Parts)));
         }

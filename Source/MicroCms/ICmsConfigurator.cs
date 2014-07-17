@@ -8,6 +8,5 @@ namespace MicroCms
     {
         ICmsConfigurator RegisterBasicTypes();
         ICmsConfigurator Register(string contentType, IContentRenderer renderer);
-        ContentTypes ContentTypes { get; }
     }
 }

@@ -65,7 +65,7 @@ namespace MicroCms
                 return this;
             }
 
-            public ContentTypes ContentTypes { get; set; }
+            private ContentTypes ContentTypes { get; set; }
 
             public CmsConfiguration Build()
             {

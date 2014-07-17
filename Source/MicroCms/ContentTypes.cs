@@ -20,7 +20,7 @@ namespace MicroCms
             if (renderer == null)
                 throw new ArgumentNullException("renderer");
             
-            _Renderers[contentType.ToLowerInvariant()] = renderer;
+            _Renderers[contentType.Split('/')[0].ToLowerInvariant()] = renderer;
         }
 
         public IContentRenderer GetRenderer(string contentType)
@@ -29,7 +29,7 @@ namespace MicroCms
                 throw new ArgumentNullException("contentType");            
             try
             {
-                return _Renderers[contentType.ToLowerInvariant()];
+                return _Renderers[contentType.Split('/')[0].ToLowerInvariant()];
             }
             catch (KeyNotFoundException)
             {

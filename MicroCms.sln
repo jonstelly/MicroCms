@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroCms.Tests", "Tests\Mic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroCms.Markdown.Tests", "Tests\MicroCms.Markdown.Tests\MicroCms.Markdown.Tests.csproj", "{1AA72C92-72A5-4742-BF56-152B1C166F45}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroCms.Mvc", "Source\MicroCms.Mvc\MicroCms.Mvc.csproj", "{B4B7A5CA-1435-4C01-8E16-A2D08E3D9B40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroCms.Mvc.Tests", "Tests\MicroCms.Mvc.Tests\MicroCms.Mvc.Tests.csproj", "{B24931C1-0882-4E6D-B1A4-8CD7DB235F5B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{1AA72C92-72A5-4742-BF56-152B1C166F45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AA72C92-72A5-4742-BF56-152B1C166F45}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AA72C92-72A5-4742-BF56-152B1C166F45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4B7A5CA-1435-4C01-8E16-A2D08E3D9B40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4B7A5CA-1435-4C01-8E16-A2D08E3D9B40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4B7A5CA-1435-4C01-8E16-A2D08E3D9B40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4B7A5CA-1435-4C01-8E16-A2D08E3D9B40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B24931C1-0882-4E6D-B1A4-8CD7DB235F5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B24931C1-0882-4E6D-B1A4-8CD7DB235F5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B24931C1-0882-4E6D-B1A4-8CD7DB235F5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B24931C1-0882-4E6D-B1A4-8CD7DB235F5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +54,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FCD0F5D8-693E-450F-A1C1-D62C76AE8886} = {40E99C80-A670-4A2C-AAEC-2D0E20E47D1B}
 		{1AA72C92-72A5-4742-BF56-152B1C166F45} = {40E99C80-A670-4A2C-AAEC-2D0E20E47D1B}
+		{B24931C1-0882-4E6D-B1A4-8CD7DB235F5B} = {40E99C80-A670-4A2C-AAEC-2D0E20E47D1B}
 	EndGlobalSection
 EndGlobal

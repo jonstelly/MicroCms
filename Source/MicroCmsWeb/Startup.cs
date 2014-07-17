@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(MicroCmsWeb.Startup))]
-namespace MicroCmsWeb
+[assembly: OwinStartupAttribute(typeof(MicroCms.Startup))]
+namespace MicroCms
 {
     public partial class Startup
     {

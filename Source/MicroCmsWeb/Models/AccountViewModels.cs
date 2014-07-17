@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MicroCmsWeb.Models
+namespace MicroCms.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

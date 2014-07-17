@@ -10,9 +10,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
-using MicroCmsWeb.Models;
+using MicroCms.Models;
 
-namespace MicroCmsWeb.Controllers
+namespace MicroCms.Controllers
 {
     [Authorize]
     public class AccountController : Controller

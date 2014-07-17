@@ -9,7 +9,7 @@ using System.Web.Routing;
 using MicroCms;
 using MicroCms.Renderers;
 
-namespace MicroCmsWeb
+namespace MicroCms
 {
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -23,8 +23,8 @@ namespace MicroCmsWeb
 
             Cms.Configure(c => c
                 .RegisterBasicTypes()
-                .Register(MarkdownRenderer.ContentType, new MarkdownRenderer())
-                .Register(SourceCodeRenderer.ContentType, new SourceCodeRenderer()));
+                .Register(ContentTypes.Markdown, new MarkdownRenderer())
+                .Register(ContentTypes.SourceCode, new SourceCodeRenderer()));
         }
     }
 }

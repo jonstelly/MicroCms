@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributesExtensions.cs" />
     <Compile Include="Cms.cs" />
     <Compile Include="CmsConfiguration.cs" />
     <Compile Include="Constants.cs" />
@@ -48,11 +49,14 @@
     <Compile Include="ContentTypes.cs" />
     <Compile Include="ICmsConfigurator.cs" />
     <Compile Include="IContentRenderer.cs" />
+    <Compile Include="IHaveAttributes.cs" />
+    <Compile Include="Renderers\ContentRenderer.cs" />
     <Compile Include="Storage\IContentStore.cs" />
     <Compile Include="Storage\IEditableContentStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\HtmlRenderer.cs" />
     <Compile Include="Renderers\TextRenderer.cs" />
+    <Compile Include="XmlExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

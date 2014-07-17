@@ -7,9 +7,9 @@ using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using System;
-using MicroCmsWeb.Models;
+using MicroCms.Models;
 
-namespace MicroCmsWeb
+namespace MicroCms
 {
     public partial class Startup
     {

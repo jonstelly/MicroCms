@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Xml.Linq;
 
 namespace MicroCms.Renderers
 {
-    public class HtmlRenderer : IContentRenderer
+    public class HtmlRenderer : ContentRenderer
     {
-        public IHtmlString Render(ContentPart part)
+        protected override XElement CreateElement(ContentPart part)
         {
-            return new HtmlString(part.Value);
+            return Parse(part.Value);
         }
     }
 }

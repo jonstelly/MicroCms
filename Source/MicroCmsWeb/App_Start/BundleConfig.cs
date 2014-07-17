@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace MicroCmsWeb
+namespace MicroCms
 {
     public class BundleConfig
     {

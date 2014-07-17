@@ -5,16 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Xml.Linq;
 using ColorCode;
 using ColorCode.Compilation.Languages;
+using MicroCms.Renderers;
 
 namespace MicroCms
 {
-    public class SourceCodeRenderer : IContentRenderer
+    public class SourceCodeRenderer : ContentRenderer
     {
-        public const string ContentType = "code";
-
-        private ConcurrentDictionary<string, ILanguage> _Languages = new ConcurrentDictionary<string, ILanguage>();
+        private readonly ConcurrentDictionary<string, ILanguage> _Languages = new ConcurrentDictionary<string, ILanguage>();
         
         private ILanguage GetLanguage(string language)
         {
@@ -34,9 +34,9 @@ namespace MicroCms
 
         private static readonly CodeColorizer _Colorizer = new CodeColorizer();
 
-        public IHtmlString Render(ContentPart part)
+        protected override XElement CreateElement(ContentPart part)
         {
-            return new HtmlString(_Colorizer.Colorize(part.Value, GetLanguage(part.ContentSubType)));
+            return Parse(_Colorizer.Colorize(part.Value, GetLanguage(part.ContentSubType)));
         }
     }
 }

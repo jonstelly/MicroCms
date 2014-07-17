@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MicroCms
 {
-    public class ContentItem
+    public class ContentItem : IHaveAttributes
     {
         public ContentItem()
         {
@@ -20,5 +20,7 @@ namespace MicroCms
         public Guid Id { get; set; }
 
         public List<ContentPart> Parts { get; set; }
+
+        public object Attributes { get; set; }
     }
 }

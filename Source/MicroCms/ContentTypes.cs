@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
-using MicroCms.Renderers;
 
 namespace MicroCms
 {
@@ -10,7 +9,9 @@ namespace MicroCms
     {
         public const string Html = "html";
         public const string Text = "text";
-    
+        public const string Markdown = "markdown";
+        public const string SourceCode = "code";
+
         private readonly ConcurrentDictionary<string, IContentRenderer> _Renderers = new ConcurrentDictionary<string, IContentRenderer>();
 
         internal void Register(string contentType, IContentRenderer renderer)

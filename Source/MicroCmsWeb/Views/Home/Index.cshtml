@@ -15,16 +15,20 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        @Html.RenderContent(SourceCodeRenderer.ContentType + "/csharp", "public class This : IsCSharp { public string Name { get; set; } }")
+        @Html.RenderContent(ContentTypes.SourceCode + "/csharp", "public class This : IsCSharp { public string Name { get; set; } }")
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        @Html.RenderContent(SourceCodeRenderer.ContentType + "/xml", "<xml name=\"XML\">This is XML</xml>")
+        @Html.RenderContent(ContentTypes.SourceCode + "/xml", "<xml name=\"XML\">This is XML</xml>")
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        @Html.RenderContent(SourceCodeRenderer.ContentType + "/html", "<html><head></head><body id=\"3\" class=\"my-body\">This is HTML</body></html>")
+        @Html.RenderContent(ContentTypes.SourceCode + "/html", "<html><head></head><body id=\"3\" class=\"my-body\">This is HTML</body></html>")
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">        
     </div>
 </div>

@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Web;
+using System.Xml.Linq;
+using MicroCms.Renderers;
 
 namespace MicroCms
 {
-    public class MarkdownRenderer : IContentRenderer
+    public class MarkdownRenderer : ContentRenderer
     {
         public const string ContentType = "markdown";
 
         private static readonly MarkdownSharp.Markdown _Markdown = new MarkdownSharp.Markdown();
 
-        public IHtmlString Render(ContentPart part)
+        protected override XElement CreateElement(ContentPart part)
         {
-            return new HtmlString(_Markdown.Transform(part.Value));
+            return Parse(_Markdown.Transform(part.Value));
         }
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
+using System.Xml.Linq;
 using MicroCms;
 
 // ReSharper disable once CheckNamespace
@@ -11,25 +13,30 @@ namespace System
 {
     public static class HtmlHelperExtensions
     {
-        public static IHtmlString RenderContent(this HtmlHelper helper, string contentType, string value)
+        public static IHtmlString RenderContent(this HtmlHelper html, string contentType, string value)
         {
-            return helper.RenderPart(new ContentPart(contentType, value));
+            return html.RenderPart(new ContentPart(contentType, value)).ToHtml();
         }
 
-        public static IHtmlString RenderItem(this HtmlHelper helper, ContentItem item, string separator = "<br/>")
+        public static IHtmlString RenderItem(this HtmlHelper html, ContentItem item, string separator = "<br/>")
         {
-            return new HtmlString(String.Join(separator, helper.RenderParts(item.Parts)));
+            var div = new XElement("div");
+            item.ApplyAttributes(div);
+            div.Add(html.RenderParts(item.Parts));
+            return div.ToHtml();
         }
 
-        private static IHtmlString RenderPart(this HtmlHelper helper, ContentPart part)
+        private static XElement RenderPart(this HtmlHelper html, ContentPart part)
         {
             var renderer = Cms.GetContentTypes().GetRenderer(part.ContentType);
-            return renderer.Render(part);
+            var element = renderer.Render(part);
+            part.ApplyAttributes(element);
+            return element;
         }
 
-        private static IEnumerable<IHtmlString> RenderParts(this HtmlHelper helper, IEnumerable<ContentPart> parts)
+        private static IEnumerable<XElement> RenderParts(this HtmlHelper html, IEnumerable<ContentPart> parts)
         {
-            return parts.Select(helper.RenderPart);
+            return parts.Select(html.RenderPart);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MicroCms
 {
-    public class ContentPart
+    public class ContentPart : IHaveAttributes
     {
         public ContentPart()
         {
@@ -17,6 +17,8 @@ namespace MicroCms
             ContentType = contentType;
             Value = value;
         }
+
+        public object Attributes { get; set; }
 
         public string ContentFamily { get { return ContentType.Split('/')[0]; } }
         public string ContentSubType

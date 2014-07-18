@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -43,9 +44,18 @@ namespace MicroCms
                 new ContentItem(CreateMarkdown("#3", 3)),
                 new ContentItem(CreateMarkdown("#3", 3)),
                 new ContentItem(CreateMarkdown("#3", 3)),
-                new ContentItem(CreateMarkdown("#12", 12)));
+                new ContentItem(CreateMarkdown("#12", 12))) { Tag = "documents" };
             Cms.GetArea().DocumentRepository.Save(document);
             Cms.GetArea().DocumentRepository.Save(new ContentDocument(singleItemTemplate, new ContentItem(CreateMarkdown("#NEXTDOCUMENT", 12))));
+
+            var rootFolder = Server.MapPath("~/");
+            var readmeText = File.ReadAllText(rootFolder + @"..\..\README.md");
+
+            var homeDocument = new ContentDocument(singleItemTemplate, new ContentItem(CreateMarkdown(readmeText, 12)))
+            {
+                Tag = "home"
+            };
+            Cms.GetArea().DocumentRepository.Save(homeDocument);
         }
 
         private ContentPart CreateMarkdown(string value, int columns)

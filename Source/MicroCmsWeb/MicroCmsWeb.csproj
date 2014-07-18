@@ -181,6 +181,7 @@
     <None Include="Resources\SimpleClass.cs" />
     <Compile Include="Startup.cs" />
     <Content Include="Views\Home\Documents.cshtml" />
+    <Content Include="Views\Home\SourceCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

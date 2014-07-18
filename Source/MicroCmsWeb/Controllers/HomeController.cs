@@ -12,7 +12,7 @@ namespace MicroCms.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(Cms.GetArea().DocumentRepository.GetByTag("home"));
         }
 
         public ActionResult About()
@@ -24,9 +24,13 @@ namespace MicroCms.Controllers
 
         public ActionResult Documents()
         {
-            return View(Cms.GetArea().DocumentRepository.GetAll());
+            return View(Cms.GetArea().DocumentRepository.GetByTag("documents"));
         }
 
+        public ActionResult SourceCode()
+        {
+            return View();
+        }
 
         public ActionResult Items()
         {

@@ -17,21 +17,9 @@ namespace MicroCms.Renderers
             return element;
         }
 
-        public XElement Parse(string xml)
+        protected XElement Parse(string xml)
         {
-            try
-            {
-                return XElement.Parse(xml, LoadOptions.PreserveWhitespace);
-            }
-            catch (XmlException exception)
-            {
-                if (exception.Message.StartsWith("There are multiple root elements.")
-                    || exception.Message.StartsWith("Data at the root level is invalid."))
-                {
-                    return Parse("<div>" + xml + "</div>");
-                }
-                throw new ArgumentOutOfRangeException("Error parsing: " + xml, exception);
-            }
+            return XmlParser.ParseSafe(xml);
         }
 
         protected abstract XElement CreateElement(ContentPart part);

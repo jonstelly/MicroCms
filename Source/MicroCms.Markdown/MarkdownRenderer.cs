@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web;
 using System.Xml.Linq;
+using MarkdownSharp;
 using MicroCms.Renderers;
 
 namespace MicroCms
@@ -11,11 +12,9 @@ namespace MicroCms
     {
         public const string ContentType = "markdown";
 
-        private static readonly MarkdownSharp.Markdown _Markdown = new MarkdownSharp.Markdown();
-
         protected override XElement CreateElement(ContentPart part)
         {
-            return Parse(_Markdown.Transform(part.Value));
+            return Parse(new Markdown().Transform(part.Value));
         }
     }
 }

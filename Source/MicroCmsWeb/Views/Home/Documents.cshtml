@@ -1,0 +1,19 @@
+﻿@model IEnumerable<MicroCms.ContentDocument>
+
+@{
+    ViewBag.Title = "Documents";
+}
+
+<h2>Documents</h2>
+
+<table class="table">
+    <tr>
+        <th></th>
+    </tr>
+
+    @foreach (var document in Model)
+    {
+        @Html.RenderCms(document);
+    }
+
+</table>

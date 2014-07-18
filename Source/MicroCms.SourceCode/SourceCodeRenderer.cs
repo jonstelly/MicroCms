@@ -32,11 +32,9 @@ namespace MicroCms
             }
         }
 
-        private static readonly CodeColorizer _Colorizer = new CodeColorizer();
-
         protected override XElement CreateElement(ContentPart part)
         {
-            return Parse(_Colorizer.Colorize(part.Value, GetLanguage(part.ContentSubType)));
+            return Parse(new CodeColorizer().Colorize(part.Value, GetLanguage(part.ContentSubType)));
         }
     }
 }

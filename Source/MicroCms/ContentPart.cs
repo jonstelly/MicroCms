@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace MicroCms
 {
-    public class ContentPart : IHaveAttributes
+    public class ContentPart : ContentEntity, IHaveAttributes
     {
-        public ContentPart()
-        {
-        }
-
         public ContentPart(string contentType, string value)
         {
+            if (String.IsNullOrEmpty(contentType))
+                throw new ArgumentNullException("contentType");
+                        
             ContentType = contentType;
             Value = value;
+        }
+
+        protected ContentPart()
+        {
         }
 
         public object Attributes { get; set; }

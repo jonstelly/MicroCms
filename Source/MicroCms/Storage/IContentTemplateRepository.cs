@@ -4,8 +4,7 @@ using System.Text;
 
 namespace MicroCms.Storage
 {
-    public interface IContentStore
+    public interface IContentTemplateRepository : IContentRepository<ContentTemplate>
     {
-        ContentItem GetContent(string path);
     }
 }

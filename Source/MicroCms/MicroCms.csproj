@@ -40,24 +40,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonInfo.cs">
+      <Link>Properties\CommonInfo.cs</Link>
+    </Compile>
     <Compile Include="AttributesExtensions.cs" />
     <Compile Include="Cms.cs" />
-    <Compile Include="CmsConfiguration.cs" />
+    <Compile Include="CmsArea.cs" />
+    <Compile Include="Configuration\CmsConfigurator.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="ContentDocument.cs" />
+    <Compile Include="ContentEntity.cs" />
     <Compile Include="ContentItem.cs" />
     <Compile Include="ContentPart.cs" />
+    <Compile Include="ContentTemplate.cs" />
     <Compile Include="ContentTypes.cs" />
-    <Compile Include="ICmsConfigurator.cs" />
+    <Compile Include="Configuration\ICmsConfigurator.cs" />
     <Compile Include="IContentRenderer.cs" />
     <Compile Include="IHaveAttributes.cs" />
+    <Compile Include="ILayoutEngine.cs" />
+    <Compile Include="Layouts\StringFormatLayoutEngine.cs" />
     <Compile Include="Renderers\ContentRenderer.cs" />
-    <Compile Include="Storage\IContentStore.cs" />
-    <Compile Include="Storage\IEditableContentStore.cs" />
+    <Compile Include="Storage\IContentDocumentRepository.cs" />
+    <Compile Include="Storage\IContentRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\HtmlRenderer.cs" />
     <Compile Include="Renderers\TextRenderer.cs" />
+    <Compile Include="Storage\IContentTemplateRepository.cs" />
+    <Compile Include="Storage\MemoryContentDocumentRepository.cs" />
+    <Compile Include="Storage\MemoryContentRepository.cs" />
+    <Compile Include="Storage\MemoryContentTemplateRepository.cs" />
     <Compile Include="XmlExtensions.cs" />
+    <Compile Include="XmlParser.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="MicroCms.nuspec" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

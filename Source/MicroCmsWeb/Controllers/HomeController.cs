@@ -22,14 +22,20 @@ namespace MicroCms.Controllers
             return View();
         }
 
-        public ActionResult Content()
+        public ActionResult Documents()
         {
-            return View(new ContentItem[]
+            return View(Cms.GetArea().DocumentRepository.GetAll());
+        }
+
+
+        public ActionResult Items()
+        {
+            return View(new[]
             {
-                new ContentItem(new ContentPart(ContentTypes.Markdown, MicroCms.Content.SimpleExample))
+                new ContentItem(new ContentPart(ContentTypes.Markdown, MicroCms.Content.SimpleExample)
                 {
                     Attributes = new { @class = "col-md-4" }
-                },
+                }),
                 new ContentItem(
                     new ContentPart(ContentTypes.Markdown, MicroCms.Content.SimpleExample),
                     new ContentPart(ContentTypes.SourceCode + "/csharp", MicroCms.Content.SimpleClass),

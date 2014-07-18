@@ -6,21 +6,20 @@ using System.Threading.Tasks;
 
 namespace MicroCms
 {
-    public class ContentItem : IHaveAttributes
+    public class ContentItem :  ContentEntity, IHaveAttributes
     {
-        public ContentItem()
-        {
-        }
-
         public ContentItem(params ContentPart[] parts)
+            : this()
         {
             Parts = new List<ContentPart>(parts);
         }
 
-        public Guid Id { get; set; }
+        protected ContentItem()
+        {
+        }
 
-        public List<ContentPart> Parts { get; set; }
+        public virtual List<ContentPart> Parts { get; set; }
 
-        public object Attributes { get; set; }
+        public virtual object Attributes { get; set; }
     }
 }

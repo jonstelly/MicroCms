@@ -13,30 +13,25 @@ namespace System
 {
     public static class HtmlHelperExtensions
     {
-        public static IHtmlString RenderContent(this HtmlHelper html, string contentType, string value)
+        public static IHtmlString RenderCmsContent(this HtmlHelper html, string contentType, string value)
         {
-            return html.RenderPart(new ContentPart(contentType, value)).ToHtml();
+            return Cms.Render(new ContentPart(contentType, value)).ToHtml();
         }
 
-        public static IHtmlString RenderItem(this HtmlHelper html, ContentItem item, string separator = "<br/>")
+        public static IHtmlString RenderCms(this HtmlHelper html, ContentItem item)
         {
-            var div = new XElement("div");
-            item.ApplyAttributes(div);
-            div.Add(html.RenderParts(item.Parts));
-            return div.ToHtml();
+            return Cms.Render(item).ToHtml();
         }
 
-        private static XElement RenderPart(this HtmlHelper html, ContentPart part)
+        public static IHtmlString RenderCms(this HtmlHelper html, ContentTemplate template, params ContentItem[] items)
         {
-            var renderer = Cms.GetContentTypes().GetRenderer(part.ContentType);
-            var element = renderer.Render(part);
-            part.ApplyAttributes(element);
-            return element;
+            return Cms.Render(template, items).ToHtml();
         }
 
-        private static IEnumerable<XElement> RenderParts(this HtmlHelper html, IEnumerable<ContentPart> parts)
+        public static IHtmlString RenderCms(this HtmlHelper html, ContentDocument document)
         {
-            return parts.Select(html.RenderPart);
+            var template = Cms.GetArea().TemplateRepository.Find(document.TemplateId);
+            return html.RenderCms(template, document.Items.ToArray());
         }
     }
 }

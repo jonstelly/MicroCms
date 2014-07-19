@@ -15,22 +15,22 @@ namespace System
     {
         public static IHtmlString RenderCmsContent(this HtmlHelper html, string contentType, string value)
         {
-            return Cms.Render(new ContentPart(contentType, value)).ToHtml();
+            return Cms.Render(new CmsPart(contentType, value)).ToHtml();
         }
 
-        public static IHtmlString RenderCms(this HtmlHelper html, ContentItem item)
+        public static IHtmlString RenderCms(this HtmlHelper html, CmsItem item)
         {
             return Cms.Render(item).ToHtml();
         }
 
-        public static IHtmlString RenderCms(this HtmlHelper html, ContentTemplate template, params ContentItem[] items)
+        public static IHtmlString RenderCms(this HtmlHelper html, CmsTemplate template, params CmsItem[] items)
         {
             return Cms.Render(template, items).ToHtml();
         }
 
-        public static IHtmlString RenderCms(this HtmlHelper html, ContentDocument document)
+        public static IHtmlString RenderCms(this HtmlHelper html, CmsDocument document)
         {
-            var template = Cms.GetArea().TemplateRepository.Find(document.TemplateId);
+            var template = Cms.GetArea().Templates.Find(document.TemplateId);
             return html.RenderCms(template, document.Items.ToArray());
         }
     }

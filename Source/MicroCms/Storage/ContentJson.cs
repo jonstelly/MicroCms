@@ -21,7 +21,7 @@ namespace MicroCms.Storage
         };
 
         public static string Serialize<TContent>(TContent content)
-            where TContent : ContentEntity
+            where TContent : CmsEntity
         {
             var serializer = JsonSerializer.Create(_Settings);
             using (var sw = new StringWriter())
@@ -32,7 +32,7 @@ namespace MicroCms.Storage
         }
 
         public static TContent Deserialize<TContent>(string json)
-            where TContent : ContentEntity
+            where TContent : CmsEntity
         {
             var serializer = JsonSerializer.Create(_Settings);
             using (var sr = new StringReader(json))
@@ -45,7 +45,7 @@ namespace MicroCms.Storage
         }
 
         public static TContent Clone<TContent>(TContent content) 
-            where TContent : ContentEntity
+            where TContent : CmsEntity
         {
             var json = Serialize(content);
             return Deserialize<TContent>(json);

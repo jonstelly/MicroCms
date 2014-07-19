@@ -5,9 +5,9 @@ using System.Text;
 
 namespace MicroCms.Storage
 {
-    public class FileSystemContentTemplateRepository : FileSystemContentRepository<ContentTemplate>, IContentTemplateRepository
+    public class FSCmsTemplateService : FSCmsEntityService<CmsTemplate>, ICmsTemplateService
     {
-        public FileSystemContentTemplateRepository(DirectoryInfo baseDirectory)
+        public FSCmsTemplateService(DirectoryInfo baseDirectory)
             : base(new DirectoryInfo(Path.Combine(baseDirectory.FullName, "Templates")))
         {
         }

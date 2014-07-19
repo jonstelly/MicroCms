@@ -7,12 +7,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace MicroCms.Tests.Renderers
 {
     [TestClass]
-    public class TextRendererTests
+    public class TextCmsRendererServiceTests
     {
         [TestMethod]
         public void ValidateBasicRender()
         {
-            var result = new TextRenderer().Render(new ContentPart(ContentTypes.Text, "Hello, World"));
+            var result = new TextCmsRendererService().Render(new CmsPart(CmsTypes.Text, "Hello, World"));
             Assert.IsNotNull(result);
         }
          

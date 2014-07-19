@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace MicroCms.Storage
 {
-    public abstract class MemoryContentRepository<TEntity> : IContentRepository<TEntity>
-        where TEntity : ContentEntity
+    public abstract class MemoryCmsEntityService<TEntity> : ICmsEntityService<TEntity>
+        where TEntity : CmsEntity
     {
         private readonly ConcurrentDictionary<Guid, TEntity> _Entities = new ConcurrentDictionary<Guid, TEntity>();
 

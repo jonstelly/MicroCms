@@ -15,9 +15,9 @@ using Version = Lucene.Net.Util.Version;
 
 namespace MicroCms.Lucene
 {
-    public class LuceneContentSearch : IContentSearch, IDisposable
+    public class LuceneCmsSearchService : ICmsSearchService, IDisposable
     {
-        public LuceneContentSearch(Directory directory)
+        public LuceneCmsSearchService(Directory directory)
         {
             _Directory = directory;
             _Analyzer = new StandardAnalyzer(Version.LUCENE_30);
@@ -41,7 +41,7 @@ namespace MicroCms.Lucene
         private readonly Directory _Directory;
         private readonly Analyzer _Analyzer;
 
-        public IEnumerable<ContentTitle> SearchDocuments(DocumentField field, string queryText)
+        public IEnumerable<CmsTitle> SearchDocuments(CmsDocumentField field, string queryText)
         {
             using (var reader = IndexReader.Open(_Directory, true))
             {
@@ -53,13 +53,13 @@ namespace MicroCms.Lucene
                     foreach (var result in results.ScoreDocs)
                     {
                         var doc = searcher.Doc(result.Doc);
-                        yield return new ContentTitle(Guid.Parse(doc.Get(DocumentField.Id.ToString())), doc.Get(DocumentField.Title.ToString()));
+                        yield return new CmsTitle(Guid.Parse(doc.Get(CmsDocumentField.Id.ToString())), doc.Get(CmsDocumentField.Title.ToString()));
                     }
                 }
             }
         }
 
-        public void AddOrUpdateDocuments(params ContentDocument[] documents)
+        public void AddOrUpdateDocuments(params CmsDocument[] documents)
         {
             using (var writer = new IndexWriter(_Directory, _Analyzer, false, new IndexWriter.MaxFieldLength(1024 * 1024 * 4)))
             {
@@ -70,25 +70,25 @@ namespace MicroCms.Lucene
 
                     //writer.DeleteDocuments(new Term(DocumentField.Id.ToString(), document.Id.ToString("b")));
                     var doc = new Document();
-                    doc.Add(new Field(DocumentField.Id.ToString(), document.Id.ToString("b"), Field.Store.YES, Field.Index.NO));
+                    doc.Add(new Field(CmsDocumentField.Id.ToString(), document.Id.ToString("b"), Field.Store.YES, Field.Index.NO));
                     if (!String.IsNullOrEmpty(document.Title))
-                        doc.Add(new Field(DocumentField.Title.ToString(), document.Title, Field.Store.YES, Field.Index.ANALYZED));
+                        doc.Add(new Field(CmsDocumentField.Title.ToString(), document.Title, Field.Store.YES, Field.Index.ANALYZED));
                     if (!String.IsNullOrEmpty(document.Path))
-                        doc.Add(new Field(DocumentField.Path.ToString(), document.Path, Field.Store.YES, Field.Index.ANALYZED));
-                    doc.Add(new Field(DocumentField.Value.ToString(), String.Join(", ", document.Items.SelectMany(i => i.Parts).Select(p => p.Value)), Field.Store.NO, Field.Index.ANALYZED));
+                        doc.Add(new Field(CmsDocumentField.Path.ToString(), document.Path, Field.Store.YES, Field.Index.ANALYZED));
+                    doc.Add(new Field(CmsDocumentField.Value.ToString(), String.Join(", ", document.Items.SelectMany(i => i.Parts).Select(p => p.Value)), Field.Store.NO, Field.Index.ANALYZED));
                     writer.AddDocument(doc);
                 }
                 writer.Flush(true, true, true);
             }
         }
 
-        public void DeleteDocuments(params ContentDocument[] documents)
+        public void DeleteDocuments(params CmsDocument[] documents)
         {
             using (var writer = new IndexWriter(_Directory, _Analyzer, true, new IndexWriter.MaxFieldLength(1024 * 1024 * 4)))
             {
                 foreach (var document in documents)
                 {
-                    writer.DeleteDocuments(new Term(DocumentField.Id.ToString(), document.Id.ToString("b")));
+                    writer.DeleteDocuments(new Term(CmsDocumentField.Id.ToString(), document.Id.ToString("b")));
                 }
                 writer.Flush(true, true, true);
             }

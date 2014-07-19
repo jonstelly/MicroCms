@@ -12,25 +12,25 @@ namespace MicroCms.Configuration
     {
         public CmsConfigurator()
         {
-            ContentTypes = new ContentTypes();
+            Types = new CmsTypes();
         }
 
-        public ILayoutEngine LayoutEngine { get; set; }
-        public IContentTemplateRepository TemplateRepository { get; set; }
-        public IContentDocumentRepository DocumentRepository { get; set; }
-        public IContentSearch ContentSearch { get; set; }
-        public ContentTypes ContentTypes { get; private set; }
+        public ICmsLayoutService Layout { get; set; }
+        public ICmsTemplateService Templates { get; set; }
+        public ICmsDocumentService Documents { get; set; }
+        public ICmsSearchService Search { get; set; }
+        public CmsTypes Types { get; private set; }
 
         public ICmsConfigurator RegisterBasicRenderers()
         {
-            RegisterRenderer(ContentTypes.Html, new HtmlRenderer());
-            RegisterRenderer(ContentTypes.Text, new TextRenderer());
+            RegisterRenderer(CmsTypes.Html, new HtmlCmsRendererService());
+            RegisterRenderer(CmsTypes.Text, new TextCmsRendererService());
             return this;
         }
 
-        public ICmsConfigurator RegisterRenderer(string contentType, IContentRenderer renderer)
+        public ICmsConfigurator RegisterRenderer(string contentType, ICmsRendererService renderer)
         {
-            ContentTypes.Register(contentType, renderer);
+            Types.Register(contentType, renderer);
             return this;
         }
 

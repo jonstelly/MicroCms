@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MicroCms.Markdown.Tests
+namespace MicroCms.SourceCode.Tests
 {
     [TestClass]
-    public class MarkdownRendererTests
+    public class SourceCodeCmsRendererServiceTests
     {
         [TestMethod]
         public void ValidateBasicRender()
         {
-            var result = new MarkdownRenderer().Render(new ContentPart(ContentTypes.Markdown, "#Hello, World"));
+            var result = new SourceCodeCmsRendererService().Render(new CmsPart(CmsTypes.SourceCode + "/csharp", "public class Thing { public string Name { get; set; } }"));
             Assert.IsNotNull(result);
         }
          

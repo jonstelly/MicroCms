@@ -15,19 +15,19 @@ namespace MicroCms
             if (configurator == null)
                 throw new ArgumentNullException("configurator");
             
-            ContentTypes = configurator.ContentTypes;
-            LayoutEngine = configurator.LayoutEngine ?? new StringFormatLayoutEngine();
+            Types = configurator.Types;
+            Layout = configurator.Layout ?? new StringCmsLayoutService();
             
             //TODO: Default to local filesystem / appdata repositories?
-            TemplateRepository = configurator.TemplateRepository ?? new MemoryContentTemplateRepository();
-            DocumentRepository = configurator.DocumentRepository ?? new MemoryContentDocumentRepository();
-            ContentSearch = configurator.ContentSearch;
+            Templates = configurator.Templates ?? new MemoryCmsTemplateService();
+            Documents = configurator.Documents ?? new MemoryCmsDocumentService();
+            Search = configurator.Search;
         }
 
-        public ILayoutEngine LayoutEngine { get; private set; }
-        public ContentTypes ContentTypes { get; private set; }
-        public IContentTemplateRepository TemplateRepository { get; private set; }
-        public IContentDocumentRepository DocumentRepository { get; private set; }
-        public IContentSearch ContentSearch { get; private set; }
+        public ICmsLayoutService Layout { get; private set; }
+        public CmsTypes Types { get; private set; }
+        public ICmsTemplateService Templates { get; private set; }
+        public ICmsDocumentService Documents { get; private set; }
+        public ICmsSearchService Search { get; private set; }
     }
 }

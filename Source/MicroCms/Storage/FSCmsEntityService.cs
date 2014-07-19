@@ -6,12 +6,12 @@ using System.Text;
 
 namespace MicroCms.Storage
 {
-    public abstract class FileSystemContentRepository<TEntity> : IContentRepository<TEntity>
-        where TEntity : ContentEntity
+    public abstract class FSCmsEntityService<TEntity> : ICmsEntityService<TEntity>
+        where TEntity : CmsEntity
     {
         protected readonly DirectoryInfo BaseDirectory;
 
-        protected FileSystemContentRepository(DirectoryInfo baseDirectory)
+        protected FSCmsEntityService(DirectoryInfo baseDirectory)
         {
             if (baseDirectory == null)
                 throw new ArgumentNullException("baseDirectory");

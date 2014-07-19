@@ -8,11 +8,11 @@ using MicroCms.Renderers;
 
 namespace MicroCms
 {
-    public class MarkdownRenderer : ContentRenderer
+    public class MarkdownCmsRendererService : CmsRendererService
     {
         public const string ContentType = "markdown";
 
-        protected override XElement CreateElement(ContentPart part)
+        protected override XElement CreateElement(CmsPart part)
         {
             return Parse(new Markdown().Transform(part.Value));
         }

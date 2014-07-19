@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MicroCms
 {
-    public class ContentTitle
+    public class CmsTitle
     {
-        public ContentTitle(Guid id, string title)
+        public CmsTitle(Guid id, string title)
         {
             Id = id;
             Title = title;

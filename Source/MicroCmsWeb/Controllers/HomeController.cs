@@ -12,7 +12,7 @@ namespace MicroCms.Controllers
     {
         public ActionResult Index()
         {
-            return View(Cms.GetArea().DocumentRepository.GetByPath("home"));
+            return View(Cms.GetArea().Documents.GetByPath("home"));
         }
 
         public ActionResult About()
@@ -20,35 +20,6 @@ namespace MicroCms.Controllers
             ViewBag.Message = "Your application description page.";
 
             return View();
-        }
-
-        public ActionResult Documents()
-        {
-            return View(Cms.GetArea().DocumentRepository.GetByPath("documents"));
-        }
-
-        public ActionResult SourceCode()
-        {
-            return View();
-        }
-
-        public ActionResult Items()
-        {
-            return View(new[]
-            {
-                new ContentItem(new ContentPart(ContentTypes.Markdown, MicroCms.Content.SimpleExample)
-                {
-                    Attributes = new { @class = "col-md-4" }
-                }),
-                new ContentItem(
-                    new ContentPart(ContentTypes.Markdown, MicroCms.Content.SimpleExample),
-                    new ContentPart(ContentTypes.SourceCode + "/csharp", MicroCms.Content.SimpleClass),
-                    new ContentPart(ContentTypes.Markdown, MicroCms.Content.SimpleExample),
-                    new ContentPart(ContentTypes.SourceCode +"/javascript", MicroCms.Content.SimpleScript))
-                    {
-                        Attributes = new { @class = "col-md-8" }
-                    }
-            });
         }
 
         public ActionResult Contact()

@@ -10,11 +10,11 @@ namespace MicroCms.Configuration
 {
     public interface ICmsConfigurator
     {
-        IContentTemplateRepository TemplateRepository { get; set; }
-        IContentDocumentRepository DocumentRepository { get; set; }
-        IContentSearch ContentSearch { get; set; }
-        ILayoutEngine LayoutEngine { get; set; }
+        ICmsTemplateService Templates { get; set; }
+        ICmsDocumentService Documents { get; set; }
+        ICmsSearchService Search { get; set; }
+        ICmsLayoutService Layout { get; set; }
         ICmsConfigurator RegisterBasicRenderers();
-        ICmsConfigurator RegisterRenderer(string contentType, IContentRenderer renderer);
+        ICmsConfigurator RegisterRenderer(string contentType, ICmsRendererService renderer);
     }
 }

@@ -8,14 +8,14 @@ using MicroCms.Search;
 
 namespace MicroCms.Storage
 {
-    public class MemoryContentDocumentRepository : MemoryContentRepository<ContentDocument>, IContentDocumentRepository
+    public class MemoryCmsDocumentService : MemoryCmsEntityService<CmsDocument>, ICmsDocumentService
     {
-        public virtual IEnumerable<ContentDocument> GetByPath(string path)
+        public virtual IEnumerable<CmsDocument> GetByPath(string path)
         {
-            var search = Cms.GetArea().ContentSearch;
+            var search = Cms.GetArea().Search;
             if (search != null)
             {
-                foreach (var result in search.SearchDocuments(DocumentField.Path, path))
+                foreach (var result in search.SearchDocuments(CmsDocumentField.Path, path))
                 {
                     yield return Find(result.Id);
                 }
@@ -29,10 +29,10 @@ namespace MicroCms.Storage
             }
         }
 
-        public override void Save(ContentDocument entity)
+        public override void Save(CmsDocument entity)
         {
             base.Save(entity);
-            var search = Cms.GetArea().ContentSearch;
+            var search = Cms.GetArea().Search;
             if (search != null)
             {
                 search.AddOrUpdateDocuments(entity);

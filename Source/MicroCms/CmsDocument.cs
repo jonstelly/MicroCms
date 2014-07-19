@@ -4,9 +4,9 @@ using System.Text;
 
 namespace MicroCms
 {
-    public class ContentDocument : ContentEntity
+    public class CmsDocument : CmsEntity
     {
-        public ContentDocument(ContentTemplate template, string title, params ContentItem[] items)
+        public CmsDocument(CmsTemplate template, string title, params CmsItem[] items)
             : this()
         {
             TemplateId = template.Id;
@@ -14,14 +14,14 @@ namespace MicroCms
             Items.AddRange(items);
         }
 
-        protected ContentDocument()
+        protected CmsDocument()
         {
-            Items = new List<ContentItem>();
+            Items = new List<CmsItem>();
         }
 
         public virtual string Title { get; set; }
         public virtual string Path { get; set; }
-        public virtual List<ContentItem> Items { get; set; }
+        public virtual List<CmsItem> Items { get; set; }
         public virtual Guid TemplateId { get; set; }
     }
 }

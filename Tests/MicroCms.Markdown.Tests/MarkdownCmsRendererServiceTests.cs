@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MicroCms.Renderers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MicroCms.Tests.Renderers
+namespace MicroCms.Markdown.Tests
 {
     [TestClass]
-    public class HtmlRendererTests
+    public class MarkdownCmsRendererServiceTests
     {
         [TestMethod]
         public void ValidateBasicRender()
         {
-            var result = new HtmlRenderer().Render(new ContentPart(ContentTypes.Html, "<html><head></head><body><h1>Hello, HTML</h1></body></html>"));
+            var result = new MarkdownCmsRendererService().Render(new CmsPart(CmsTypes.Markdown, "#Hello, World"));
             Assert.IsNotNull(result);
         }
          

@@ -13,14 +13,14 @@ namespace MicroCms.Controllers
         public ActionResult Index(string q)
         {
             if (String.IsNullOrEmpty(q))
-                return View(Cms.GetArea().DocumentRepository.GetAll().Select(d => new ContentTitle(d.Id, d.Title)));
+                return View(Cms.GetArea().Documents.GetAll().Select(d => new CmsTitle(d.Id, d.Title)));
 
-            return View(Cms.GetArea().ContentSearch.SearchDocuments(DocumentField.Title, q).Union(Cms.GetArea().ContentSearch.SearchDocuments(DocumentField.Value, q)));
+            return View(Cms.GetArea().Search.SearchDocuments(CmsDocumentField.Title, q).Union(Cms.GetArea().Search.SearchDocuments(CmsDocumentField.Value, q)));
         }
 
         public ActionResult Item(Guid id)
         {
-            return View(Cms.GetArea().DocumentRepository.Find(id));
+            return View(Cms.GetArea().Documents.Find(id));
         }
     }
 }

@@ -7,9 +7,9 @@ using System.Xml.Linq;
 
 namespace MicroCms.Layouts
 {
-    public class StringFormatLayoutEngine : ILayoutEngine
+    public class StringCmsLayoutService : ICmsLayoutService
     {
-        public XElement Render(ContentTemplate template, params ContentItem[] items)
+        public XElement Render(CmsTemplate template, params CmsItem[] items)
         {
             return XmlParser.ParseSafe(String.Format(template.Value, items.Select(Cms.Render).Cast<object>().ToArray()));
         }

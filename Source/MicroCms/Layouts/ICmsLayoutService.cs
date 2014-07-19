@@ -5,8 +5,8 @@ using System.Xml.Linq;
 
 namespace MicroCms.Layouts
 {
-    public interface ILayoutEngine
+    public interface ICmsLayoutService
     {
-        XElement Render(ContentTemplate template, params ContentItem[] items);
+        XElement Render(CmsTemplate template, params CmsItem[] items);
     }
 }

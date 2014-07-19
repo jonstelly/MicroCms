@@ -4,9 +4,9 @@ using System.Text;
 
 namespace MicroCms
 {
-    public abstract class ContentEntity
+    public abstract class CmsEntity
     {
-        protected ContentEntity()
+        protected CmsEntity()
         {
         }
 

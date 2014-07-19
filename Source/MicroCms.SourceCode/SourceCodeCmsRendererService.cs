@@ -12,7 +12,7 @@ using MicroCms.Renderers;
 
 namespace MicroCms
 {
-    public class SourceCodeRenderer : ContentRenderer
+    public class SourceCodeCmsRendererService : CmsRendererService
     {
         private readonly ConcurrentDictionary<string, ILanguage> _Languages = new ConcurrentDictionary<string, ILanguage>();
         
@@ -32,7 +32,7 @@ namespace MicroCms
             }
         }
 
-        protected override XElement CreateElement(ContentPart part)
+        protected override XElement CreateElement(CmsPart part)
         {
             return Parse(new CodeColorizer().Colorize(part.Value, GetLanguage(part.ContentSubType)));
         }

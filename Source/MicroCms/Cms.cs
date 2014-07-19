@@ -10,12 +10,12 @@ namespace MicroCms
 {
     public static class Cms
     {
-        public static XElement Render(ContentTemplate template, params ContentItem[] items)
+        public static XElement Render(CmsTemplate template, params CmsItem[] items)
         {
-            return GetArea().LayoutEngine.Render(template, items);
+            return GetArea().Layout.Render(template, items);
         }
 
-        public static XElement Render(ContentItem item)
+        public static XElement Render(CmsItem item)
         {
             if (item.Parts.Count == 1)
                 return Render(item.Parts[0]);
@@ -29,9 +29,9 @@ namespace MicroCms
             return element;
         }
         
-        public static XElement Render(ContentPart part)
+        public static XElement Render(CmsPart part)
         {
-            var renderer = GetArea().ContentTypes.GetRenderer(part.ContentType);
+            var renderer = GetArea().Types.GetRenderer(part.ContentType);
             var element = renderer.Render(part);
             return element;
         }

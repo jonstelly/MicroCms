@@ -8,9 +8,9 @@ using System.Xml.Linq;
 
 namespace MicroCms.Renderers
 {
-    public abstract class ContentRenderer : IContentRenderer
+    public abstract class CmsRendererService : ICmsRendererService
     {
-        public XElement Render(ContentPart part)
+        public XElement Render(CmsPart part)
         {
             var element = CreateElement(part);
             part.ApplyAttributes(element);
@@ -22,6 +22,6 @@ namespace MicroCms.Renderers
             return XmlParser.ParseSafe(xml);
         }
 
-        protected abstract XElement CreateElement(ContentPart part);
+        protected abstract XElement CreateElement(CmsPart part);
     }
 }

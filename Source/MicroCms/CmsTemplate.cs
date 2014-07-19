@@ -4,14 +4,14 @@ using System.Text;
 
 namespace MicroCms
 {
-    public class ContentTemplate : ContentEntity
+    public class CmsTemplate : CmsEntity
     {
-        public ContentTemplate(string value)
+        public CmsTemplate(string value)
         {
             Value = value;
         }
 
-        public ContentTemplate()
+        public CmsTemplate()
         {
         }
 

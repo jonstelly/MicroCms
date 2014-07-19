@@ -6,16 +6,16 @@ using MicroCms.Renderers;
 
 namespace MicroCms
 {
-    public class ContentTypes
+    public class CmsTypes
     {
         public const string Html = "html";
         public const string Text = "text";
         public const string Markdown = "markdown";
         public const string SourceCode = "code";
 
-        private readonly ConcurrentDictionary<string, IContentRenderer> _Renderers = new ConcurrentDictionary<string, IContentRenderer>();
+        private readonly ConcurrentDictionary<string, ICmsRendererService> _Renderers = new ConcurrentDictionary<string, ICmsRendererService>();
 
-        internal void Register(string contentType, IContentRenderer renderer)
+        internal void Register(string contentType, ICmsRendererService renderer)
         {
             if (contentType == null)
                 throw new ArgumentNullException("contentType");
@@ -25,7 +25,7 @@ namespace MicroCms
             _Renderers[contentType.Split('/')[0].ToLowerInvariant()] = renderer;
         }
 
-        public IContentRenderer GetRenderer(string contentType)
+        public ICmsRendererService GetRenderer(string contentType)
         {
             if (contentType == null)
                 throw new ArgumentNullException("contentType");            

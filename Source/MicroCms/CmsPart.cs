@@ -5,9 +5,9 @@ using System.Text;
 
 namespace MicroCms
 {
-    public class ContentPart : ContentEntity, IHaveAttributes
+    public class CmsPart : CmsEntity, IHaveAttributes
     {
-        public ContentPart(string contentType, string value)
+        public CmsPart(string contentType, string value)
         {
             if (String.IsNullOrEmpty(contentType))
                 throw new ArgumentNullException("contentType");
@@ -16,7 +16,7 @@ namespace MicroCms
             Value = value;
         }
 
-        protected ContentPart()
+        protected CmsPart()
         {
         }
 

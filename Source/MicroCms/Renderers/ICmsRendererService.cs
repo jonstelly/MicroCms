@@ -5,8 +5,8 @@ using System.Xml.Linq;
 
 namespace MicroCms.Renderers
 {
-    public interface IContentRenderer
+    public interface ICmsRendererService
     {
-        XElement Render(ContentPart part);
+        XElement Render(CmsPart part);
     }
 }

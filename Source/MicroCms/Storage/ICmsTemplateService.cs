@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MicroCms.Storage
 {
-    public interface IContentTemplateRepository : IContentRepository<ContentTemplate>
+    public interface ICmsTemplateService : ICmsEntityService<CmsTemplate>
     {
     }
 }

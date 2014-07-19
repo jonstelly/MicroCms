@@ -10,6 +10,13 @@ namespace MicroCms.Renderers
 {
     public class HtmlCmsRendererService : CmsRendererService
     {
+        public override bool Supports(string contentType)
+        {
+            if (String.IsNullOrEmpty(contentType))
+                return false;
+            return contentType.Equals(CmsTypes.Html, StringComparison.InvariantCultureIgnoreCase);
+        }
+
         protected override XElement CreateElement(CmsPart part)
         {
             return Parse(part.Value);

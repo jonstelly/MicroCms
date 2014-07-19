@@ -10,6 +10,8 @@ namespace MicroCms.Renderers
 {
     public abstract class CmsRendererService : ICmsRendererService
     {
+        public abstract bool Supports(string contentType);
+
         public XElement Render(CmsPart part)
         {
             var element = CreateElement(part);

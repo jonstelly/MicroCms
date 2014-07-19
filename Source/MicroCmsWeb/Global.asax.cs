@@ -49,7 +49,13 @@ namespace MicroCms
                 new CmsItem(CreateMarkdown("#3", 3)),
                 new CmsItem(CreateMarkdown("#12", 12))) { Path = "documents" };
             Cms.GetArea().Documents.Save(document);
-            Cms.GetArea().Documents.Save(new CmsDocument(singleItemTemplate, "Following Example Row", new CmsItem(CreateMarkdown("#NEXTDOCUMENT", 12))));
+            Cms.GetArea().Documents.Save(new CmsDocument(singleItemTemplate, "Source Code Example", new CmsItem(CreateMarkdown(@"#CODE
+    {{CSharp}}
+    public class Thing
+    {
+        public string Name { get; set; }
+    }
+", 12))));
 
             var readmeText = File.ReadAllText(Path.Combine(rootFolder, @"..\..\README.md"));
 

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Web;
 using System.Xml.Linq;
-using MarkdownSharp;
 using MicroCms.Renderers;
 
-namespace MicroCms
+namespace MicroCms.Markdown
 {
     public class MarkdownCmsRendererService : CmsRendererService
     {
@@ -14,7 +12,7 @@ namespace MicroCms
 
         protected override XElement CreateElement(CmsPart part)
         {
-            return Parse(new Markdown().Transform(part.Value));
+            return Parse(new MarkdownSharp.Markdown().Transform(part.Value));
         }
     }
 }

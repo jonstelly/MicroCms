@@ -7,7 +7,7 @@
     <ProjectGuid>{9E613596-47B8-46F6-89EE-5886E79A3600}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MicroCms</RootNamespace>
+    <RootNamespace>MicroCms.SourceCode</RootNamespace>
     <AssemblyName>MicroCms.SourceCode</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -50,6 +50,7 @@
     </Compile>
     <Compile Include="SourceCodeCmsRendererService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SourceCodeConfigurationExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MicroCms\MicroCms.csproj">

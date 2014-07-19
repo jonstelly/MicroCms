@@ -6,8 +6,6 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Lucene.Net.Store;
-using MicroCms.Lucene;
-using MicroCms.Storage;
 
 namespace MicroCms
 {
@@ -31,13 +29,11 @@ namespace MicroCms
 
             Cms.Configure(c =>
             {
-                c
-                    .RegisterBasicRenderers()
-                    .RegisterRenderer(CmsTypes.Markdown, new MarkdownCmsRendererService())
-                    .RegisterRenderer(CmsTypes.SourceCode, new SourceCodeCmsRendererService());
-                c.Documents = new FSCmsDocumentService(cmsDirectory);
-                c.Templates = new FSCmsTemplateService(cmsDirectory);
-                c.Search = new LuceneCmsSearchService(new SimpleFSDirectory(new DirectoryInfo(Path.Combine(cmsDirectory.FullName, "Index"))));
+                c.RegisterBasicRenderers()
+                    .EnableMarkdownRenderer()
+                    .EnableSourceCodeRenderer()
+                    .UseLuceneSearch(new SimpleFSDirectory(new DirectoryInfo(Path.Combine(cmsDirectory.FullName, "Index"))));
+                c.UseFileSystemStorage(cmsDirectory);
             });
 
             var singleItemTemplate = new CmsTemplate("<div class=\"row\">{0}</div>");

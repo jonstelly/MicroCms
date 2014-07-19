@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Xml.Linq;
 using ColorCode;
-using ColorCode.Compilation.Languages;
 using MicroCms.Renderers;
 
-namespace MicroCms
+namespace MicroCms.SourceCode
 {
     public class SourceCodeCmsRendererService : CmsRendererService
     {
         private readonly ConcurrentDictionary<string, ILanguage> _Languages = new ConcurrentDictionary<string, ILanguage>();
-        
+
+        public const string SourceCodeTypeFamily = "code";
+
         private ILanguage GetLanguage(string language)
         {
             try

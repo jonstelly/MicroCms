@@ -50,6 +50,7 @@
     <Compile Include="..\CommonInfo.cs">
       <Link>Properties\CommonInfo.cs</Link>
     </Compile>
+    <Compile Include="LuceneConfigurationExtensions.cs" />
     <Compile Include="LuceneCmsSearchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

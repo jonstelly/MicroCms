@@ -1,0 +1,14 @@
+﻿@model ContentDocument
+
+@{
+    ViewBag.Title = "Item";
+}
+
+<h1>@Model.Title</h1>
+
+@Html.RenderCms(Model)
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

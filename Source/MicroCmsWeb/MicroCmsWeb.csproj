@@ -43,6 +43,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>..\..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.0.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -172,6 +178,7 @@
       <DependentUpon>Content.resx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DocsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -180,8 +187,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Resources\SimpleClass.cs" />
     <Compile Include="Startup.cs" />
-    <Content Include="Views\Home\Documents.cshtml" />
-    <Content Include="Views\Home\SourceCode.cshtml" />
+    <Content Include="Views\Docs\Item.cshtml" />
+    <Content Include="Views\Docs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -245,7 +252,6 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\Items.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -255,6 +261,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MicroCms.Lucene\MicroCms.Lucene.csproj">
+      <Project>{DAE33EED-5FC7-46E6-A6EF-2A629E82FF24}</Project>
+      <Name>MicroCms.Lucene</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MicroCms.Markdown\MicroCms.Markdown.csproj">
       <Project>{fb9beb73-d928-4972-9b73-c3f71c7ddf75}</Project>
       <Name>MicroCms.Markdown</Name>

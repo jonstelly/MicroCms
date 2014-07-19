@@ -3,10 +3,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web.UI.WebControls;
 using System.Xml.Linq;
 using MicroCms.Configuration;
-using MicroCms.Storage;
 
 namespace MicroCms
 {
@@ -43,7 +41,7 @@ namespace MicroCms
             area = area ?? String.Empty;
             try
             {
-                return _Configurations[area];
+                return _Areas[area];
             }
             catch (KeyNotFoundException)
             {
@@ -58,7 +56,7 @@ namespace MicroCms
 
         public static void Configure(string area, Action<ICmsConfigurator> action = null)
         {
-            if (_Configurations.ContainsKey(area))
+            if (_Areas.ContainsKey(area))
                 throw new ArgumentOutOfRangeException("Configuration already specified for: " + area);
             
             var config = new CmsConfigurator();
@@ -68,10 +66,10 @@ namespace MicroCms
             else
                 action(config);
 
-            _Configurations[area] = config.Build();
+            _Areas[area] = config.Build();
         }
 
-        private static readonly ConcurrentDictionary<string, CmsArea> _Configurations = new ConcurrentDictionary<string, CmsArea>(); 
+        private static readonly ConcurrentDictionary<string, CmsArea> _Areas = new ConcurrentDictionary<string, CmsArea>(); 
 
     }
 }

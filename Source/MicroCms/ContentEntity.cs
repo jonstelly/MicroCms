@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MicroCms
 {
@@ -10,11 +8,8 @@ namespace MicroCms
     {
         protected ContentEntity()
         {
-            Id = Guid.NewGuid();
         }
 
         public virtual Guid Id { get; set; }
-
-        public virtual string Tag { get; set; }
     }
 }

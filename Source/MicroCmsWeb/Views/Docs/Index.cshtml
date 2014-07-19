@@ -1,0 +1,31 @@
+﻿@model IEnumerable<ContentTitle>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+
+    @using(Html.BeginForm("Index", "Docs", FormMethod.Get))
+    {
+        @Html.TextBox("q")
+        <input type="submit" value="Search"/>
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>Title</th>
+        <th>Actions</th>
+    </tr>
+
+    @foreach (var title in Model)
+    {
+        <tr>
+            <th>@title.Title</th>
+            <th>@Html.ActionLink("View", "Item", new { id = title.Id })</th>
+        </tr>
+    }
+</table>

@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
+using MicroCms.Renderers;
 
 namespace MicroCms
 {

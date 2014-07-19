@@ -6,7 +6,6 @@
     <title>@ViewBag.Title - MicroCms</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <div class="navbar navbar-default navbar-fixed-top">
@@ -22,9 +21,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Documents", "Documents", "Home")</li>
-                    <li>@Html.ActionLink("Items", "Items", "Home")</li>
-                    <li>@Html.ActionLink("Source Code", "SourceCode", "Home")</li>
+                    <li>@Html.ActionLink("Docs", "Index", "Docs")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
@@ -36,7 +33,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - MicroCms</p>
         </footer>
     </div>
 

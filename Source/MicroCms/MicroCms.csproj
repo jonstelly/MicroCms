@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -47,19 +51,24 @@
     <Compile Include="Cms.cs" />
     <Compile Include="CmsArea.cs" />
     <Compile Include="Configuration\CmsConfigurator.cs" />
-    <Compile Include="Constants.cs" />
     <Compile Include="ContentDocument.cs" />
     <Compile Include="ContentEntity.cs" />
     <Compile Include="ContentItem.cs" />
     <Compile Include="ContentPart.cs" />
     <Compile Include="ContentTemplate.cs" />
+    <Compile Include="ContentTitle.cs" />
     <Compile Include="ContentTypes.cs" />
     <Compile Include="Configuration\ICmsConfigurator.cs" />
-    <Compile Include="IContentRenderer.cs" />
+    <Compile Include="Renderers\IContentRenderer.cs" />
     <Compile Include="IHaveAttributes.cs" />
-    <Compile Include="ILayoutEngine.cs" />
+    <Compile Include="Layouts\ILayoutEngine.cs" />
     <Compile Include="Layouts\StringFormatLayoutEngine.cs" />
     <Compile Include="Renderers\ContentRenderer.cs" />
+    <Compile Include="Search\IContentSearch.cs" />
+    <Compile Include="Storage\ContentJson.cs" />
+    <Compile Include="Storage\FileSystemContentDocumentRepository.cs" />
+    <Compile Include="Storage\FileSystemContentRepository.cs" />
+    <Compile Include="Storage\FileSystemContentTemplateRepository.cs" />
     <Compile Include="Storage\IContentDocumentRepository.cs" />
     <Compile Include="Storage\IContentRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MicroCms.nuspec" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

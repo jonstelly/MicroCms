@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MicroCms.Layouts;
 using MicroCms.Renderers;
+using MicroCms.Search;
 using MicroCms.Storage;
 
 namespace MicroCms.Configuration
@@ -16,6 +18,7 @@ namespace MicroCms.Configuration
         public ILayoutEngine LayoutEngine { get; set; }
         public IContentTemplateRepository TemplateRepository { get; set; }
         public IContentDocumentRepository DocumentRepository { get; set; }
+        public IContentSearch ContentSearch { get; set; }
         public ContentTypes ContentTypes { get; private set; }
 
         public ICmsConfigurator RegisterBasicRenderers()

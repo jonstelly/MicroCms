@@ -8,7 +8,6 @@ namespace MicroCms.Storage
         where TEntity : ContentEntity
     {
         TEntity Find(Guid id);
-        IEnumerable<TEntity> GetByTag(string tag);
         void Save(TEntity entity);
         TEntity Delete(Guid id);
         IEnumerable<TEntity> GetAll();

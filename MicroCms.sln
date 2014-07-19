@@ -25,10 +25,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroCms.SourceCode.Tests",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CDFD8FE0-983C-49F4-8222-21DF16A4FC17}"
 	ProjectSection(SolutionItems) = preProject
+		CommonInfoTemplate.cs = CommonInfoTemplate.cs
+		publish-packages.ps1 = publish-packages.ps1
 		README.md = README.md
+		version.txt = version.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroCms.Lucene", "Source\MicroCms.Lucene\MicroCms.Lucene.csproj", "{DAE33EED-5FC7-46E6-A6EF-2A629E82FF24}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F5D6582B-8302-4B53-940D-3A1AEBE9BD32}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

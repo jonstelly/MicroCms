@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Lucene.Net.Store;
+using Lucene.Net.Store.Azure;
+using Microsoft.WindowsAzure.Storage;
 
 namespace MicroCms
 {
@@ -22,6 +24,8 @@ namespace MicroCms
             ConfigureCms();
         }
 
+        private const bool UseAzure = true;
+
         private void ConfigureCms()
         {
             var rootFolder = Server.MapPath("~/");
@@ -37,14 +41,34 @@ namespace MicroCms
                 {
                 }
             }
-            Cms.Configure(c =>
+
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            if (UseAzure)
             {
-                c.RegisterBasicRenderServices()
-                    .EnableMarkdownRenderService()
-                    .EnableSourceCodeRenderService()
-                    .UseLuceneSearch(new SimpleFSDirectory(new DirectoryInfo(Path.Combine(cmsDirectory.FullName, "Index"))));
-                c.UseFileSystemStorage(cmsDirectory);
-            });
+                //Configure for Azure
+                Cms.Configure(c =>
+                {
+                    var cacheDirectory = new RAMDirectory();
+                    var azureDirectory = new AzureDirectory(CloudStorageAccount.Parse("UseDevelopmentStorage=true"), "cms-index", cacheDirectory);
+                    c.RegisterBasicRenderServices()
+                        .EnableMarkdownRenderService()
+                        .EnableSourceCodeRenderService()
+                        .UseLuceneSearch(azureDirectory);
+                    c.UseAzureStorage("UseDevelopmentStorage=true");
+                });
+            }
+            else
+            {
+                //Configure for local filesystem
+                Cms.Configure(c =>
+                {
+                    c.RegisterBasicRenderServices()
+                        .EnableMarkdownRenderService()
+                        .EnableSourceCodeRenderService()
+                        .UseLuceneSearch(new SimpleFSDirectory(new DirectoryInfo(Path.Combine(cmsDirectory.FullName, "Index"))));
+                    c.UseFileSystemStorage(cmsDirectory);
+                });
+            }
 
             var singleItemTemplate = new CmsTemplate("<div class=\"row\">{0}</div>");
             var template = new CmsTemplate("<div class=\"row\">{0}{1}</div><div class=\"row\">{2}{3}{4}{5}</div><div class=\"row\">{6}</div>");

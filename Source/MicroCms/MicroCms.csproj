@@ -52,6 +52,7 @@
     <Compile Include="AttributesExtensions.cs" />
     <Compile Include="Cms.cs" />
     <Compile Include="CmsArea.cs" />
+    <Compile Include="CmsJson.cs" />
     <Compile Include="Configuration\CmsConfigurationExtensions.cs" />
     <Compile Include="Configuration\CmsConfigurator.cs" />
     <Compile Include="CmsDocument.cs" />
@@ -68,7 +69,6 @@
     <Compile Include="Renderers\CmsRenderService.cs" />
     <Compile Include="Search\CmsDocumentField.cs" />
     <Compile Include="Search\ICmsSearchService.cs" />
-    <Compile Include="Storage\ContentJson.cs" />
     <Compile Include="Storage\FSCmsDocumentService.cs" />
     <Compile Include="Storage\FSCmsEntityService.cs" />
     <Compile Include="Storage\FSCmsTemplateService.cs" />

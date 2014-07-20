@@ -51,6 +51,9 @@
     <Reference Include="Lucene.Net">
       <HintPath>..\..\packages\Lucene.Net.3.0.3\lib\NET40\Lucene.Net.dll</HintPath>
     </Reference>
+    <Reference Include="Lucene.Net.Store.Azure">
+      <HintPath>..\..\packages\Lucene.Net.Store.Azure.2.0.4937.26631\lib\net40\Lucene.Net.Store.Azure.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.0.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
@@ -60,15 +63,39 @@
       <HintPath>..\..\packages\Microsoft.AspNet.Identity.Owin.2.0.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm">
+      <HintPath>..\..\packages\Microsoft.Data.Edm.5.6.1\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData">
+      <HintPath>..\..\packages\Microsoft.Data.OData.5.6.1\lib\net40\Microsoft.Data.OData.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client">
+      <HintPath>..\..\packages\Microsoft.Data.Services.Client.5.6.1\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage">
+      <HintPath>..\..\packages\WindowsAzure.Storage.4.1.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Spatial">
+      <HintPath>..\..\packages\System.Spatial.5.6.1\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -189,6 +216,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Resources\SimpleClass.cs" />
     <Compile Include="Startup.cs" />
+    <Content Include="Eula.htm" />
+    <Content Include="Readme.html" />
     <Content Include="Views\Docs\Item.cshtml" />
     <Content Include="Views\Docs\Index.cshtml" />
   </ItemGroup>
@@ -263,6 +292,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MicroCms.Azure\MicroCms.Azure.csproj">
+      <Project>{b466277f-a4bd-4247-ac9b-f1e21d7d998c}</Project>
+      <Name>MicroCms.Azure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MicroCms.Lucene\MicroCms.Lucene.csproj">
       <Project>{DAE33EED-5FC7-46E6-A6EF-2A629E82FF24}</Project>
       <Name>MicroCms.Lucene</Name>
@@ -278,6 +311,10 @@
     <ProjectReference Include="..\MicroCms.SourceCode\MicroCms.SourceCode.csproj">
       <Project>{9E613596-47B8-46F6-89EE-5886E79A3600}</Project>
       <Name>MicroCms.SourceCode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MicroCms.WebApi\MicroCms.WebApi.csproj">
+      <Project>{39201ff9-4d8b-4ee9-a01d-14fea58903be}</Project>
+      <Name>MicroCms.WebApi</Name>
     </ProjectReference>
     <ProjectReference Include="..\MicroCms\MicroCms.csproj">
       <Project>{156abb76-b6ec-478d-b5b4-ffe5c0e107f8}</Project>

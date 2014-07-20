@@ -15,7 +15,7 @@ namespace MicroCms.Renderers
         public XElement Render(CmsPart part)
         {
             var element = CreateElement(part);
-            part.Attributes.ApplyAttributes(element);
+            part.RenderAttributes.ApplyAttributes(element);
             return element;
         }
 

@@ -10,6 +10,6 @@
     <description>$description$</description>
     <releaseNotes>$description$</releaseNotes>
     <copyright>Copyright 2013</copyright>
-    <tags>$id$</tags>
+    <tags>MicroCms CMS Markdown</tags>
   </metadata>
 </package>

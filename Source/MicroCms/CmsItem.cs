@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MicroCms
 {
-    public class CmsItem :  CmsEntity
+    public class CmsItem
     {
         public CmsItem(params CmsPart[] parts)
             : this()
@@ -12,11 +12,11 @@ namespace MicroCms
             Parts = new List<CmsPart>(parts);
         }
 
-        public CmsItem(object attributes, params CmsPart[] parts)
+        public CmsItem(object renderAttributes, params CmsPart[] parts)
             : this()
         {
             Parts = new List<CmsPart>(parts);
-            Attributes = attributes.ToAttributeDictionary();
+            RenderAttributes = renderAttributes.ToAttributeDictionary();
         }
 
         protected CmsItem()
@@ -25,6 +25,6 @@ namespace MicroCms
 
         public virtual List<CmsPart> Parts { get; set; }
 
-        public virtual Dictionary<string, string> Attributes { get; set; }
+        public virtual Dictionary<string, string> RenderAttributes { get; set; }
     }
 }

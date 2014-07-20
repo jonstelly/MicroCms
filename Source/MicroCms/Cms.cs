@@ -21,7 +21,7 @@ namespace MicroCms
                 return Render(item.Parts[0]);
 
             var element = new XElement("div");
-            item.Attributes.ApplyAttributes(element);
+            item.RenderAttributes.ApplyAttributes(element);
             foreach (var partXml in item.Parts.AsParallel().AsOrdered().Select(Render))
             {
                 element.Add(partXml);

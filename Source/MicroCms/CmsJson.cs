@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace MicroCms.Storage
+namespace MicroCms
 {
-    public static class ContentJson
+    public class CmsJson
     {
-        private static readonly JsonSerializerSettings _Settings = new JsonSerializerSettings()
+        public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings()
         {
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
             DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate,
@@ -23,10 +21,10 @@ namespace MicroCms.Storage
         public static string Serialize<TContent>(TContent content)
             where TContent : CmsEntity
         {
-            var serializer = JsonSerializer.Create(_Settings);
+            var serializer = JsonSerializer.Create(Settings);
             using (var sw = new StringWriter())
             {
-                serializer.Serialize(sw, content, typeof (TContent));
+                serializer.Serialize(sw, content, typeof(TContent));
                 return sw.ToString();
             }
         }
@@ -34,7 +32,7 @@ namespace MicroCms.Storage
         public static TContent Deserialize<TContent>(string json)
             where TContent : CmsEntity
         {
-            var serializer = JsonSerializer.Create(_Settings);
+            var serializer = JsonSerializer.Create(Settings);
             using (var sr = new StringReader(json))
             {
                 using (var rd = new JsonTextReader(sr))
@@ -44,12 +42,11 @@ namespace MicroCms.Storage
             }
         }
 
-        public static TContent Clone<TContent>(TContent content) 
+        public static TContent Clone<TContent>(TContent content)
             where TContent : CmsEntity
         {
             var json = Serialize(content);
             return Deserialize<TContent>(json);
         }
-
     }
 }

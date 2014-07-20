@@ -14,7 +14,7 @@ namespace MicroCms.Storage
 
         public virtual TEntity Find(Guid id)
         {
-            return ContentJson.Clone(_Entities[id]);
+            return CmsJson.Clone(_Entities[id]);
         }
 
         public virtual void Save(TEntity entity)
@@ -24,7 +24,7 @@ namespace MicroCms.Storage
 
             if (entity.Id == Guid.Empty)
                 entity.Id = Guid.NewGuid();
-            _Entities[entity.Id] = ContentJson.Clone(entity);
+            _Entities[entity.Id] = CmsJson.Clone(entity);
         }
 
         public virtual TEntity Delete(Guid id)
@@ -40,7 +40,7 @@ namespace MicroCms.Storage
         {
             foreach (var entity in _Entities.Values)
             {
-                yield return ContentJson.Clone(entity);
+                yield return CmsJson.Clone(entity);
             }
         }
     }

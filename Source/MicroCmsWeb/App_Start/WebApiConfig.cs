@@ -10,6 +10,7 @@ namespace MicroCms
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
+            config.Formatters.JsonFormatter.SerializerSettings = CmsJson.Settings;
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -17,8 +18,8 @@ namespace MicroCms
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+                defaults: new { id = RouteParameter.Optional });
+
         }
     }
 }

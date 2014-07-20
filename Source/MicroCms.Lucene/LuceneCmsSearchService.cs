@@ -24,14 +24,14 @@ namespace MicroCms.Lucene
             try
             {
                 //Try to open directory.
-                using (var rd = IndexReader.Open(_Directory, true)) 
+                using (var rd = IndexReader.Open(directory, true))
                 {
                 }
             }
             catch (Exception)
             {
                 //If open fails, create it
-                using (var writer = new IndexWriter(_Directory, _Analyzer, true, new IndexWriter.MaxFieldLength(1024 * 1024 * 4)))
+                using (var writer = new IndexWriter(directory, _Analyzer, true, new IndexWriter.MaxFieldLength(1024 * 1024 * 4)))
                 {
                     writer.Flush(true, true, true);
                 }
@@ -49,7 +49,7 @@ namespace MicroCms.Lucene
                 {
                     var parser = new QueryParser(Version.LUCENE_30, field.ToString(), _Analyzer);
                     var query = parser.Parse(queryText);
-                    var results = searcher.Search(query, reader.MaxDoc);
+                    var results = searcher.Search(query, Math.Max(reader.MaxDoc, 10));
                     foreach (var result in results.ScoreDocs)
                     {
                         var doc = searcher.Doc(result.Doc);
@@ -97,7 +97,6 @@ namespace MicroCms.Lucene
         public void Dispose()
         {
             _Analyzer.Dispose();
-            _Directory.Dispose();
         }
     }
 }

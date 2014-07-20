@@ -23,7 +23,7 @@ namespace MicroCms.Storage
 
         public virtual TEntity Find(Guid id)
         {
-            return ContentJson.Deserialize<TEntity>(File.ReadAllText(GetContentFileName(id)));
+            return CmsJson.Deserialize<TEntity>(File.ReadAllText(GetContentFileName(id)));
         }
         
         public virtual void Save(TEntity entity)
@@ -34,7 +34,7 @@ namespace MicroCms.Storage
             if (entity.Id == Guid.Empty)
                 entity.Id = Guid.NewGuid();
 
-            File.WriteAllText(GetContentFileName(entity.Id), ContentJson.Serialize(entity));
+            File.WriteAllText(GetContentFileName(entity.Id), CmsJson.Serialize(entity));
         }
 
         protected string GetContentFileName(Guid id)
@@ -53,7 +53,7 @@ namespace MicroCms.Storage
         {
             foreach (var file in BaseDirectory.GetFiles("*.json").OrderBy(f => f.CreationTime))
             {
-                yield return ContentJson.Deserialize<TEntity>(File.ReadAllText(file.FullName));
+                yield return CmsJson.Deserialize<TEntity>(File.ReadAllText(file.FullName));
             }
         }
     }

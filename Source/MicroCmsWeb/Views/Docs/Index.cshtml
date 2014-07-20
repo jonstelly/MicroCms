@@ -25,7 +25,7 @@
     {
         <tr>
             <th>@title.Title</th>
-            <th>@Html.ActionLink("View", "Item", new { id = title.Id })</th>
+            <th>@Html.ActionLink("View", "Item", new { id = title.Id }) | @Html.ActionLink("Delete", "Delete", new { id = title.Id })</th>
         </tr>
     }
 </table>

@@ -24,6 +24,17 @@ namespace MicroCms.Azure
             }
         }
 
+        public override CmsDocument Delete(Guid id)
+        {
+            var document = base.Delete(id);
+            var search = Cms.GetArea().Search;
+            if (search != null)
+            {
+                search.DeleteDocuments(document);
+            }
+            return document;
+        }
+
         public IEnumerable<CmsDocument> GetByPath(string path)
         {
             var search = Cms.GetArea().Search;

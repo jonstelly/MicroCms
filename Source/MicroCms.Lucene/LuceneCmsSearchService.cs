@@ -61,6 +61,7 @@ namespace MicroCms.Lucene
 
         public void AddOrUpdateDocuments(params CmsDocument[] documents)
         {
+            DeleteDocuments(documents);
             using (var writer = new IndexWriter(_Directory, _Analyzer, false, new IndexWriter.MaxFieldLength(1024 * 1024 * 4)))
             {
                 foreach (var document in documents)
@@ -68,7 +69,6 @@ namespace MicroCms.Lucene
                     if (document.Id == Guid.Empty)
                         throw new ArgumentOutOfRangeException("Attempt to index transient document: " + document.Title);
 
-                    //writer.DeleteDocuments(new Term(DocumentField.Id.ToString(), document.Id.ToString("b")));
                     var doc = new Document();
                     doc.Add(new Field(CmsDocumentField.Id.ToString(), document.Id.ToString("b"), Field.Store.YES, Field.Index.NO));
                     if (!String.IsNullOrEmpty(document.Title))
@@ -84,13 +84,13 @@ namespace MicroCms.Lucene
 
         public void DeleteDocuments(params CmsDocument[] documents)
         {
-            using (var writer = new IndexWriter(_Directory, _Analyzer, true, new IndexWriter.MaxFieldLength(1024 * 1024 * 4)))
+            using (var reader = IndexReader.Open(_Directory, false))
             {
                 foreach (var document in documents)
                 {
-                    writer.DeleteDocuments(new Term(CmsDocumentField.Id.ToString(), document.Id.ToString("b")));
+                    reader.DeleteDocuments(new Term(CmsDocumentField.Id.ToString(), document.Id.ToString("b")));
                 }
-                writer.Flush(true, true, true);
+                reader.Flush();
             }
         }
 

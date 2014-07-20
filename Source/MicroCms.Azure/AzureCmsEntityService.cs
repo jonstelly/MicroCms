@@ -68,7 +68,7 @@ namespace MicroCms.Azure
             }
         }
 
-        public TEntity Delete(Guid id)
+        public virtual TEntity Delete(Guid id)
         {
             var blob = GetBlob(id);
             var ret = Read(blob);

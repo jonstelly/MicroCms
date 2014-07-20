@@ -213,6 +213,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ResultStatus.cs" />
+    <Compile Include="Models\WebActionResult.cs" />
+    <Compile Include="Models\WebActionResultExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="Resources\SimpleClass.cs" />
     <Compile Include="Startup.cs" />
@@ -220,6 +223,7 @@
     <Content Include="Readme.html" />
     <Content Include="Views\Docs\Item.cshtml" />
     <Content Include="Views\Docs\Index.cshtml" />
+    <Content Include="Views\Docs\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -295,6 +299,10 @@
     <ProjectReference Include="..\MicroCms.Azure\MicroCms.Azure.csproj">
       <Project>{b466277f-a4bd-4247-ac9b-f1e21d7d998c}</Project>
       <Name>MicroCms.Azure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MicroCms.Client\MicroCms.Client.csproj">
+      <Project>{E52625DF-E71E-4742-B27E-A4A632EF5E3F}</Project>
+      <Name>MicroCms.Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\MicroCms.Lucene\MicroCms.Lucene.csproj">
       <Project>{DAE33EED-5FC7-46E6-A6EF-2A629E82FF24}</Project>

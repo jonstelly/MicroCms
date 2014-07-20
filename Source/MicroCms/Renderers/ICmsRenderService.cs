@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 namespace MicroCms.Renderers
 {
-    public interface ICmsRendererService
+    public interface ICmsRenderService
     {
         bool Supports(string contentType);
         XElement Render(CmsPart part);

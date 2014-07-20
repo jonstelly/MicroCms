@@ -48,7 +48,7 @@
     <Compile Include="..\CommonInfo.cs">
       <Link>Properties\CommonInfo.cs</Link>
     </Compile>
-    <Compile Include="MarkdownCmsRendererService.cs" />
+    <Compile Include="MarkdownCmsRenderService.cs" />
     <Compile Include="MarkdownConfigurationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

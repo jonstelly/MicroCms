@@ -53,8 +53,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderers\HtmlCmsRendererServiceTests.cs" />
-    <Compile Include="Renderers\TextCmsRendererServiceTests.cs" />
+    <Compile Include="Renderers\HtmlCmsRenderServiceTests.cs" />
+    <Compile Include="Renderers\TextCmsRenderServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\MicroCms\MicroCms.csproj">

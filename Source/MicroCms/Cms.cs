@@ -21,7 +21,7 @@ namespace MicroCms
                 return Render(item.Parts[0]);
 
             var element = new XElement("div");
-            item.ApplyAttributes(element);
+            item.Attributes.ApplyAttributes(element);
             foreach (var partXml in item.Parts.AsParallel().AsOrdered().Select(Render))
             {
                 element.Add(partXml);
@@ -31,8 +31,8 @@ namespace MicroCms
         
         public static XElement Render(CmsPart part)
         {
-            var renderer = GetArea().Types.GetRenderer(part.ContentType);
-            var element = renderer.Render(part);
+            var renderService = GetArea().Types.GetRenderService(part.ContentType);
+            var element = renderService.Render(part);
             return element;
         }
         
@@ -62,7 +62,7 @@ namespace MicroCms
             var config = new CmsConfigurator();
             
             if (action == null)
-                config.RegisterBasicRenderers();
+                config.RegisterBasicRenderServices();
             else
                 action(config);
 

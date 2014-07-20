@@ -11,9 +11,9 @@ namespace MicroCms
 {
     public static class MarkdownConfigurationExtensions
     {
-        public static ICmsConfigurator EnableMarkdownRenderer(this ICmsConfigurator configurator)
+        public static ICmsConfigurator EnableMarkdownRenderService(this ICmsConfigurator configurator)
         {
-            return configurator.RegisterRenderer(MarkdownCmsRendererService.ContentType, new MarkdownCmsRendererService());
+            return configurator.RegisterRenderService(MarkdownCmsRenderService.ContentType, new MarkdownCmsRenderService());
         }
     }
 }

@@ -14,7 +14,7 @@ namespace MicroCms.Configuration
         ICmsDocumentService Documents { get; set; }
         ICmsSearchService Search { get; set; }
         ICmsLayoutService Layout { get; set; }
-        ICmsConfigurator RegisterBasicRenderers();
-        ICmsConfigurator RegisterRenderer(string contentType, ICmsRendererService renderer);
+        ICmsConfigurator RegisterBasicRenderServices();
+        ICmsConfigurator RegisterRenderService(string contentType, ICmsRenderService renderService);
     }
 }

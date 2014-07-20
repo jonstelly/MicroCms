@@ -5,22 +5,24 @@ using System.Text;
 
 namespace MicroCms
 {
-    public class CmsPart : CmsEntity, IHaveAttributes
+    public class CmsPart : CmsEntity
     {
-        public CmsPart(string contentType, string value)
+        public CmsPart(string contentType, string value, object attributes = null)
         {
             if (String.IsNullOrEmpty(contentType))
                 throw new ArgumentNullException("contentType");
                         
             ContentType = contentType;
             Value = value;
+            if (attributes != null)
+                Attributes = attributes.ToAttributeDictionary();
         }
 
         protected CmsPart()
         {
         }
 
-        public object Attributes { get; set; }
+        public Dictionary<string, string> Attributes { get; set; }
 
         public string ContentFamily { get { return ContentType.Split('/')[0]; } }
         public string ContentSubType

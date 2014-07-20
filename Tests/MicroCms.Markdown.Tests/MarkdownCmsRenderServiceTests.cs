@@ -9,12 +9,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace MicroCms.Markdown.Tests
 {
     [TestClass]
-    public class MarkdownCmsRendererServiceTests
+    public class MarkdownCmsRenderServiceTests
     {
         [TestMethod]
         public void ValidateBasicRender()
         {
-            var result = new MarkdownCmsRendererService().Render(new CmsPart(CmsTypes.Markdown, "#Hello, World"));
+            var result = new MarkdownCmsRenderService().Render(new CmsPart(CmsTypes.Markdown, "#Hello, World"));
             Assert.IsNotNull(result);
         }
 

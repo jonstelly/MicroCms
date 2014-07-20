@@ -11,9 +11,9 @@ namespace MicroCms
 {
     public static class SourceCodeConfigurationExtensions
     {
-        public static ICmsConfigurator EnableSourceCodeRenderer(this ICmsConfigurator configurator)
+        public static ICmsConfigurator EnableSourceCodeRenderService(this ICmsConfigurator configurator)
         {
-            return configurator.RegisterRenderer(SourceCodeCmsRendererService.SourceCodeTypeFamily, new SourceCodeCmsRendererService());
+            return configurator.RegisterRenderService(SourceCodeCmsRenderService.SourceCodeTypeFamily, new SourceCodeCmsRenderService());
         }
     }
 }

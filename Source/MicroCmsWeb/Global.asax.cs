@@ -26,12 +26,22 @@ namespace MicroCms
         {
             var rootFolder = Server.MapPath("~/");
             var cmsDirectory = new DirectoryInfo(Path.Combine(rootFolder, @"App_Data\Cms"));
-
+            //TODO: Hack while we're generating content below.
+            if (cmsDirectory.Exists) 
+            {
+                try
+                {
+                    cmsDirectory.Delete(true);
+                }
+                catch (Exception)
+                {
+                }
+            }
             Cms.Configure(c =>
             {
-                c.RegisterBasicRenderers()
-                    .EnableMarkdownRenderer()
-                    .EnableSourceCodeRenderer()
+                c.RegisterBasicRenderServices()
+                    .EnableMarkdownRenderService()
+                    .EnableSourceCodeRenderService()
                     .UseLuceneSearch(new SimpleFSDirectory(new DirectoryInfo(Path.Combine(cmsDirectory.FullName, "Index"))));
                 c.UseFileSystemStorage(cmsDirectory);
             });
@@ -68,13 +78,10 @@ namespace MicroCms
 
         private CmsPart CreateMarkdown(string value, int columns)
         {
-            return new CmsPart(CmsTypes.Markdown, value)
+            return new CmsPart(CmsTypes.Markdown, value, new
             {
-                Attributes = new
-                {
-                    @class = "col-md-" + columns
-                }
-            };
+                @class = "col-md-" + columns
+            });
         }
     }
 }

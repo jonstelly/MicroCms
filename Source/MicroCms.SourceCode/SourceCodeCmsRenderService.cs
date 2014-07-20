@@ -9,7 +9,7 @@ using MicroCms.Renderers;
 
 namespace MicroCms.SourceCode
 {
-    public class SourceCodeCmsRendererService : CmsRendererService
+    public class SourceCodeCmsRenderService : CmsRenderService
     {
         private readonly ConcurrentDictionary<string, ILanguage> _Languages = new ConcurrentDictionary<string, ILanguage>();
 

@@ -1,26 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Linq;
 
 namespace MicroCms.Renderers
 {
-    public class TextCmsRendererService : CmsRendererService
+    public class HtmlCmsRenderService : CmsRenderService
     {
         public override bool Supports(string contentType)
         {
             if (String.IsNullOrEmpty(contentType))
                 return false;
-            return contentType.Equals(CmsTypes.Text, StringComparison.InvariantCultureIgnoreCase);
+            return contentType.Equals(CmsTypes.Html, StringComparison.InvariantCultureIgnoreCase);
         }
 
         protected override XElement CreateElement(CmsPart part)
         {
-            return Parse(HttpUtility.HtmlEncode(
-                part.Value
-                    .Replace("\r\n", "<br/>")
-                    .Replace("\n", "<br/>")));
+            return Parse(part.Value);
         }
     }
 }

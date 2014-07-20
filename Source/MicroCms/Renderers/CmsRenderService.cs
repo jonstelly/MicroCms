@@ -8,14 +8,14 @@ using System.Xml.Linq;
 
 namespace MicroCms.Renderers
 {
-    public abstract class CmsRendererService : ICmsRendererService
+    public abstract class CmsRenderService : ICmsRenderService
     {
         public abstract bool Supports(string contentType);
 
         public XElement Render(CmsPart part)
         {
             var element = CreateElement(part);
-            part.ApplyAttributes(element);
+            part.Attributes.ApplyAttributes(element);
             return element;
         }
 

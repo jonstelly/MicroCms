@@ -13,32 +13,32 @@ namespace MicroCms
         public const string Markdown = "markdown";
         public const string SourceCode = "code";
 
-        private readonly ConcurrentDictionary<string, ICmsRendererService> _Renderers = new ConcurrentDictionary<string, ICmsRendererService>();
+        private readonly ConcurrentDictionary<string, ICmsRenderService> _RenderServices = new ConcurrentDictionary<string, ICmsRenderService>();
 
-        internal void Register(string contentType, ICmsRendererService renderer)
+        internal void Register(string contentType, ICmsRenderService renderService)
         {
             if (contentType == null)
                 throw new ArgumentNullException("contentType");
-            if (renderer == null)
-                throw new ArgumentNullException("renderer");
+            if (renderService == null)
+                throw new ArgumentNullException("renderService");
             
-            _Renderers[contentType.Split('/')[0].ToLowerInvariant()] = renderer;
+            _RenderServices[contentType.Split('/')[0].ToLowerInvariant()] = renderService;
         }
 
-        public ICmsRendererService GetRenderer(string contentType)
+        public ICmsRenderService GetRenderService(string contentType)
         {
             if (contentType == null)
                 throw new ArgumentNullException("contentType");            
             try
             {
-                return _Renderers[contentType.Split('/')[0].ToLowerInvariant()];
+                return _RenderServices[contentType.Split('/')[0].ToLowerInvariant()];
             }
             catch (KeyNotFoundException)
             {
-                throw new ArgumentOutOfRangeException("contentType", "No renderer registered for: " + contentType);
+                throw new ArgumentOutOfRangeException("contentType", "No render service registered for: " + contentType);
             }
         }
 
-        public IEnumerable<string> Registered { get { return _Renderers.Keys; } }
+        public IEnumerable<string> Registered { get { return _RenderServices.Keys; } }
     }
 }

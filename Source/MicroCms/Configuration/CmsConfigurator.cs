@@ -21,16 +21,16 @@ namespace MicroCms.Configuration
         public ICmsSearchService Search { get; set; }
         public CmsTypes Types { get; private set; }
 
-        public ICmsConfigurator RegisterBasicRenderers()
+        public ICmsConfigurator RegisterBasicRenderServices()
         {
-            RegisterRenderer(CmsTypes.Html, new HtmlCmsRendererService());
-            RegisterRenderer(CmsTypes.Text, new TextCmsRendererService());
+            RegisterRenderService(CmsTypes.Html, new HtmlCmsRenderService());
+            RegisterRenderService(CmsTypes.Text, new TextCmsRenderService());
             return this;
         }
 
-        public ICmsConfigurator RegisterRenderer(string contentType, ICmsRendererService renderer)
+        public ICmsConfigurator RegisterRenderService(string contentType, ICmsRenderService renderService)
         {
-            Types.Register(contentType, renderer);
+            Types.Register(contentType, renderService);
             return this;
         }
 

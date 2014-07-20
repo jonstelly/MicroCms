@@ -7,18 +7,17 @@ function Get-ScriptDirectory
 }
 
 $scriptDir = Get-ScriptDirectory
+$versionFile =  "$scriptDir\version.txt";
 
 function Get-Version()
 {
 	$version = [System.UInt16]0;
-	$versionFile =  "$scriptDir\version.txt";
 
 	if(Test-Path $versionFile)
 	{
 		$version = [System.UInt16](Get-Content $versionFile)
 	}
 	$version += 1
-	[IO.File]::WriteAllText($versionFile, $version)
 	return $version
 }
 
@@ -65,3 +64,6 @@ foreach($package in $packages)
 		return "Error pushing: $package"
 	}
 }
+
+# Write version to version file if successful
+[IO.File]::WriteAllText($versionFile, $version)

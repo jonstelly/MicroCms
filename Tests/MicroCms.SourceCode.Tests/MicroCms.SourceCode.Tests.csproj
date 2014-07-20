@@ -53,7 +53,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SourceCodeCmsRendererServiceTests.cs" />
+    <Compile Include="SourceCodeCmsRenderServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\MicroCms.SourceCode\MicroCms.SourceCode.csproj">

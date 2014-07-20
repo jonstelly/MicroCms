@@ -19,7 +19,7 @@ The code is just now coming together.  There are some early alpha build packages
 
 ### Renderers 
 * [MicroCms.Markdown](https://www.nuget.org/packages/MicroCms.Markdown/) - Markdown support via [MarkdownDeep](http://www.toptensoftware.com/markdowndeep/) 
-* [MicroCms.SourceCode](https://www.nuget.org/packages/MicroCms.SourceCode/) - Colored syntax highlighting support via [ColorCode](http://colorcode.codeplex.com/)
+* [MicroCms.SourceCode](https://www.nuget.org/packages/MicroCms.SourceCode/) - Colored syntax highlighting support for source code via [ColorCode](http://colorcode.codeplex.com/)
 
 ### Transports/Interfaces
 * [MicroCms.Mvc](https://www.nuget.org/packages/MicroCms.Mvc/) - ASP.NET MVC Extension methods and helpers

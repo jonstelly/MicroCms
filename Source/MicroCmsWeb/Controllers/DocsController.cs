@@ -24,32 +24,33 @@ namespace MicroCms.Controllers
             if (String.IsNullOrEmpty(q))
                 return View(Cms.GetArea().Documents.GetAll().Select(d => new CmsTitle(d.Id, d.Title)));
 
-            return View(Cms.GetArea().Search.SearchDocuments(CmsDocumentField.Title, q).Union(Cms.GetArea().Search.SearchDocuments(CmsDocumentField.Value, q)));
+            return View(Cms.GetArea().Search.SearchDocuments(q));
         }
 
         public ActionResult Item(Guid id)
         {
-            return View(Cms.GetArea().Documents.Find(id));
+            try
+            {
+                var document = Cms.GetArea().Documents.Find(id);
+                return View(document);
+            }
+            catch (Exception exception)
+            {
+                TempData.ActionFail(String.Format("Failed to load document {0} - {1}", id, exception.Message));
+                return RedirectToAction("Index");
+            }
         }
 
         public ActionResult Delete(Guid id)
         {
-            using (var api = new CmsDocumentsController())
+            try
             {
-                api.Request = new HttpRequestMessage();
-                api.Request.Properties.Add(HttpPropertyKeys.HttpConfigurationKey, new HttpConfiguration());
-
-                var response = api.Delete(id);
-                try
-                {
-                    response.EnsureSuccessStatusCode();
-                    TempData.ActionOk(String.Format("Document {0} was deleted", id));
-                }
-                catch (Exception exception)
-                {
-                    TempData.ActionFail(String.Format("Failed to delete document {0} - {1}", id, exception.Message));
-                    throw;
-                }
+                Cms.GetArea().Documents.Delete(id);
+                TempData.ActionOk(String.Format("Document {0} was deleted", id));
+            }
+            catch (Exception exception)
+            {
+                TempData.ActionFail(String.Format("Failed to delete document {0} - {1}", id, exception.Message));
             }
             return RedirectToAction("Index");
         }

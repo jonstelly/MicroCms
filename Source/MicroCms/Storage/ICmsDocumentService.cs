@@ -6,6 +6,6 @@ namespace MicroCms.Storage
 {
     public interface ICmsDocumentService : ICmsEntityService<CmsDocument>
     {
-        IEnumerable<CmsDocument> GetByPath(string path);
+        
     }
 }

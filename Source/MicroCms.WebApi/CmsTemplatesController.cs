@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -14,7 +15,12 @@ namespace MicroCms.WebApi
         [HttpGet]
         public virtual IEnumerable<CmsTemplate> Get()
         {
-            return Cms.GetArea().Templates.GetAll();
+            return Cms.GetArea().Templates.GetAll().Select(t => new CmsTemplate
+            {
+                Id = t.Id,
+                Title = t.Title,
+                Tags = t.Tags
+            });
         }
 
         [Route("{id:guid}", Name = "GetCmsTemplateApi")]

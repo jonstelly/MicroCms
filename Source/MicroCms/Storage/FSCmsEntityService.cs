@@ -49,12 +49,17 @@ namespace MicroCms.Storage
             return entity;
         }
 
-        public virtual IEnumerable<TEntity> GetAll()
+        public virtual IEnumerable<CmsTitle> GetAll()
         {
             foreach (var file in BaseDirectory.GetFiles("*.json").OrderBy(f => f.CreationTime))
             {
-                yield return CmsJson.Deserialize<TEntity>(File.ReadAllText(file.FullName));
+                yield return CmsJson.Deserialize<CmsTitle>(File.ReadAllText(file.FullName));
             }
+        }
+
+        public virtual IEnumerable<CmsTitle> GetByTag(string tag)
+        {
+            return GetAll().Where(e => e.Tags.Any(t => tag.Equals(t, StringComparison.InvariantCultureIgnoreCase)));
         }
     }
 }

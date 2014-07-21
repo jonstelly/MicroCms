@@ -9,7 +9,9 @@ namespace MicroCms.Search
     public interface ICmsSearchService
     {
         void AddOrUpdateDocuments(params CmsDocument[] documents);
-        IEnumerable<CmsTitle> SearchDocuments(CmsDocumentField field, string queryText);
         void DeleteDocuments(params CmsDocument[] documents);
+        IEnumerable<CmsTitle> SearchDocuments(string queryText);
+        IEnumerable<CmsTitle> SearchDocuments(CmsDocumentField field, string queryText);
+        IEnumerable<CmsTitle> GetAll(); 
     }
 }

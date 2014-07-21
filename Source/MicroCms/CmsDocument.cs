@@ -13,14 +13,12 @@ namespace MicroCms
             Title = title;
             Items.AddRange(items);
         }
-
-        protected CmsDocument()
+        
+        public CmsDocument()
         {
             Items = new List<CmsItem>();
         }
 
-        public virtual string Title { get; set; }
-        public virtual string Path { get; set; }
         public virtual List<CmsItem> Items { get; set; }
         public virtual Guid TemplateId { get; set; }
     }

@@ -36,12 +36,17 @@ namespace MicroCms.Storage
             return entity;
         }
 
-        public virtual IEnumerable<TEntity> GetAll()
+        public virtual IEnumerable<CmsTitle> GetAll()
         {
             foreach (var entity in _Entities.Values)
             {
-                yield return CmsJson.Clone(entity);
+                yield return new CmsTitle(entity.Id, entity.Title);
             }
+        }
+        
+        public virtual IEnumerable<CmsTitle> GetByTag(string tag)
+        {
+            return GetAll().Where(e => e.Tags.Any(t => tag.Equals(t, StringComparison.InvariantCultureIgnoreCase)));
         }
     }
 }

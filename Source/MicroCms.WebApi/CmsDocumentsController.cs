@@ -16,7 +16,12 @@ namespace MicroCms.WebApi
         [HttpGet]
         public virtual IEnumerable<CmsDocument> Get()
         {
-            return Cms.GetArea().Documents.GetAll();
+            return Cms.GetArea().Documents.GetAll().Select(t => new CmsDocument
+            {
+                Id = t.Id,
+                Title = t.Title,
+                Tags = t.Tags
+            });
         }
 
         [Route("{id:guid}", Name="GetCmsDocumentApi")]
@@ -28,11 +33,16 @@ namespace MicroCms.WebApi
 
         [Route("{path}")]
         [HttpGet]
-        public virtual IEnumerable<CmsDocument> Get(string path)
+        public virtual IEnumerable<CmsDocument> GetByPath(string path)
         {
-            return Cms.GetArea().Documents.GetByPath(path);
+            return Cms.GetArea().Documents.GetByTag(path).Select(t => new CmsDocument
+            {
+                Id = t.Id,
+                Title = t.Title,
+                Tags = t.Tags
+            });
         }
-
+        
         [Route("", Name="PostCmsDocumentApi")]
         [HttpPost]
         public virtual HttpResponseMessage Post(CmsDocument document)

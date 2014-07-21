@@ -8,7 +8,7 @@ namespace MicroCms.Search
     {
         Id,
         Title,
-        Path,
+        Tag,
         Value
     }
 }

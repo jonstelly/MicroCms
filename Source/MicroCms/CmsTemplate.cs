@@ -6,8 +6,9 @@ namespace MicroCms
 {
     public class CmsTemplate : CmsEntity
     {
-        public CmsTemplate(string value)
+        public CmsTemplate(string title, string value)
         {
+            Title = title;
             Value = value;
         }
 

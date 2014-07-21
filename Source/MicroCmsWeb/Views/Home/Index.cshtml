@@ -1,9 +1,9 @@
-﻿@model IEnumerable<CmsDocument>
+﻿@model IEnumerable<CmsTitle>
 @using MicroCms
 @{
     ViewBag.Title = "Home Page";
 }
-@foreach (var document in Model)
+@foreach (var title in Model)
 {
-    @Html.RenderCms(document);
+    @Html.RenderCms(Cms.GetArea().Documents.Find(title.Id));
 }

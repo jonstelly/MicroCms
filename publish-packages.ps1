@@ -27,7 +27,7 @@ $commonInfo = Get-Content "$scriptDir\CommonInfoTemplate.cs"
 $commonInfo = $commonInfo -replace '%version%', $version
 [IO.File]::WriteAllText("$scriptDir\Source\CommonInfo.cs", $commonInfo)
 
-Write-Host "Building"
+Write-Host "Building: $version"
 $output = & 'msbuild'
 
 if($LastExitCode -ne 0)

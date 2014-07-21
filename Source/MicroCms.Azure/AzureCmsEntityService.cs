@@ -27,7 +27,7 @@ namespace MicroCms.Azure
         private readonly CloudBlobContainer _Container;
         private readonly CloudBlobDirectory _Directory;
 
-        public TEntity Find(Guid id)
+        public virtual TEntity Find(Guid id)
         {
             var blob = GetBlob(id);
             return Read(blob);
@@ -76,14 +76,22 @@ namespace MicroCms.Azure
             return ret;
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public virtual IEnumerable<CmsTitle> GetAll()
         {
             foreach (var item in _Directory.ListBlobs())
             {
                 var blob = _Client.GetBlobReferenceFromServer(item.Uri) as CloudBlockBlob;
-                if(blob != null)
-                    yield return Read(blob);
+                if (blob != null)
+                {
+                    var entity = Read(blob);
+                    yield return new CmsTitle(entity.Id, entity.Title);
+                }
             }
+        }
+
+        public virtual IEnumerable<CmsTitle> GetByTag(string tag)
+        {
+            return GetAll().Where(e => e.Tags.Any(t => tag.Equals(t, StringComparison.InvariantCultureIgnoreCase)));
         }
 
         private CloudBlockBlob GetBlob(Guid id)

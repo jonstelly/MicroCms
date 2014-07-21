@@ -10,23 +10,22 @@ namespace MicroCms.Storage
 {
     public class MemoryCmsDocumentService : MemoryCmsEntityService<CmsDocument>, ICmsDocumentService
     {
-        public virtual IEnumerable<CmsDocument> GetByPath(string path)
+        public override IEnumerable<CmsTitle> GetAll()
         {
             var search = Cms.GetArea().Search;
             if (search != null)
-            {
-                foreach (var result in search.SearchDocuments(CmsDocumentField.Path, path))
-                {
-                    yield return Find(result.Id);
-                }
-            }
-            else
-            {
-                foreach (var document in GetAll().Where(d => d.Path == path.ToLowerInvariant()))
-                {
-                    yield return document;
-                }
-            }
+                return search.GetAll();
+
+            return base.GetAll();
+        }
+
+        public override IEnumerable<CmsTitle> GetByTag(string tag)
+        {
+            var search = Cms.GetArea().Search;
+            if (search != null)
+                return search.SearchDocuments(CmsDocumentField.Tag, tag);
+
+            return GetAll().Where(e => e.Tags.Any(t => tag.Equals(t, StringComparison.InvariantCultureIgnoreCase)));
         }
 
         public override void Save(CmsDocument entity)
@@ -37,6 +36,15 @@ namespace MicroCms.Storage
             {
                 search.AddOrUpdateDocuments(entity);
             }
+        }
+
+        public override CmsDocument Delete(Guid id)
+        {
+            var document = base.Delete(id);
+            var search = Cms.GetArea().Search;
+            if (search != null)
+                search.DeleteDocuments(document);
+            return document;
         }
     }
 }

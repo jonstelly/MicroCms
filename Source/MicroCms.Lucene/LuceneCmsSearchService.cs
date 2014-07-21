@@ -59,6 +59,47 @@ namespace MicroCms.Lucene
             }
         }
 
+        public IEnumerable<CmsTitle> SearchDocuments(string queryText)
+        {
+            using (var reader = IndexReader.Open(_Directory, true))
+            {
+                using (var searcher = new IndexSearcher(reader))
+                {
+                    var parser = new MultiFieldQueryParser(Version.LUCENE_30, new []{CmsDocumentField.Title.ToString(), CmsDocumentField.Value.ToString()}, _Analyzer);
+                    var query = parser.Parse(queryText);
+                    var results = searcher.Search(query, Math.Max(reader.MaxDoc, 10));
+                    foreach (var result in results.ScoreDocs)
+                    {
+                        var doc = searcher.Doc(result.Doc);
+                        yield return new CmsTitle(Guid.Parse(doc.Get(CmsDocumentField.Id.ToString())), doc.Get(CmsDocumentField.Title.ToString()));
+                    }
+                }
+            }
+        }
+
+        public IEnumerable<CmsTitle> GetAll()
+        {
+            using (var reader = DirectoryReader.Open(_Directory, true))
+            {
+                for (int i = 0; i < reader.MaxDoc; i++)
+                {
+                    if (reader.IsDeleted(i))
+                        continue;
+                    CmsTitle title = null;
+                    try
+                    {
+                        var doc = reader.Document(i);
+                        title = new CmsTitle(Guid.Parse(doc.Get(CmsDocumentField.Id.ToString())), doc.Get(CmsDocumentField.Title.ToString()));
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    if (title != null)
+                        yield return title;
+                }
+            }
+        }
+
         public void AddOrUpdateDocuments(params CmsDocument[] documents)
         {
             DeleteDocuments(documents);
@@ -70,12 +111,18 @@ namespace MicroCms.Lucene
                         throw new ArgumentOutOfRangeException("Attempt to index transient document: " + document.Title);
 
                     var doc = new Document();
-                    doc.Add(new Field(CmsDocumentField.Id.ToString(), document.Id.ToString("b"), Field.Store.YES, Field.Index.NO));
+                    doc.Add(new Field(CmsDocumentField.Id.ToString(), document.Id.ToString("b"), Field.Store.YES, Field.Index.NOT_ANALYZED));
                     if (!String.IsNullOrEmpty(document.Title))
                         doc.Add(new Field(CmsDocumentField.Title.ToString(), document.Title, Field.Store.YES, Field.Index.ANALYZED));
-                    if (!String.IsNullOrEmpty(document.Path))
-                        doc.Add(new Field(CmsDocumentField.Path.ToString(), document.Path, Field.Store.YES, Field.Index.ANALYZED));
-                    doc.Add(new Field(CmsDocumentField.Value.ToString(), String.Join(", ", document.Items.SelectMany(i => i.Parts).Select(p => p.Value)), Field.Store.NO, Field.Index.ANALYZED));
+                    foreach (var tag in document.Tags)
+                    {
+                        doc.Add(new Field(CmsDocumentField.Tag.ToString(), tag, Field.Store.YES, Field.Index.ANALYZED));
+                    }
+                    foreach (var partValue in document.Items.SelectMany(i => i.Parts).Select(p => p.Value))
+                    {
+                        if(!String.IsNullOrEmpty(partValue))
+                            doc.Add(new Field(CmsDocumentField.Value.ToString(), partValue, Field.Store.NO, Field.Index.ANALYZED));
+                    }
                     writer.AddDocument(doc);
                 }
                 writer.Flush(true, true, true);

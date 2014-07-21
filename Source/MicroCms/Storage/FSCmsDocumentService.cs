@@ -14,34 +14,39 @@ namespace MicroCms.Storage
         {
         }
 
+        public override CmsDocument Delete(Guid id)
+        {
+            var document = base.Delete(id);
+            var search = Cms.GetArea().Search;
+            if (search != null)
+                search.DeleteDocuments(document);
+            return document;
+        }
+
         public override void Save(CmsDocument entity)
         {
             base.Save(entity);
             var search = Cms.GetArea().Search;
             if (search != null)
-            {
                 search.AddOrUpdateDocuments(entity);
-            }
         }
 
-        public IEnumerable<CmsDocument> GetByPath(string path)
+        public override IEnumerable<CmsTitle> GetAll()
         {
             var search = Cms.GetArea().Search;
             if (search != null)
-            {
-                foreach (var result in search.SearchDocuments(CmsDocumentField.Path, path))
-                {
-                    yield return Find(result.Id);
-                }
-            }
-            else
-            {
-                foreach (var document in GetAll())
-                {
-                    if (!String.IsNullOrEmpty(document.Path) && document.Path.ToLowerInvariant() == path)
-                        yield return document;
-                }
-            }
+                return search.GetAll();
+
+            return base.GetAll();
+        }
+
+        public override IEnumerable<CmsTitle> GetByTag(string tag)
+        {
+            var search = Cms.GetArea().Search;
+            if (search != null)
+                return search.SearchDocuments(CmsDocumentField.Tag, tag);
+
+            return GetAll().Where(e => e.Tags.Any(t => tag.Equals(t, StringComparison.InvariantCultureIgnoreCase)));
         }
     }
 }

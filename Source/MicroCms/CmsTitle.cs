@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MicroCms
 {
-    public class CmsTitle
+    public class CmsTitle : CmsEntity
     {
         public CmsTitle(Guid id, string title)
         {
@@ -14,7 +14,8 @@ namespace MicroCms
             Title = title;
         }
 
-        public Guid Id { get; private set; }
-        public string Title { get; private set; }
+        protected CmsTitle()
+        {
+        }
     }
 }

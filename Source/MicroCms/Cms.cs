@@ -49,12 +49,12 @@ namespace MicroCms
             }
         }
 
-        public static void Configure(Action<ICmsConfigurator> action = null)
+        public static CmsArea Configure(Action<ICmsConfigurator> action = null)
         {
-            Configure(String.Empty, action);
+            return Configure(String.Empty, action);
         }
 
-        public static void Configure(string area, Action<ICmsConfigurator> action = null)
+        public static CmsArea Configure(string area, Action<ICmsConfigurator> action = null)
         {
             if (_Areas.ContainsKey(area))
                 throw new ArgumentOutOfRangeException("Configuration already specified for: " + area);
@@ -66,7 +66,9 @@ namespace MicroCms
             else
                 action(config);
 
-            _Areas[area] = config.Build();
+            var ret = config.Build();
+            _Areas[area] = ret;
+            return ret;
         }
 
         private static readonly ConcurrentDictionary<string, CmsArea> _Areas = new ConcurrentDictionary<string, CmsArea>(); 

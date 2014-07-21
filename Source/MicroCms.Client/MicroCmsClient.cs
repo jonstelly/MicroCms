@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
@@ -27,51 +28,61 @@ namespace MicroCms.Client
 
         public async Task<CmsDocument> GetDocumentAsync(Guid id)
         {
+            Debug.WriteLine("GetDocumentAsync({0})", id);
             return await GetEntityAsync<CmsDocument>(id);
         }
 
         public async Task<CmsDocument[]> GetDocumentsAsync(string path = null)
         {
+            Debug.WriteLine("GetDocumentsAsync({0})", (object)path);
             return await GetEntitiesAsync<CmsDocument>(path);
         }
 
         public async Task<Uri> PostDocumentAsync(CmsDocument document)
         {
+            Debug.WriteLine("PostDocumentAsync({0})", document);
             return await PostEntityAsync(document);
         }
 
         public async Task PutDocumentAsync(CmsDocument document)
         {
+            Debug.WriteLine("PutDocumentAsync({0})", document);
             await PutEntityAsync(document);
         }
 
         public async Task DeleteDocumentAsync(Guid id)
         {
+            Debug.WriteLine("DeleteDocumentAsync({0})", id);
             await DeleteEntityAsync<CmsDocument>(id);
         }
 
         public async Task<CmsTemplate> GetTemplateAsync(Guid id)
         {
+            Debug.WriteLine("GetTemplateAsync({0})", id);
             return await GetEntityAsync<CmsTemplate>(id);
         }
 
         public async Task<CmsTemplate[]> GetTemplatesAsync(string path = null)
         {
+            Debug.WriteLine("GetTemplatesAsync({0})", (object)path);
             return await GetEntitiesAsync<CmsTemplate>(path);
         }
 
         public async Task<Uri> PostTemplateAsync(CmsTemplate template)
         {
+            Debug.WriteLine("PostTemplateAsync({0})", template);
             return await PostEntityAsync(template);
         }
 
         public async Task PutTemplateAsync(CmsTemplate template)
         {
+            Debug.WriteLine("PutTemplateAsync({0})", template);
             await PutEntityAsync(template);
         }
 
         public async Task DeleteTemplateAsync(Guid id)
         {
+            Debug.WriteLine("DeleteTemplateAsync({0})", id);
             await DeleteEntityAsync<CmsTemplate>(id);
         }
 
@@ -158,14 +169,18 @@ namespace MicroCms.Client
             where TEntity : CmsEntity
         {
             var alias = _EntityTypeAlias[typeof(TEntity)];
-            return String.Format("{0}/{1}", alias, id);
+            var ret = String.Format("{0}/{1}", alias, id);
+            Debug.WriteLine("GetEntityPath<{0}>({1}) = {2}", typeof(TEntity).Name, id, ret);
+            return ret;
         }
 
         protected string GetEntityPath<TEntity>(string path = null)
             where TEntity : CmsEntity
         {
             var alias = _EntityTypeAlias[typeof(TEntity)];
-            return String.IsNullOrEmpty(path) ? alias : String.Format("{0}/{1}", alias, path);
+            var ret = String.IsNullOrEmpty(path) ? alias : String.Format("{0}/{1}", alias, path);
+            Debug.WriteLine("GetEntityPath<{0}>({1}) = {2}", typeof (TEntity).Name, path, ret);
+            return ret;
         }
     }
 }

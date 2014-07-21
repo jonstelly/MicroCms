@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MicroCms.Client.Tests
@@ -11,29 +11,95 @@ namespace MicroCms.Client.Tests
     [TestClass]
     public class MicroCmsClientTests
     {
-        private static readonly Uri _BaseUrl = new Uri("http://localhost:54981/api/cms/");
-
-        [TestMethod]
-        public void GetTemplatesSucceeds()
-        {
-            using (var client = new MicroCmsClient(_BaseUrl))
-            {
-                var templates = client.GetTemplatesAsync().Result;
-                Assert.IsNotNull(templates);
-                Debug.WriteLine("{0} templates", templates.Length);
-                Assert.AreNotEqual(0, templates.Length);
-            }
-        }
+        private static readonly Uri _WebApiUrl = new Uri(Startup.WebUrl, "api/cms/");
 
         [TestMethod]
         public void GetDocumentsSucceeds()
         {
-            using (var client = new MicroCmsClient(_BaseUrl))
+            using (var client = new MicroCmsClient(_WebApiUrl))
             {
                 var documents = client.GetDocumentsAsync().Result;
                 Assert.IsNotNull(documents);
                 Debug.WriteLine("{0} documents", documents.Length);
                 Assert.AreNotEqual(0, documents.Length);
+            }
+        }
+
+        [TestMethod]
+        public void PostDocumentSucceeds()
+        {
+            using (var client = new MicroCmsClient(_WebApiUrl))
+            {
+                var document = new CmsDocument(Startup.ExampleTemplate, "PostedDocument", new CmsItem(new
+                {
+                    @class = "something"
+                }, new CmsPart(CmsTypes.Markdown, "##NEWSTUFF")));
+
+                var url = client.PostDocumentAsync(document).Result;
+                
+                Assert.IsNotNull(url);
+
+                var loaded = client.GetDocumentAsync(Guid.Parse(url.AbsoluteUri.Split('/').Last())).Result;
+                Assert.IsNotNull(loaded);
+                Assert.AreEqual(document.Title, loaded.Title);
+            }
+        }
+
+        [TestMethod]
+        public void PutDocumentSucceeds()
+        {
+            using (var client = new MicroCmsClient(_WebApiUrl))
+            {
+                var document = Startup.ExampleDocument;
+                document.Tags.Add("PutTagAddition");
+                client.PutDocumentAsync(document).Wait();
+
+                var loaded = client.GetDocumentAsync(document.Id).Result;
+                Assert.IsNotNull(loaded);
+                Assert.AreEqual(document.Id, loaded.Id);
+                Assert.AreEqual(1, loaded.Tags.Count);
+                Assert.AreEqual("PutTagAddition", loaded.Tags.First());
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(HttpRequestException), "Response status code does not indicate success: 404 (Not Found).")]
+        public void DeleteDocumentSucceeds()
+        {
+            using (var client = new MicroCmsClient(_WebApiUrl))
+            {
+                var document = new CmsDocument(Startup.ExampleTemplate, "DeletedDocument", new CmsItem(new
+                {
+                    @class = "something"
+                }, new CmsPart(CmsTypes.Markdown, "##DELETEDSTUFF")));
+
+                var url = client.PostDocumentAsync(document).Result;
+                Assert.IsNotNull(url);
+
+                var id = Guid.Parse(url.AbsoluteUri.Split('/').Last());
+                client.DeleteDocumentAsync(id).Wait();
+
+                //Verify that the document was deleted
+                try
+                {
+                    var loaded = client.GetDocumentAsync(id).Result;
+                }
+                catch (AggregateException exception)
+                {
+                    throw exception.InnerException;
+                }
+            }
+        }
+
+        [TestMethod]
+        public void GetTemplatesSucceeds()
+        {
+            using (var client = new MicroCmsClient(_WebApiUrl))
+            {
+                var templates = client.GetTemplatesAsync().Result;
+                Assert.IsNotNull(templates);
+                Debug.WriteLine("{0} templates", templates.Length);
+                Assert.AreNotEqual(0, templates.Length);
             }
         }
     }

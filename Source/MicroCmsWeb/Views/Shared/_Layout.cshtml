@@ -30,13 +30,27 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @TempData.RenderActionResult()
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - MicroCms</p>
-        </footer>
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Docs", "Index", "Docs")</li>
+                <li>@Html.ActionLink("About", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            </ul>
+        </div>
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                @*<div class="container body-content">*@
+                @TempData.RenderActionResult()
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - MicroCms</p>
+                </footer>
+                @*</div>*@
+            </div>
+        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

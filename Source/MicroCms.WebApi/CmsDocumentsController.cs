@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace MicroCms.WebApi
@@ -28,7 +28,15 @@ namespace MicroCms.WebApi
         [HttpGet]
         public virtual CmsDocument Get(Guid id)
         {
-            return Cms.GetArea().Documents.Find(id);
+            try
+            {
+                return Cms.GetArea().Documents.Find(id);
+            }
+            catch (Exception exception)
+            {
+                Debug.WriteLine("Error in Get({0}) - {1}", id, exception);
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
         }
 
         [Route("{path}")]

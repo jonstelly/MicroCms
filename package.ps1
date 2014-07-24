@@ -57,7 +57,7 @@ $packages = Get-ChildItem '*.nupkg'
 foreach($package in $packages)
 {
 	Write-Host "Pushing: $package"
-	$output = & $ng @('push', '-NonInteractive', $package)
+	# $output = & $ng @('push', '-NonInteractive', $package)
 	if($LastExitCode -ne 0)
 	{
 		Write-Error "Error packaging: $package`r`n$output"

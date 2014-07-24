@@ -16,7 +16,7 @@ namespace MicroCms
         {
             var account = CloudStorageAccount.Parse(connectionString);
             configurator.Documents = new AzureCmsDocumentService(account.CreateCloudBlobClient());
-            configurator.Templates = new AzureCmsTemplateService(account.CreateCloudBlobClient());
+            configurator.Views = new AzureCmsViewService(account.CreateCloudBlobClient());
             return configurator;
         }
     }

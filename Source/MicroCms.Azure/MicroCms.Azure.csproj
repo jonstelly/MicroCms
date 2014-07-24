@@ -73,7 +73,7 @@
     </Compile>
     <Compile Include="AzureCmsDocumentService.cs" />
     <Compile Include="AzureCmsEntityService.cs" />
-    <Compile Include="AzureCmsTemplateService.cs" />
+    <Compile Include="AzureCmsViewService.cs" />
     <Compile Include="AzureConfigurationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

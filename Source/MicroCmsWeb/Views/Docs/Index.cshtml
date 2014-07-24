@@ -1,9 +1,16 @@
-﻿@model IEnumerable<CmsTitle>
+﻿@using System.Collections.Specialized
+@using MicroCms.Search
+@model IEnumerable<CmsTitle>
 
 @{
     ViewBag.Title = "Index";
 }
 
+
+@section Sidebar
+{
+    @Html.RenderCms(Cms.GetArea().Documents.Find(Cms.GetArea().Search.SearchDocuments(CmsDocumentField.Tag, "TableOfContents").First().Id))
+}
 <h2>Index</h2>
 
 <p>

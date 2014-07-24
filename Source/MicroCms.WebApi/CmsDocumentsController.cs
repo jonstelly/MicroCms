@@ -12,7 +12,7 @@ namespace MicroCms.WebApi
     [RoutePrefix("api/cms/docs")]
     public class CmsDocumentsController : ApiController
     {
-        [Route("")]
+        [Route("", Name="GetCmsDocumentsApi")]
         [HttpGet]
         public virtual IEnumerable<CmsDocument> Get()
         {
@@ -39,7 +39,7 @@ namespace MicroCms.WebApi
             }
         }
 
-        [Route("{path}")]
+        [Route("{path}", Name="GetCmsDocumentsByPathApi")]
         [HttpGet]
         public virtual IEnumerable<CmsDocument> GetByPath(string path)
         {

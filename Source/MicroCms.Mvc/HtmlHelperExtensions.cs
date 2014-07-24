@@ -18,20 +18,20 @@ namespace System
             return Cms.Render(new CmsPart(contentType, value)).ToHtml();
         }
 
-        public static IHtmlString RenderCms(this HtmlHelper html, CmsItem item)
+        public static IHtmlString RenderCms(this HtmlHelper html, CmsPart part)
         {
-            return Cms.Render(item).ToHtml();
+            return Cms.Render(part).ToHtml();
         }
 
-        public static IHtmlString RenderCms(this HtmlHelper html, CmsTemplate template, params CmsItem[] items)
+        public static IHtmlString RenderCms(this HtmlHelper html, CmsView view, params CmsPart[] parts)
         {
-            return Cms.Render(template, items).ToHtml();
+            return Cms.Render(view, parts).ToHtml();
         }
 
         public static IHtmlString RenderCms(this HtmlHelper html, CmsDocument document)
         {
-            var template = Cms.GetArea().Templates.Find(document.TemplateId);
-            return html.RenderCms(template, document.Items.ToArray());
+            var area = Cms.GetArea();
+            return html.RenderCms(area.DefaultView, document.Parts.ToArray());
         }
     }
 }

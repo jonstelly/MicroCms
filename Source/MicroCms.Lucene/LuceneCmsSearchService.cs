@@ -118,7 +118,7 @@ namespace MicroCms.Lucene
                     {
                         doc.Add(new Field(CmsDocumentField.Tag.ToString(), tag, Field.Store.YES, Field.Index.ANALYZED));
                     }
-                    foreach (var partValue in document.Items.SelectMany(i => i.Parts).Select(p => p.Value))
+                    foreach (var partValue in document.Parts.Select(p => p.Value))
                     {
                         if(!String.IsNullOrEmpty(partValue))
                             doc.Add(new Field(CmsDocumentField.Value.ToString(), partValue, Field.Store.NO, Field.Index.ANALYZED));

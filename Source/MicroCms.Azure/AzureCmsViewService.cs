@@ -6,9 +6,9 @@ using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace MicroCms.Azure
 {
-    public class AzureCmsTemplateService : AzureCmsEntityService<CmsTemplate>, ICmsTemplateService
+    public class AzureCmsViewService : AzureCmsEntityService<CmsView>, ICmsViewService
     {
-        public AzureCmsTemplateService(CloudBlobClient client, string directory = "templates", string container = "cms")
+        public AzureCmsViewService(CloudBlobClient client, string directory = "views", string container = "cms")
             : base(client, directory, container)
         {
         }

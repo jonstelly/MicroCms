@@ -6,20 +6,18 @@ namespace MicroCms
 {
     public class CmsDocument : CmsEntity
     {
-        public CmsDocument(CmsTemplate template, string title, params CmsItem[] items)
+        public CmsDocument(string title, params CmsPart[] parts)
             : this()
         {
-            TemplateId = template.Id;
             Title = title;
-            Items.AddRange(items);
+            Parts.AddRange(parts);
         }
         
         public CmsDocument()
         {
-            Items = new List<CmsItem>();
+            Parts = new List<CmsPart>();
         }
 
-        public virtual List<CmsItem> Items { get; set; }
-        public virtual Guid TemplateId { get; set; }
+        public virtual List<CmsPart> Parts { get; set; }
     }
 }

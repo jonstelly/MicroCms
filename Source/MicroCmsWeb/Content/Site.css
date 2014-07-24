@@ -166,7 +166,7 @@ textarea {
     background: none;
 }
 
-@media(min-width:768px) {
+@media(min-width:767px) {
     #wrapper {
         padding-left: 250px;
     }

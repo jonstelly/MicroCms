@@ -11,6 +11,7 @@ using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using Lucene.Net.Store;
 using Lucene.Net.Store.Azure;
+using MicroCms.Views;
 using MicroCms.WebApi;
 using Microsoft.WindowsAzure.Storage;
 
@@ -47,11 +48,13 @@ namespace MicroCms
             {
                 cmsDirectory.Delete(true);
             }
+
+            CmsArea cms = null;
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (UseAzure)
             {
                 //Configure for Azure
-                Cms.Configure(c =>
+                cms = Cms.Configure(c =>
                 {
                     var cacheDirectory = new RAMDirectory();
                     var azureDirectory = new AzureDirectory(CloudStorageAccount.Parse("UseDevelopmentStorage=true"), "cms-index", cacheDirectory);
@@ -65,7 +68,7 @@ namespace MicroCms
             else
             {
                 //Configure for local filesystem
-                Cms.Configure(c =>
+                cms = Cms.Configure(c =>
                 {
                     c.RegisterBasicRenderServices()
                         .EnableMarkdownRenderService()
@@ -75,33 +78,38 @@ namespace MicroCms
                 });
             }
 
-            if (!Cms.GetArea().Documents.GetAll().Any())
+            if (!cms.Documents.GetAll().Any())
             {
-                var singleItemTemplate = new CmsTemplate("SingleTemplate", "<div class=\"row\">{0}</div>");
-                var template = new CmsTemplate("PageTemplate", "<div class=\"row\">{0}{1}</div><div class=\"row\">{2}{3}{4}{5}</div><div class=\"row\">{6}</div>");
-                Cms.GetArea().Templates.Save(template);
-                Cms.GetArea().Templates.Save(singleItemTemplate);
-                var document = new CmsDocument(template, "Example Rows",
-                    new CmsItem(CreateMarkdown("#MD4", 4)),
-                    new CmsItem(CreateMarkdown("#MD8", 8)),
-                    new CmsItem(CreateMarkdown("#MD3", 3)),
-                    new CmsItem(CreateMarkdown("#MD3", 3)),
-                    new CmsItem(CreateMarkdown("#MD3", 3)),
-                    new CmsItem(CreateMarkdown("#MD3", 3)),
-                    new CmsItem(CreateMarkdown("#MD12", 12)));
+                var rowView = new CmsContentView("RowView", "<div class=\"row\">{0}</div>");
+                var sidebarView = new CmsContentView("SidebarView", "<div>{0}</div>");
+                cms.Views.Save(rowView);
+                cms.Views.Save(sidebarView);
+                var document = new CmsDocument("Example Rows", 
+                    CreateMarkdown("#MD4", 4),
+                    CreateMarkdown("#MD8", 8),
+                    CreateMarkdown("#MD3", 3),
+                    CreateMarkdown("#MD3", 3),
+                    CreateMarkdown("#MD3", 3),
+                    CreateMarkdown("#MD3", 3),
+                    CreateMarkdown("#MD12", 12));
                 document.Tags.Add("documents");
-                Cms.GetArea().Documents.Save(document);
-                Cms.GetArea().Documents.Save(new CmsDocument(singleItemTemplate, "Source Code Example", new CmsItem(CreateMarkdown(@"#CODE
+                cms.Documents.Save(document);
+                cms.Documents.Save(new CmsDocument("Source Code Example", CreateMarkdown(@"#CODE
     {{CSharp}}
     public class Thing
     {
         public string Name { get; set; }
     }
-", 12))));
+", 12)));
+                var sidebar = new CmsDocument("TableOfContents", new CmsPart(CmsTypes.Markdown, @"[Home](/)
+
+[Docs](/docs/)"));
+                sidebar.Tags.Add("TableOfContents");
+                cms.Documents.Save(sidebar);
 
                 var readmeText = File.ReadAllText(Path.Combine(rootFolder, @"..\..\README.md"));
 
-                var homeDocument = new CmsDocument(singleItemTemplate, "Readme", new CmsItem(CreateMarkdown(readmeText, 12)));
+                var homeDocument = new CmsDocument("Readme", CreateMarkdown(readmeText, 12));
                 homeDocument.Tags.Add("home");
                 Cms.GetArea().Documents.Save(homeDocument);
             }

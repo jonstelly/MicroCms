@@ -10,23 +10,9 @@ namespace MicroCms
 {
     public static class Cms
     {
-        public static XElement Render(CmsTemplate template, params CmsItem[] items)
+        public static XElement Render(CmsView view, params CmsPart[] parts)
         {
-            return GetArea().Layout.Render(template, items);
-        }
-
-        public static XElement Render(CmsItem item)
-        {
-            if (item.Parts.Count == 1)
-                return Render(item.Parts[0]);
-
-            var element = new XElement("div");
-            item.RenderAttributes.ApplyAttributes(element);
-            foreach (var partXml in item.Parts.AsParallel().AsOrdered().Select(Render))
-            {
-                element.Add(partXml);
-            }
-            return element;
+            return view.Render(new CmsDocument("dynamic", parts)).Single();
         }
         
         public static XElement Render(CmsPart part)

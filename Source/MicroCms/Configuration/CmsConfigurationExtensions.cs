@@ -14,14 +14,14 @@ namespace MicroCms
     {
         public static ICmsConfigurator UseFileSystemStorage(this ICmsConfigurator configurator, DirectoryInfo directory)
         {
-            configurator.Templates = new FSCmsTemplateService(directory);
+            configurator.Views = new FSCmsViewService(directory);
             configurator.Documents = new FSCmsDocumentService(directory);
             return configurator;
         }
 
         public static ICmsConfigurator UseMemoryStorage(this ICmsConfigurator configurator)
         {
-            configurator.Templates = new MemoryCmsTemplateService();
+            configurator.Views = new MemoryCmsViewService();
             configurator.Documents = new MemoryCmsDocumentService();
             return configurator;
         }

@@ -11,4 +11,7 @@
     <copyright>Copyright 2013</copyright>
     <tags>MicroCms WebApi Controllers</tags>
   </metadata>
+  <files>
+    <file src="Content\**\*.*" target="Content"/>
+  </files>
 </package>

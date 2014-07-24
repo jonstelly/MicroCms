@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MicroCms.Layouts;
 using MicroCms.Renderers;
 using MicroCms.Search;
 using MicroCms.Storage;
@@ -15,8 +14,7 @@ namespace MicroCms.Configuration
             Types = new CmsTypes();
         }
 
-        public ICmsLayoutService Layout { get; set; }
-        public ICmsTemplateService Templates { get; set; }
+        public ICmsViewService Views { get; set; }
         public ICmsDocumentService Documents { get; set; }
         public ICmsSearchService Search { get; set; }
         public CmsTypes Types { get; private set; }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using MicroCms.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MicroCms.Client.Tests
@@ -30,10 +31,11 @@ namespace MicroCms.Client.Tests
         {
             using (var client = new MicroCmsClient(_WebApiUrl))
             {
-                var document = new CmsDocument(Startup.ExampleTemplate, "PostedDocument", new CmsItem(new
-                {
-                    @class = "something"
-                }, new CmsPart(CmsTypes.Markdown, "##NEWSTUFF")));
+                var document = new CmsDocument("PostedDocument",
+                    new CmsPart(CmsTypes.Markdown, "##NEWSTUFF", new
+                    {
+                        @class = "something"
+                    }));
 
                 var url = client.PostDocumentAsync(document).Result;
                 
@@ -50,7 +52,7 @@ namespace MicroCms.Client.Tests
         {
             using (var client = new MicroCmsClient(_WebApiUrl))
             {
-                var document = Startup.ExampleDocument;
+                var document = CmsTests.ExampleDocument;
                 document.Tags.Add("PutTagAddition");
                 client.PutDocumentAsync(document).Wait();
 
@@ -68,10 +70,10 @@ namespace MicroCms.Client.Tests
         {
             using (var client = new MicroCmsClient(_WebApiUrl))
             {
-                var document = new CmsDocument(Startup.ExampleTemplate, "DeletedDocument", new CmsItem(new
+                var document = new CmsDocument("DeletedDocument", new CmsPart(CmsTypes.Markdown, "##DELETEDSTUFF", new
                 {
                     @class = "something"
-                }, new CmsPart(CmsTypes.Markdown, "##DELETEDSTUFF")));
+                }));
 
                 var url = client.PostDocumentAsync(document).Result;
                 Assert.IsNotNull(url);
@@ -92,14 +94,14 @@ namespace MicroCms.Client.Tests
         }
 
         [TestMethod]
-        public void GetTemplatesSucceeds()
+        public void GetViewssSucceeds()
         {
             using (var client = new MicroCmsClient(_WebApiUrl))
             {
-                var templates = client.GetTemplatesAsync().Result;
-                Assert.IsNotNull(templates);
-                Debug.WriteLine("{0} templates", templates.Length);
-                Assert.AreNotEqual(0, templates.Length);
+                var views = client.GetViewsAsync().Result;
+                Assert.IsNotNull(views);
+                Debug.WriteLine("{0} views", views.Length);
+                Assert.AreNotEqual(0, views.Length);
             }
         }
     }

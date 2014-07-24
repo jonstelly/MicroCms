@@ -56,34 +56,34 @@ namespace MicroCms.Client
             await DeleteEntityAsync<CmsDocument>(id);
         }
 
-        public async Task<CmsTemplate> GetTemplateAsync(Guid id)
+        public async Task<CmsView> GetViewAsync(Guid id)
         {
-            Debug.WriteLine("GetTemplateAsync({0})", id);
-            return await GetEntityAsync<CmsTemplate>(id);
+            Debug.WriteLine("GetViewAsync({0})", id);
+            return await GetEntityAsync<CmsView>(id);
         }
 
-        public async Task<CmsTemplate[]> GetTemplatesAsync(string path = null)
+        public async Task<CmsView[]> GetViewsAsync(string path = null)
         {
-            Debug.WriteLine("GetTemplatesAsync({0})", (object)path);
-            return await GetEntitiesAsync<CmsTemplate>(path);
+            Debug.WriteLine("GetViewsAsync({0})", (object)path);
+            return await GetEntitiesAsync<CmsView>(path);
         }
 
-        public async Task<Uri> PostTemplateAsync(CmsTemplate template)
+        public async Task<Uri> PostViewAsync(CmsView View)
         {
-            Debug.WriteLine("PostTemplateAsync({0})", template);
-            return await PostEntityAsync(template);
+            Debug.WriteLine("PostViewAsync({0})", View);
+            return await PostEntityAsync(View);
         }
 
-        public async Task PutTemplateAsync(CmsTemplate template)
+        public async Task PutViewAsync(CmsView View)
         {
-            Debug.WriteLine("PutTemplateAsync({0})", template);
-            await PutEntityAsync(template);
+            Debug.WriteLine("PutViewAsync({0})", View);
+            await PutEntityAsync(View);
         }
 
-        public async Task DeleteTemplateAsync(Guid id)
+        public async Task DeleteViewAsync(Guid id)
         {
-            Debug.WriteLine("DeleteTemplateAsync({0})", id);
-            await DeleteEntityAsync<CmsTemplate>(id);
+            Debug.WriteLine("DeleteViewAsync({0})", id);
+            await DeleteEntityAsync<CmsView>(id);
         }
 
         public void Dispose()
@@ -94,7 +94,7 @@ namespace MicroCms.Client
         private static readonly Dictionary<Type, string> _EntityTypeAlias = new Dictionary<Type, string>
         {
             {typeof(CmsDocument), "docs"},
-            {typeof(CmsTemplate), "templates"}
+            {typeof(CmsView), "Views"}
         };
 
         protected static JsonMediaTypeFormatter Formatter = new JsonMediaTypeFormatter

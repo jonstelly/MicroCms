@@ -26,7 +26,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CDFD8FE0-983C-49F4-8222-21DF16A4FC17}"
 	ProjectSection(SolutionItems) = preProject
 		CommonInfoTemplate.cs = CommonInfoTemplate.cs
-		publish-packages.ps1 = publish-packages.ps1
+		package.ps1 = package.ps1
 		README.md = README.md
 		version.txt = version.txt
 	EndProjectSection

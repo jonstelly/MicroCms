@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using Lucene.Net.Store;
+using MicroCms.Tests;
 using MicroCms.WebApi;
 using Microsoft.Owin.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -24,24 +22,12 @@ namespace MicroCms.Client.Tests
         [AssemblyInitialize]
         public static void Initialize(TestContext context)
         {
-            var area = Cms.Configure(c =>
-            {
-                c.RegisterBasicRenderServices()
-                    .EnableMarkdownRenderService()
-                    .EnableSourceCodeRenderService()
-                    .UseLuceneSearch(new RAMDirectory());
-                c.UseMemoryStorage();
-            });
-            ExampleTemplate = new CmsTemplate("ExampleTemplate", "<div>{0}</div>");
-            area.Templates.Save(ExampleTemplate);
-            ExampleDocument = new CmsDocument(ExampleTemplate, "ExampleDocument", new CmsItem(new CmsPart(CmsTypes.Markdown, "#Hello, World")));
-            area.Documents.Save(ExampleDocument);
+            CmsTests.Initialize(c => c.EnableMarkdownRenderService()
+                .EnableSourceCodeRenderService()
+                .UseLuceneSearch(new RAMDirectory()));
 
             _WebApp = WebApp.Start<Startup>(WebUrl.ToString());
         }
-
-        public static CmsDocument ExampleDocument { get; private set; }
-        public static CmsTemplate ExampleTemplate { get; private set; }
 
         [AssemblyCleanup]
         public static void Cleanup()

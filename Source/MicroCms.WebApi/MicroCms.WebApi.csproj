@@ -58,11 +58,13 @@
       <Link>Properties\CommonInfo.cs</Link>
     </Compile>
     <Compile Include="CmsDocumentsController.cs" />
-    <Compile Include="CmsTemplatesController.cs" />
+    <Compile Include="CmsViewsController.cs" />
+    <None Include="Content\Controllers\Cms\DocsController.cs.pp" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Content\Controllers\Cms\ViewsController.cs.pp" />
     <None Include="MicroCms.WebApi.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using MicroCms.Configuration;
-using MicroCms.Layouts;
 using MicroCms.Search;
 using MicroCms.Storage;
+using MicroCms.Views;
 
 namespace MicroCms
 {
@@ -16,17 +16,18 @@ namespace MicroCms
                 throw new ArgumentNullException("configurator");
             
             Types = configurator.Types;
-            Layout = configurator.Layout ?? new StringCmsLayoutService();
             
             //TODO: Default to local filesystem / appdata repositories?
-            Templates = configurator.Templates ?? new MemoryCmsTemplateService();
+            Views = configurator.Views ?? new MemoryCmsViewService();
             Documents = configurator.Documents ?? new MemoryCmsDocumentService();
             Search = configurator.Search;
+            DefaultView = new CmsContentView("Default");
+            Views.Save(DefaultView);
         }
 
-        public ICmsLayoutService Layout { get; private set; }
+        public CmsView DefaultView { get; private set; }
         public CmsTypes Types { get; private set; }
-        public ICmsTemplateService Templates { get; private set; }
+        public ICmsViewService Views { get; private set; }
         public ICmsDocumentService Documents { get; private set; }
         public ICmsSearchService Search { get; private set; }
     }

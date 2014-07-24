@@ -27,12 +27,6 @@ namespace MicroCms
                 element.WriteTo(wr);
             }
             return new HtmlString(sb.ToString());
-
-            //using (var sw = new StringWriter())
-            //{
-            //    element.Save(sw, SaveOptions.DisableFormatting);
-            //    return new HtmlString(sw.ToString());
-            //}
         }
     }
 }

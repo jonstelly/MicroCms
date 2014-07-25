@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MicroCms.Azure")]
-[assembly: AssemblyDescription("MicroCms.Azure")]
+[assembly: AssemblyDescription("Provides support for using Azure blob storage for the MicroCms framework")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("MicroCms.Azure")]
 [assembly: AssemblyTrademark("")]

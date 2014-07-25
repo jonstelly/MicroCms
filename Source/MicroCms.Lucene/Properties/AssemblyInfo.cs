@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MicroCms.Lucene")]
-[assembly: AssemblyDescription("MicroCms.Lucene")]
+[assembly: AssemblyDescription("Provides full-text search using Lucene for the MicroCms CMS framework")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("MicroCms.Lucene")]
 [assembly: AssemblyTrademark("")]

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MicroCms.Mvc")]
-[assembly: AssemblyDescription("MicroCms.Mvc")]
+[assembly: AssemblyDescription("Provides ASP.NET MVC helper methods and supporting types for the MicroCms CMS framework")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("MicroCms.Mvc")]
 [assembly: AssemblyTrademark("")]

@@ -38,12 +38,9 @@ namespace MicroCms.Storage
 
         public virtual IEnumerable<CmsTitle> GetAll()
         {
-            foreach (var entity in _Entities.Values)
-            {
-                yield return new CmsTitle(entity.Id, entity.Title);
-            }
+            return _Entities.Values.Select(entity => new CmsTitle(entity.Id, entity.Title));
         }
-        
+
         public virtual IEnumerable<CmsTitle> GetByTag(string tag)
         {
             return GetAll().Where(e => e.Tags.Any(t => tag.Equals(t, StringComparison.InvariantCultureIgnoreCase)));

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Linq;
+using MicroCms.Views;
 
 namespace MicroCms
 {
+    [KnownType(typeof(CmsContentView))]
     public abstract class CmsView : CmsEntity
     {
         protected CmsView(string title, string documentFormat = "{0}", string partFormat = "{0}")

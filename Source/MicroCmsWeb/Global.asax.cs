@@ -70,11 +70,11 @@ namespace MicroCms
                 //Configure for local filesystem
                 cms = Cms.Configure(c =>
                 {
-                    c.RegisterBasicRenderServices()
-                        .EnableMarkdownRenderService()
-                        .EnableSourceCodeRenderService()
-                        .UseLuceneSearch(new SimpleFSDirectory(new DirectoryInfo(Path.Combine(cmsDirectory.FullName, "Index"))));
-                    c.UseFileSystemStorage(cmsDirectory);
+                    c.RegisterBasicRenderServices() // Supports HTML and Text content rendering
+                        .EnableMarkdownRenderService() // Requires MicroCms.Markdown package
+                        .EnableSourceCodeRenderService() // Requires MicroCms.SourceCode package
+                        .UseLuceneSearch(new SimpleFSDirectory(new DirectoryInfo(Path.Combine(cmsDirectory.FullName, "Index")))); // Requires MicroCms.Lucene package
+                    c.UseFileSystemStorage(cmsDirectory); // Stores Documents and Views to the local filesystem
                 });
             }
 

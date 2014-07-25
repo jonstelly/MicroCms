@@ -31,6 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MarkdownDeep">
       <HintPath>..\..\packages\MarkdownDeep.NET-Signed.1.5\lib\.NetFramework 3.5\MarkdownDeep.dll</HintPath>
@@ -59,6 +65,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Key.snk">
+      <Link>Key.snk</Link>
+    </None>
     <None Include="MicroCms.Markdown.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>

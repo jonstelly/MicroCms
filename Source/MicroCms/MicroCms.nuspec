@@ -12,4 +12,7 @@
     <copyright>Copyright 2013</copyright>
     <tags>MicroCms CMS</tags>
   </metadata>
+  <files>
+    <file src="tools\init.ps1" target="tools"/>
+  </files>
 </package>

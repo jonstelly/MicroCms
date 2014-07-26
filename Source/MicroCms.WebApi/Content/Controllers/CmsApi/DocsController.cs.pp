@@ -7,6 +7,7 @@ using MicroCms.WebApi;
 namespace $rootnamespace$.Controllers.Cms
 {
     [Authorize]
+	[RoutePrefix("api/cms/docs")]
     public class DocsController : CmsDocumentsController
     {
     }

@@ -63,17 +63,18 @@
     <Compile Include="..\CommonInfo.cs">
       <Link>Properties\CommonInfo.cs</Link>
     </Compile>
+    <Compile Include="CmsDirectRouteProvider.cs" />
     <Compile Include="CmsDocumentsController.cs" />
     <Compile Include="CmsViewsController.cs" />
     <None Include="..\..\Key.snk">
       <Link>Key.snk</Link>
     </None>
-    <None Include="Content\Controllers\Cms\DocsController.cs.pp" />
+    <None Include="Content\Controllers\CmsApi\DocsController.cs.pp" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Content\Controllers\Cms\ViewsController.cs.pp" />
+    <None Include="Content\Controllers\CmsApi\ViewsController.cs.pp" />
     <None Include="MicroCms.WebApi.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>

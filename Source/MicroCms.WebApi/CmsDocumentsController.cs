@@ -9,8 +9,7 @@ using System.Web.Http;
 
 namespace MicroCms.WebApi
 {
-    [RoutePrefix("api/cms/docs")]
-    public class CmsDocumentsController : ApiController
+    public abstract class CmsDocumentsController : ApiController
     {
         [Route("", Name="GetCmsDocumentsApi")]
         [HttpGet]

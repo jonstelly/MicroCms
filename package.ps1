@@ -1,3 +1,5 @@
+Param([switch]$publish = $false)
+
 $ng = '.\.nuget\nuget.exe'
 
 function Get-ScriptDirectory
@@ -13,11 +15,18 @@ function Get-Version()
 {
 	$version = [System.UInt16]0;
 
-	if(Test-Path $versionFile)
+	if($publish)
 	{
-		$version = [System.UInt16](Get-Content $versionFile)
+		if(Test-Path $versionFile)
+		{
+			$version = [System.UInt16](Get-Content $versionFile)
+		}
+		$version += 1
 	}
-	$version += 1
+	else
+	{
+		$version = [System.UInt16][System.String]::Format('{0:HHmm}', [System.DateTime]::Now)
+	}
 	return $version
 }
 
@@ -54,16 +63,22 @@ foreach($spec in $specs)
 
 $packages = Get-ChildItem '*.nupkg'
 
-foreach($package in $packages)
+if($publish)
 {
-	Write-Host "Pushing: $package"
-	$output = & $ng @('push', '-NonInteractive', $package)
-	if($LastExitCode -ne 0)
+	foreach($package in $packages)
 	{
-		Write-Error "Error packaging: $package`r`n$output"
-		return "Error pushing: $package"
+		Write-Host "Pushing: $package"
+		$output = & $ng @('push', '-NonInteractive', $package)
+		if($LastExitCode -ne 0)
+		{
+			Write-Error "Error packaging: $package`r`n$output"
+			return "Error pushing: $package"
+		}
 	}
 }
 
 # Write version to version file if successful
-[IO.File]::WriteAllText($versionFile, $version)
+if($publish)
+{
+	[IO.File]::WriteAllText($versionFile, $version)
+}

@@ -4,9 +4,9 @@ using System.Text;
 using System.Web.Http;
 using MicroCms.WebApi;
 
-namespace $rootnamespace$.Controllers.Cms
+namespace MicroCms.Controllers.CmsApi
 {
-    [Authorize]
+    [RoutePrefix("api/cms/views")]
     public class ViewsController : CmsViewsController
     {
     }

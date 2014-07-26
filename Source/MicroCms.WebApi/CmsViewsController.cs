@@ -8,8 +8,7 @@ using System.Web.Http;
 
 namespace MicroCms.WebApi
 {
-    [RoutePrefix("api/cms/views")]
-    public class CmsViewsController : ApiController
+    public abstract class CmsViewsController : ApiController
     {
         [Route("", Name="GetCmsViewsApi")]
         [HttpGet]

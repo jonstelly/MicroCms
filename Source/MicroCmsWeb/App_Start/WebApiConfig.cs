@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using MicroCms.WebApi;
 
 namespace MicroCms
 {
@@ -13,7 +14,7 @@ namespace MicroCms
             config.Formatters.JsonFormatter.SerializerSettings = CmsJson.Settings;
 
             // Web API routes
-            config.MapHttpAttributeRoutes();
+            config.MapHttpAttributeRoutes(new CmsDirectRouteProvider());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

@@ -20,10 +20,12 @@ namespace MicroCms.Configuration
                 foreach (var renderer in rendererAssembly.GetTypes().Where(t => typeof(ICmsRenderService).IsAssignableFrom(t)
                                                                                 && t.IsClass
                                                                                 && !t.IsAbstract
-                                                                                && t.GetCustomAttribute<RenderServiceAttribute>() != null))
+                                                                                && t.GetCustomAttributes<RenderServiceAttribute>() != null))
                 {
-                    var rsa = renderer.GetCustomAttribute<RenderServiceAttribute>();
-                    mappings[rsa.ContentType.ToLowerInvariant()] = renderer;
+                    foreach (var rsa in renderer.GetCustomAttributes<RenderServiceAttribute>())
+                    {
+                        mappings[rsa.ContentType.ToLowerInvariant()] = renderer;
+                    }
                 }
             }
             return mappings;

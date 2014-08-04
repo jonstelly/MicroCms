@@ -5,10 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using ColorCode;
+using MicroCms.Configuration;
 using MicroCms.Renderers;
 
 namespace MicroCms.SourceCode
 {
+    [RenderService(CmsTypes.SourceCode)]
     public class SourceCodeCmsRenderService : CmsRenderService
     {
         private readonly ConcurrentDictionary<string, ILanguage> _Languages = new ConcurrentDictionary<string, ILanguage>();
@@ -52,7 +54,7 @@ namespace MicroCms.SourceCode
             }
         }
 
-        protected override XElement CreateElement(CmsPart part)
+        protected override XElement CreateElement(CmsContext context, CmsPart part)
         {
             return Parse(new CodeColorizer().Colorize(part.Value, GetLanguage(part.ContentSubType)));
         }

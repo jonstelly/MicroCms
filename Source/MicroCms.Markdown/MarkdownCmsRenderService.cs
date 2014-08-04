@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using MicroCms.Configuration;
 using MicroCms.Renderers;
 
 namespace MicroCms.Markdown
 {
+    [RenderService(CmsTypes.Markdown)]
     public class MarkdownCmsRenderService : CmsRenderService
     {
         public const string ContentType = "markdown";
@@ -21,36 +23,36 @@ namespace MicroCms.Markdown
 
         private static readonly Regex _LanguageExpression = new Regex(@"^{{(?<language>.+)}}$", RegexOptions.Compiled);
 
-        private static string FormatCodeBlock(MarkdownDeep.Markdown markdown, string source)
+        private string FormatCodeBlock(CmsContext context, MarkdownDeep.Markdown markdown, string source)
         {
-            //If code content type is registered
-            if (Cms.GetArea().Types.Registered.Any(r => r.ToLowerInvariant().Equals("code")))
+            try
             {
-                var codeRenderService = Cms.GetArea().Types.GetRenderService("code");
-                if (codeRenderService != null)
+                var match = _LanguageExpression.Match(source.Split('\n')[0].Trim());
+                if (match.Success)
                 {
-                    var match = _LanguageExpression.Match(source.Split('\n')[0].Trim());
-                    if (match.Success)
+                    var language = match.Result("${language}");
+                    var contentType = "code/" + language;
+                    var codeRenderer = context.GetRenderService(contentType);
+                    if (codeRenderer != null)
                     {
-                        var language = match.Result("${language}");
-                        if (codeRenderService.Supports("code/" + language))
-                        {
-                            return codeRenderService.Render(new CmsPart("code/" + language, String.Join("\n", source.Split('\n').Skip(1)))).ToHtml().ToHtmlString();
-                        }
+                        return codeRenderer.Render(context, new CmsPart(contentType, String.Join("\n", source.Split('\n').Skip(1)))).ToHtml().ToHtmlString();
                     }
                 }
+            }
+            catch
+            {
             }
             return markdown.Transform(source);
         }
 
-        protected override XElement CreateElement(CmsPart part)
+        protected override XElement CreateElement(CmsContext context, CmsPart part)
         {
             var md = new MarkdownDeep.Markdown
             {
                 ExtraMode = true,
                 SafeMode = false,
                 NewWindowForExternalLinks = true,
-                FormatCodeBlock = FormatCodeBlock
+                FormatCodeBlock = (markdown, s) => FormatCodeBlock(context, markdown, s)
             };
             return Parse(md.Transform(part.Value));
         }

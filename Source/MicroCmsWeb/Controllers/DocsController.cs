@@ -22,16 +22,16 @@ namespace MicroCms.Controllers
         public ActionResult Index(string q)
         {
             if (String.IsNullOrEmpty(q))
-                return View(Cms.GetArea().Documents.GetAll().Select(d => new CmsTitle(d.Id, d.Title)));
+                return View(Cms.CreateContext().Documents.GetAll().Select(d => new CmsTitle(d.Id, d.Title)));
 
-            return View(Cms.GetArea().Search.SearchDocuments(q));
+            return View(Cms.CreateContext().Search.SearchDocuments(q));
         }
 
         public ActionResult Item(Guid id)
         {
             try
             {
-                var document = Cms.GetArea().Documents.Find(id);
+                var document = Cms.CreateContext().Documents.Find(id);
                 return View(document);
             }
             catch (Exception exception)
@@ -45,7 +45,7 @@ namespace MicroCms.Controllers
         {
             try
             {
-                Cms.GetArea().Documents.Delete(id);
+                Cms.CreateContext().Documents.Delete(id);
                 TempData.ActionOk(String.Format("Document {0} was deleted", id));
             }
             catch (Exception exception)

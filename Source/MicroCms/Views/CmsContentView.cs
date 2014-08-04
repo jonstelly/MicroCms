@@ -9,6 +9,8 @@ namespace MicroCms.Views
 {
     public class CmsContentView : CmsView
     {
+        public static readonly CmsContentView Default = new CmsContentView("default");
+
         public CmsContentView(string title, string documentFormat = "{0}", string partFormat = "{0}")
             : base(title, documentFormat, partFormat)
         {
@@ -18,14 +20,14 @@ namespace MicroCms.Views
         {
         }
 
-        protected override XElement RenderDocument(CmsDocument document)
+        protected override XElement RenderDocument(CmsContext context, CmsDocument document)
         {
-            return XmlParser.ParseSafe(String.Format(DocumentFormat, String.Join("", document.Parts.Select(RenderPart))));
+            return XmlParser.ParseSafe(String.Format(DocumentFormat, String.Join("", document.Parts.Select(p => RenderPart(context, p)))));
         }
 
-        protected override XElement RenderPart(CmsPart part)
+        protected override XElement RenderPart(CmsContext context, CmsPart part)
         {
-            return XmlParser.ParseSafe(String.Format(PartFormat, Cms.Render(part)));
+            return XmlParser.ParseSafe(String.Format(PartFormat, context.Render(part)));
         }
     }
 }

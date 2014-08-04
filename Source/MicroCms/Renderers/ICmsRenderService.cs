@@ -8,6 +8,6 @@ namespace MicroCms.Renderers
     public interface ICmsRenderService
     {
         bool Supports(string contentType);
-        XElement Render(CmsPart part);
+        XElement Render(CmsContext context, CmsPart part);
     }
 }

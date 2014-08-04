@@ -10,54 +10,25 @@ namespace MicroCms
 {
     public static class Cms
     {
-        public static XElement Render(CmsView view, params CmsPart[] parts)
+        public static CmsContext CreateContext()
         {
-            return view.Render(new CmsDocument("dynamic", parts)).Single();
+            return new CmsContext(_ContainerProvider);
         }
-        
-        public static XElement Render(CmsPart part)
+
+        public static void Configure(Func<ICmsContainer> containerFunc, bool disposeOnComplete = true)
         {
-            var renderService = GetArea().Types.GetRenderService(part.ContentType);
-            var element = renderService.Render(part);
-            return element;
-        }
-        
-        public static CmsArea GetArea(string area = null)
-        {
-            area = area ?? String.Empty;
-            try
+            lock (typeof (Cms))
             {
-                return _Areas[area];
-            }
-            catch (KeyNotFoundException)
-            {
-                throw new ArgumentOutOfRangeException("area", "No configuration found for: " + area);
+                if (_ContainerProvider != null)
+                    throw new InvalidOperationException("Multiple calls to Cms.Configure()");
+
+                if (containerFunc == null)
+                    throw new ArgumentNullException("containerFunc");
+
+                _ContainerProvider = new CmsContainerProvider(containerFunc, disposeOnComplete);
             }
         }
 
-        public static CmsArea Configure(Action<ICmsConfigurator> action = null)
-        {
-            return Configure(String.Empty, action);
-        }
-
-        public static CmsArea Configure(string area, Action<ICmsConfigurator> action = null)
-        {
-            if (_Areas.ContainsKey(area))
-                throw new ArgumentOutOfRangeException("Configuration already specified for: " + area);
-            
-            var config = new CmsConfigurator();
-            
-            if (action == null)
-                config.RegisterBasicRenderServices();
-            else
-                action(config);
-
-            var ret = config.Build();
-            _Areas[area] = ret;
-            return ret;
-        }
-
-        private static readonly ConcurrentDictionary<string, CmsArea> _Areas = new ConcurrentDictionary<string, CmsArea>(); 
-
+        private static ICmsContainerProvider _ContainerProvider;
     }
 }

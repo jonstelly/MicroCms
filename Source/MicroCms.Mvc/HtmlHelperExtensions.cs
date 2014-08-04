@@ -7,31 +7,36 @@ using System.Web.Mvc;
 using System.Web.WebPages;
 using System.Xml.Linq;
 using MicroCms;
+using MicroCms.Views;
 
 // ReSharper disable once CheckNamespace
 namespace System
 {
     public static class HtmlHelperExtensions
     {
+        public static CmsContext GetCmsContext(this HtmlHelper html)
+        {
+            return html.ViewContext.HttpContext.GetCmsContext();
+        }
+
         public static IHtmlString RenderCmsContent(this HtmlHelper html, string contentType, string value)
         {
-            return Cms.Render(new CmsPart(contentType, value)).ToHtml();
+            return html.GetCmsContext().Render(new CmsPart(contentType, value)).ToHtml();
         }
 
         public static IHtmlString RenderCms(this HtmlHelper html, CmsPart part)
         {
-            return Cms.Render(part).ToHtml();
+            return html.GetCmsContext().Render(part).ToHtml();
         }
 
         public static IHtmlString RenderCms(this HtmlHelper html, CmsView view, params CmsPart[] parts)
         {
-            return Cms.Render(view, parts).ToHtml();
+            return html.GetCmsContext().Render(view, parts).ToHtml();
         }
 
         public static IHtmlString RenderCms(this HtmlHelper html, CmsDocument document)
         {
-            var area = Cms.GetArea();
-            return html.RenderCms(area.DefaultView, document.Parts.ToArray());
+            return html.GetCmsContext().Render(CmsContentView.Default, document.Parts.ToArray()).ToHtml();
         }
     }
 }

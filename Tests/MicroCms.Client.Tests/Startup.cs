@@ -5,9 +5,18 @@ using System.Text;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using Lucene.Net.Store;
+using MicroCms.Configuration;
+using MicroCms.Lucene;
+using MicroCms.Lucene.Configuration;
+using MicroCms.Markdown;
+using MicroCms.SourceCode;
+using MicroCms.Storage;
 using MicroCms.Tests;
+using MicroCms.Unity;
+using MicroCms.Views;
 using MicroCms.WebApi;
 using Microsoft.Owin.Hosting;
+using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Owin;
 
@@ -22,10 +31,16 @@ namespace MicroCms.Client.Tests
         [AssemblyInitialize]
         public static void Initialize(TestContext context)
         {
-            CmsTests.Initialize(c => c.EnableMarkdownRenderService()
-                .EnableSourceCodeRenderService()
-                .UseLuceneSearch(new RAMDirectory()));
+            var unity = new UnityContainer();
+            unity.ConfigureCms()
+                .UseMemoryStorage()
+                .UseLuceneSearch(new RAMDirectory())
+                .UseTextRenderer()
+                .UseHtmlRenderer()
+                .UseMarkdownRenderer()
+                .UseSourceCodeRenderer();
 
+            CmsTesting.Initialize(() => new UnityCmsContainer(unity.CreateChildContainer()));
             _WebApp = WebApp.Start<Startup>(WebUrl.ToString());
         }
 
@@ -47,7 +62,7 @@ namespace MicroCms.Client.Tests
             config.Formatters.JsonFormatter.SerializerSettings = CmsJson.Settings;
 
             // Web API routes
-            config.MapHttpAttributeRoutes();
+            config.MapHttpAttributeRoutes(new CmsDirectRouteProvider());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

@@ -7,13 +7,14 @@ using MicroCms.Configuration;
 using MicroCms.SourceCode;
 
 // ReSharper disable once CheckNamespace
-namespace MicroCms
+namespace MicroCms.Configuration
 {
     public static class SourceCodeConfigurationExtensions
     {
-        public static ICmsConfigurator EnableSourceCodeRenderService(this ICmsConfigurator configurator)
+        public static ICmsConfigurator UseSourceCodeRenderer(this ICmsConfigurator configurator)
         {
-            return configurator.RegisterRenderService(SourceCodeCmsRenderService.SourceCodeTypeFamily, new SourceCodeCmsRenderService());
+            configurator.UseRenderer<SourceCodeCmsRenderService>();
+            return configurator;
         }
     }
 }

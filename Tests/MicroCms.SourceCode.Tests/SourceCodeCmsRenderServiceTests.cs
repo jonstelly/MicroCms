@@ -13,8 +13,11 @@ namespace MicroCms.SourceCode.Tests
         [TestMethod]
         public void ValidateBasicRender()
         {
-            var result = new SourceCodeCmsRenderService().Render(new CmsPart(CmsTypes.SourceCode + "/csharp", "public class Thing { public string Name { get; set; } }"));
-            Assert.IsNotNull(result);
+            using (var context = Cms.CreateContext())
+            {
+                var result = new SourceCodeCmsRenderService().Render(context, new CmsPart(CmsTypes.SourceCode + "/csharp", "public class Thing { public string Name { get; set; } }"));
+                Assert.IsNotNull(result);
+            }
         }
          
     }

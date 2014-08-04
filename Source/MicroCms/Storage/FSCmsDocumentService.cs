@@ -9,15 +9,15 @@ namespace MicroCms.Storage
 {
     public class FSCmsDocumentService : FSCmsEntityService<CmsDocument>, ICmsDocumentService
     {
-        public FSCmsDocumentService(DirectoryInfo baseDirectory)
-            : base(new DirectoryInfo(Path.Combine(baseDirectory.FullName, "Documents")))
+        public FSCmsDocumentService(DirectoryInfo directory)
+            : base(directory, "Documents")
         {
         }
 
         public override CmsDocument Delete(Guid id)
         {
             var document = base.Delete(id);
-            var search = Cms.GetArea().Search;
+            var search = Cms.CreateContext().Search;
             if (search != null)
                 search.DeleteDocuments(document);
             return document;
@@ -26,14 +26,14 @@ namespace MicroCms.Storage
         public override void Save(CmsDocument entity)
         {
             base.Save(entity);
-            var search = Cms.GetArea().Search;
+            var search = Cms.CreateContext().Search;
             if (search != null)
                 search.AddOrUpdateDocuments(entity);
         }
 
         public override IEnumerable<CmsTitle> GetAll()
         {
-            var search = Cms.GetArea().Search;
+            var search = Cms.CreateContext().Search;
             if (search != null)
                 return search.GetAll();
 
@@ -42,7 +42,7 @@ namespace MicroCms.Storage
 
         public override IEnumerable<CmsTitle> GetByTag(string tag)
         {
-            var search = Cms.GetArea().Search;
+            var search = Cms.CreateContext().Search;
             if (search != null)
                 return search.SearchDocuments(CmsDocumentField.Tag, tag);
 

@@ -7,8 +7,8 @@ namespace MicroCms.Storage
 {
     public class FSCmsViewService : FSCmsEntityService<CmsView>, ICmsViewService
     {
-        public FSCmsViewService(DirectoryInfo baseDirectory)
-            : base(new DirectoryInfo(Path.Combine(baseDirectory.FullName, "Views")))
+        public FSCmsViewService(DirectoryInfo directory)
+            : base(directory, "Views")
         {
         }
     }

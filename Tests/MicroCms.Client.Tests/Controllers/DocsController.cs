@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Web.Http;
 using MicroCms.WebApi;
 
 namespace MicroCms.Client.Tests.Controllers
 {
+    [RoutePrefix("api/cms/docs")]
     public class DocsController : CmsDocumentsController
     {
     }

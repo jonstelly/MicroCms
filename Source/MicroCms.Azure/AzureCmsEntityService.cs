@@ -14,17 +14,15 @@ namespace MicroCms.Azure
     public abstract class AzureCmsEntityService<TEntity> : ICmsEntityService<TEntity>
         where TEntity : CmsEntity
     {
-        protected AzureCmsEntityService(CloudBlobClient client, string directory, string container = "cms")
+        protected AzureCmsEntityService(CloudBlobClient client, string containerName, string directoryName)
         {
             _Client = client;
-            _Container  = _Client.GetContainerReference(container);
-            _Container.CreateIfNotExists(BlobContainerPublicAccessType.Off);
-            _Directory = _Container.GetDirectoryReference(directory);
+            var container = _Client.GetContainerReference(containerName);
+            container.CreateIfNotExists(BlobContainerPublicAccessType.Off);
+            _Directory = container.GetDirectoryReference(directoryName);
         }
 
         private readonly CloudBlobClient _Client;
-        // ReSharper disable once PrivateFieldCanBeConvertedToLocalVariable
-        private readonly CloudBlobContainer _Container;
         private readonly CloudBlobDirectory _Directory;
 
         public virtual TEntity Find(Guid id)

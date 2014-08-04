@@ -10,15 +10,25 @@ namespace MicroCms.Azure
 {
     public class AzureCmsDocumentService : AzureCmsEntityService<CmsDocument>, ICmsDocumentService
     {
-        public AzureCmsDocumentService(CloudBlobClient client, string directory = "documents", string container = "cms")
-            : base(client, directory, container)
+        public AzureCmsDocumentService(CloudBlobClient client)
+            : this(client, "cms", "documents")
+        {
+        }
+
+        public AzureCmsDocumentService(CloudBlobClient client, string containerName)
+            : this(client, containerName, "documents")
+        {
+        }
+
+        public AzureCmsDocumentService(CloudBlobClient client, string containerName, string directoryName)
+            : base(client, containerName, directoryName)
         {
         }
 
         public override void Save(CmsDocument entity)
         {
             base.Save(entity);
-            var search = Cms.GetArea().Search;
+            var search = Cms.CreateContext().Search;
             if (search != null)
             {
                 search.AddOrUpdateDocuments(entity);
@@ -28,7 +38,7 @@ namespace MicroCms.Azure
         public override CmsDocument Delete(Guid id)
         {
             var document = base.Delete(id);
-            var search = Cms.GetArea().Search;
+            var search = Cms.CreateContext().Search;
             if (search != null)
                 search.DeleteDocuments(document);
             return document;
@@ -36,7 +46,7 @@ namespace MicroCms.Azure
 
         public override IEnumerable<CmsTitle> GetAll()
         {
-            var search = Cms.GetArea().Search;
+            var search = Cms.CreateContext().Search;
             if (search != null)
                 return search.GetAll();
 
@@ -45,7 +55,7 @@ namespace MicroCms.Azure
 
         public override IEnumerable<CmsTitle> GetByTag(string tag)
         {
-            var search = Cms.GetArea().Search;
+            var search = Cms.CreateContext().Search;
             if (search != null)
                 return search.SearchDocuments(CmsDocumentField.Tag, tag);
 

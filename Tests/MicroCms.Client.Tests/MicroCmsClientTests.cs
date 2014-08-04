@@ -52,7 +52,7 @@ namespace MicroCms.Client.Tests
         {
             using (var client = new MicroCmsClient(_WebApiUrl))
             {
-                var document = CmsTests.ExampleDocument;
+                var document = CmsTesting.ExampleDocument;
                 document.Tags.Add("PutTagAddition");
                 client.PutDocumentAsync(document).Wait();
 
@@ -94,7 +94,7 @@ namespace MicroCms.Client.Tests
         }
 
         [TestMethod]
-        public void GetViewssSucceeds()
+        public void GetViewsSucceeds()
         {
             using (var client = new MicroCmsClient(_WebApiUrl))
             {

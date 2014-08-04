@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml.Linq;
+using MicroCms.Configuration;
 
 namespace MicroCms.Renderers
 {
+    [RenderService(CmsTypes.Html)]
     public class HtmlCmsRenderService : CmsRenderService
     {
         public override bool Supports(string contentType)
@@ -17,7 +19,7 @@ namespace MicroCms.Renderers
             return contentType.Equals(CmsTypes.Html, StringComparison.InvariantCultureIgnoreCase);
         }
 
-        protected override XElement CreateElement(CmsPart part)
+        protected override XElement CreateElement(CmsContext context, CmsPart part)
         {
             return Parse(part.Value);
         }

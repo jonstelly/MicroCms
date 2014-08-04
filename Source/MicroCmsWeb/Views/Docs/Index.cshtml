@@ -1,5 +1,4 @@
-﻿@using System.Collections.Specialized
-@using MicroCms.Search
+﻿@using MicroCms.Search
 @model IEnumerable<CmsTitle>
 
 @{
@@ -9,17 +8,17 @@
 
 @section Sidebar
 {
-    @Html.RenderCms(Cms.GetArea().Documents.Find(Cms.GetArea().Search.SearchDocuments(CmsDocumentField.Tag, "TableOfContents").First().Id))
+    @Html.RenderCms(@Html.GetCmsContext().Documents.Find(@Html.GetCmsContext().Search.SearchDocuments(CmsDocumentField.Tag, "TableOfContents").First().Id))
 }
 <h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 
-    @using(Html.BeginForm("Index", "Docs", FormMethod.Get))
+    @using (Html.BeginForm("Index", "Docs", FormMethod.Get))
     {
         @Html.TextBox("q")
-        <input type="submit" value="Search"/>
+        <input type="submit" value="Search" />
     }
 </p>
 <table class="table">

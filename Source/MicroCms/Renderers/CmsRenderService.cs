@@ -12,9 +12,9 @@ namespace MicroCms.Renderers
     {
         public abstract bool Supports(string contentType);
 
-        public XElement Render(CmsPart part)
+        public XElement Render(CmsContext context, CmsPart part)
         {
-            var element = CreateElement(part);
+            var element = CreateElement(context, part);
             part.RenderAttributes.ApplyAttributes(element);
             return element;
         }
@@ -24,6 +24,6 @@ namespace MicroCms.Renderers
             return XmlParser.ParseSafe(xml);
         }
 
-        protected abstract XElement CreateElement(CmsPart part);
+        protected abstract XElement CreateElement(CmsContext context, CmsPart part);
     }
 }

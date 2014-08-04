@@ -22,14 +22,14 @@ namespace MicroCms
         {
         }
 
-        public virtual IEnumerable<XElement> Render(params CmsDocument[] documents)
+        public virtual IEnumerable<XElement> Render(CmsContext context, params CmsDocument[] documents)
         {
-            return documents.Select(RenderDocument);
+            return documents.Select(d => RenderDocument(context, d));
         }
 
-        protected abstract XElement RenderDocument(CmsDocument document);
+        protected abstract XElement RenderDocument(CmsContext context, CmsDocument document);
 
-        protected abstract XElement RenderPart(CmsPart part);
+        protected abstract XElement RenderPart(CmsContext context, CmsPart part);
 
         public string DocumentFormat { get; set; }
         public string PartFormat { get; set; }

@@ -102,9 +102,9 @@
     <Compile Include="ColorCode\StyleDictionary.cs" />
     <Compile Include="ColorCode\StyleSheets.cs" />
     <Compile Include="ColorCode\Styling\StyleSheets\DefaultStyleSheet.cs" />
+    <Compile Include="Configuration\SourceCodeConfigurationExtensions.cs" />
     <Compile Include="SourceCodeCmsRenderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SourceCodeConfigurationExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MicroCms\MicroCms.csproj">

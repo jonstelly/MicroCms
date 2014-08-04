@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web;
 using System.Xml.Linq;
+using MicroCms.Configuration;
 
 namespace MicroCms.Renderers
 {
+    [RenderService(CmsTypes.Text)]
     public class TextCmsRenderService : CmsRenderService
     {
         public override bool Supports(string contentType)
@@ -15,7 +17,7 @@ namespace MicroCms.Renderers
             return contentType.Equals(CmsTypes.Text, StringComparison.InvariantCultureIgnoreCase);
         }
 
-        protected override XElement CreateElement(CmsPart part)
+        protected override XElement CreateElement(CmsContext context, CmsPart part)
         {
             return Parse(HttpUtility.HtmlEncode(
                 part.Value

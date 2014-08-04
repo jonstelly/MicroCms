@@ -4,7 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Lucene.Net.Store;
+using MicroCms.Configuration;
+using MicroCms.Storage;
 using MicroCms.Tests;
+using MicroCms.Unity;
+using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MicroCms.Markdown.Tests
@@ -15,9 +19,12 @@ namespace MicroCms.Markdown.Tests
         [AssemblyInitialize]
         public static void Initialize(TestContext context)
         {
-            CmsTests.Initialize(c => c.EnableMarkdownRenderService()
-                .EnableSourceCodeRenderService()
-                .UseLuceneSearch(new RAMDirectory()));
+            var unity = new UnityContainer();
+            unity.ConfigureCms()
+                .UseMemoryStorage()
+                .UseSourceCodeRenderer()
+                .UseMarkdownRenderer();
+            CmsTesting.Initialize(() => new UnityCmsContainer(unity.CreateChildContainer()));
         }
     }
 }

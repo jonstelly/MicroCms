@@ -52,6 +52,15 @@
     <Reference Include="Microsoft.Owin.Hosting">
       <HintPath>..\..\packages\Microsoft.Owin.Hosting.2.0.2\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -87,6 +96,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Controllers\DocsController.cs" />
+    <Compile Include="Controllers\ViewsController.cs" />
     <Compile Include="MicroCmsClientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -107,6 +117,10 @@
     <ProjectReference Include="..\..\Source\MicroCms.SourceCode\MicroCms.SourceCode.csproj">
       <Project>{9e613596-47b8-46f6-89ee-5886e79a3600}</Project>
       <Name>MicroCms.SourceCode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\MicroCms.Unity\MicroCms.Unity.csproj">
+      <Project>{8efc8fc3-7b7c-4dc4-879a-fdd3583b639c}</Project>
+      <Name>MicroCms.Unity</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Source\MicroCms.WebApi\MicroCms.WebApi.csproj">
       <Project>{39201ff9-4d8b-4ee9-a01d-14fea58903be}</Project>

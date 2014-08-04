@@ -54,11 +54,15 @@
     <Compile Include="..\CommonInfo.cs">
       <Link>Properties\CommonInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\MarkdownConfigurationExtensions.cs" />
     <Compile Include="MarkdownCmsRenderService.cs" />
-    <Compile Include="MarkdownConfigurationExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MicroCms.Unity\MicroCms.Unity.csproj">
+      <Project>{8efc8fc3-7b7c-4dc4-879a-fdd3583b639c}</Project>
+      <Name>MicroCms.Unity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MicroCms\MicroCms.csproj">
       <Project>{156abb76-b6ec-478d-b5b4-ffe5c0e107f8}</Project>
       <Name>MicroCms</Name>

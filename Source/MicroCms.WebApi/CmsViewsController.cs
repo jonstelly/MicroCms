@@ -14,14 +14,14 @@ namespace MicroCms.WebApi
         [HttpGet]
         public virtual IEnumerable<CmsView> Get()
         {
-            return Cms.GetArea().Views.GetAll().Select(t => Cms.GetArea().Views.Find(t.Id));
+            return Cms.CreateContext().Views.GetAll().Select(t => Cms.CreateContext().Views.Find(t.Id));
         }
 
         [Route("{id:guid}", Name = "GetCmsViewApi")]
         [HttpGet]
         public virtual CmsView Get(Guid id)
         {
-            return Cms.GetArea().Views.Find(id);
+            return Cms.CreateContext().Views.Find(id);
         }
         
         [Route("", Name = "PostCmsViewApi")]
@@ -33,7 +33,7 @@ namespace MicroCms.WebApi
             if (view.Id != Guid.Empty)
                 throw new ArgumentOutOfRangeException("view", "Attempt to post a non-transient view");
 
-            Cms.GetArea().Views.Save(view);
+            Cms.CreateContext().Views.Save(view);
             var response = Request.CreateResponse(HttpStatusCode.Created, view);
             string uri = Url.Link("GetCmsViewApi", new { id = view.Id });
             response.Headers.Location = new Uri(uri);
@@ -51,7 +51,7 @@ namespace MicroCms.WebApi
             if (view.Id != id)
                 throw new ArgumentOutOfRangeException("view", "view Id doesn't match id parameter");
 
-            Cms.GetArea().Views.Save(view);
+            Cms.CreateContext().Views.Save(view);
             var response = Request.CreateResponse(HttpStatusCode.OK, view);
             string uri = Url.Link("GetCmsViewApi", new { id = view.Id });
             response.Headers.Location = new Uri(uri);
@@ -64,7 +64,7 @@ namespace MicroCms.WebApi
         {
             if (id == Guid.Empty)
                 throw new ArgumentOutOfRangeException("id", "invalid View Id");
-            Cms.GetArea().Views.Delete(id);
+            Cms.CreateContext().Views.Delete(id);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }

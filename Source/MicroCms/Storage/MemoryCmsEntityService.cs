@@ -10,7 +10,12 @@ namespace MicroCms.Storage
     public abstract class MemoryCmsEntityService<TEntity> : ICmsEntityService<TEntity>
         where TEntity : CmsEntity
     {
-        private readonly ConcurrentDictionary<Guid, TEntity> _Entities = new ConcurrentDictionary<Guid, TEntity>();
+        protected MemoryCmsEntityService(ConcurrentDictionary<Guid, TEntity> entities)
+        {
+            _Entities = entities ?? new ConcurrentDictionary<Guid, TEntity>();
+        }
+
+        private readonly ConcurrentDictionary<Guid, TEntity> _Entities;
 
         public virtual TEntity Find(Guid id)
         {

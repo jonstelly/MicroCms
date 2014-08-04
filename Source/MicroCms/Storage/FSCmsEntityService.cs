@@ -11,12 +11,12 @@ namespace MicroCms.Storage
     {
         protected readonly DirectoryInfo BaseDirectory;
 
-        protected FSCmsEntityService(DirectoryInfo baseDirectory)
+        protected FSCmsEntityService(DirectoryInfo baseDirectory, string subdirectory)
         {
             if (baseDirectory == null)
                 throw new ArgumentNullException("baseDirectory");
 
-            BaseDirectory = baseDirectory;
+            BaseDirectory = new DirectoryInfo(Path.Combine(baseDirectory.FullName, subdirectory));
             if (!BaseDirectory.Exists)
                 Directory.CreateDirectory(BaseDirectory.FullName);
         }

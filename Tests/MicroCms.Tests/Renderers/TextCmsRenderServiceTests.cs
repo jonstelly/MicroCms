@@ -12,8 +12,11 @@ namespace MicroCms.Tests.Renderers
         [TestMethod]
         public void ValidateBasicRender()
         {
-            var result = new TextCmsRenderService().Render(new CmsPart(CmsTypes.Text, "Hello, World"));
-            Assert.IsNotNull(result);
+            using (var context = Cms.CreateContext())
+            {
+                var result = new TextCmsRenderService().Render(context, new CmsPart(CmsTypes.Text, "Hello, World"));
+                Assert.IsNotNull(result);
+            }
         }
          
     }

@@ -84,6 +84,15 @@
       <HintPath>..\..\packages\Microsoft.Data.Services.Client.5.6.1\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
     </Reference>
@@ -332,6 +341,10 @@
     <ProjectReference Include="..\MicroCms.SourceCode\MicroCms.SourceCode.csproj">
       <Project>{9E613596-47B8-46F6-89EE-5886E79A3600}</Project>
       <Name>MicroCms.SourceCode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MicroCms.Unity\MicroCms.Unity.csproj">
+      <Project>{8EFC8FC3-7B7C-4DC4-879A-FDD3583B639C}</Project>
+      <Name>MicroCms.Unity</Name>
     </ProjectReference>
     <ProjectReference Include="..\MicroCms.WebApi\MicroCms.WebApi.csproj">
       <Project>{39201ff9-4d8b-4ee9-a01d-14fea58903be}</Project>

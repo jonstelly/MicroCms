@@ -11,9 +11,23 @@ using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using Lucene.Net.Store;
 using Lucene.Net.Store.Azure;
+using MicroCms.Azure;
+using MicroCms.Azure.Configuration;
+using MicroCms.Configuration;
+using MicroCms.Lucene;
+using MicroCms.Lucene.Configuration;
+using MicroCms.Markdown;
+using MicroCms.Renderers;
+using MicroCms.Search;
+using MicroCms.SourceCode;
+using MicroCms.Storage;
+using MicroCms.Unity;
 using MicroCms.Views;
 using MicroCms.WebApi;
+using Microsoft.CSharp.RuntimeBinder;
+using Microsoft.Practices.Unity;
 using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace MicroCms
 {
@@ -23,10 +37,10 @@ namespace MicroCms
         {
             var builder = new ContainerBuilder();
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
-            builder.RegisterApiControllers(typeof(MvcApplication).Assembly, typeof (CmsDocumentsController).Assembly);
+            builder.RegisterApiControllers(typeof(MvcApplication).Assembly, typeof(CmsDocumentsController).Assembly);
             _Container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(_Container));
-            
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -49,69 +63,70 @@ namespace MicroCms
                 cmsDirectory.Delete(true);
             }
 
-            CmsArea cms = null;
+            var unity = new UnityContainer();
+            var configuration = unity.ConfigureCms()
+                .UseHtmlRenderer()
+                .UseTextRenderer()
+                .UseMarkdownRenderer()
+                .UseSourceCodeRenderer();
+
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (UseAzure)
             {
+                //Azure & Lucene
+                var cacheDirectory = new RAMDirectory();
+                var azureStorageAccount = CloudStorageAccount.Parse("UseDevelopmentStorage=true");
+                
                 //Configure for Azure
-                cms = Cms.Configure(c =>
-                {
-                    var cacheDirectory = new RAMDirectory();
-                    var azureDirectory = new AzureDirectory(CloudStorageAccount.Parse("UseDevelopmentStorage=true"), "cms-index", cacheDirectory);
-                    c.RegisterBasicRenderServices()
-                        .EnableMarkdownRenderService()
-                        .EnableSourceCodeRenderService()
-                        .UseLuceneSearch(azureDirectory);
-                    c.UseAzureStorage("UseDevelopmentStorage=true");
-                });
+                configuration
+                    .UseAzureStorage(azureStorageAccount.CreateCloudBlobClient(), "cms")
+                    .UseLuceneSearch(new AzureDirectory(azureStorageAccount, "cms-index", cacheDirectory));
             }
             else
             {
-                //Configure for local filesystem
-                cms = Cms.Configure(c =>
-                {
-                    c.RegisterBasicRenderServices() // Supports HTML and Text content rendering
-                        .EnableMarkdownRenderService() // Requires MicroCms.Markdown package
-                        .EnableSourceCodeRenderService() // Requires MicroCms.SourceCode package
-                        .UseLuceneSearch(new SimpleFSDirectory(new DirectoryInfo(Path.Combine(cmsDirectory.FullName, "Index")))); // Requires MicroCms.Lucene package
-                    c.UseFileSystemStorage(cmsDirectory); // Stores Documents and Views to the local filesystem
-                });
+                configuration
+                    .UseFileSystemStorage(cmsDirectory)
+                    .UseLuceneSearch(new SimpleFSDirectory(new DirectoryInfo(Path.Combine(cmsDirectory.FullName, "Index"))));
             }
 
-            if (!cms.Documents.GetAll().Any())
+            Cms.Configure(() => new UnityCmsContainer(unity.CreateChildContainer()));
+            using (var context = Cms.CreateContext())
             {
-                var rowView = new CmsContentView("RowView", "<div class=\"row\">{0}</div>");
-                var sidebarView = new CmsContentView("SidebarView", "<div>{0}</div>");
-                cms.Views.Save(rowView);
-                cms.Views.Save(sidebarView);
-                var document = new CmsDocument("Example Rows", 
-                    CreateMarkdown("#MD4", 4),
-                    CreateMarkdown("#MD8", 8),
-                    CreateMarkdown("#MD3", 3),
-                    CreateMarkdown("#MD3", 3),
-                    CreateMarkdown("#MD3", 3),
-                    CreateMarkdown("#MD3", 3),
-                    CreateMarkdown("#MD12", 12));
-                document.Tags.Add("documents");
-                cms.Documents.Save(document);
-                cms.Documents.Save(new CmsDocument("Source Code Example", CreateMarkdown(@"#CODE
+                if (!context.Documents.GetAll().Any())
+                {
+                    var rowView = new CmsContentView("RowView", "<div class=\"row\">{0}</div>");
+                    var sidebarView = new CmsContentView("SidebarView", "<div>{0}</div>");
+                    context.Views.Save(rowView);
+                    context.Views.Save(sidebarView);
+                    var document = new CmsDocument("Example Rows",
+                        CreateMarkdown("#MD4", 4),
+                        CreateMarkdown("#MD8", 8),
+                        CreateMarkdown("#MD3", 3),
+                        CreateMarkdown("#MD3", 3),
+                        CreateMarkdown("#MD3", 3),
+                        CreateMarkdown("#MD3", 3),
+                        CreateMarkdown("#MD12", 12));
+                    document.Tags.Add("documents");
+                    context.Documents.Save(document);
+                    context.Documents.Save(new CmsDocument("Source Code Example", CreateMarkdown(@"#CODE
     {{CSharp}}
     public class Thing
     {
         public string Name { get; set; }
     }
 ", 12)));
-                var sidebar = new CmsDocument("TableOfContents", new CmsPart(CmsTypes.Markdown, @"[Home](/)
+                    var sidebar = new CmsDocument("TableOfContents", new CmsPart(CmsTypes.Markdown, @"[Home](/)
 
 [Docs](/docs/)"));
-                sidebar.Tags.Add("TableOfContents");
-                cms.Documents.Save(sidebar);
+                    sidebar.Tags.Add("TableOfContents");
+                    context.Documents.Save(sidebar);
 
-                var readmeText = File.ReadAllText(Path.Combine(rootFolder, @"..\..\README.md"));
+                    var readmeText = File.ReadAllText(Path.Combine(rootFolder, @"..\..\README.md"));
 
-                var homeDocument = new CmsDocument("Readme", CreateMarkdown(readmeText, 12));
-                homeDocument.Tags.Add("home");
-                Cms.GetArea().Documents.Save(homeDocument);
+                    var homeDocument = new CmsDocument("Readme", CreateMarkdown(readmeText, 12));
+                    homeDocument.Tags.Add("home");
+                    Cms.CreateContext().Documents.Save(homeDocument);
+                }
             }
         }
 

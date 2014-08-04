@@ -8,8 +8,18 @@ namespace MicroCms.Azure
 {
     public class AzureCmsViewService : AzureCmsEntityService<CmsView>, ICmsViewService
     {
-        public AzureCmsViewService(CloudBlobClient client, string directory = "views", string container = "cms")
-            : base(client, directory, container)
+        public AzureCmsViewService(CloudBlobClient client)
+            : this(client, "cms", "views")
+        {
+        }
+
+        public AzureCmsViewService(CloudBlobClient client, string containerName)
+            : this(client, containerName, "views")
+        {
+        }
+
+        public AzureCmsViewService(CloudBlobClient client, string containerName, string directoryName)
+            : base(client, containerName, directoryName)
         {
         }
     }

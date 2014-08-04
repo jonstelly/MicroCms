@@ -58,17 +58,22 @@
     </Compile>
     <Compile Include="AttributesExtensions.cs" />
     <Compile Include="Cms.cs" />
-    <Compile Include="CmsArea.cs" />
+    <Compile Include="CmsContext.cs" />
+    <Compile Include="CmsContextExtensions.cs" />
     <Compile Include="CmsJson.cs" />
-    <Compile Include="Configuration\CmsConfigurationExtensions.cs" />
-    <Compile Include="Configuration\CmsConfigurator.cs" />
     <Compile Include="CmsDocument.cs" />
     <Compile Include="CmsEntity.cs" />
     <Compile Include="CmsPart.cs" />
     <Compile Include="CmsView.cs" />
     <Compile Include="CmsTitle.cs" />
     <Compile Include="CmsTypes.cs" />
+    <Compile Include="Configuration\CmsConfigurator.cs" />
+    <Compile Include="Configuration\CmsConfiguratorExtensions.cs" />
+    <Compile Include="Configuration\CmsContainerProvider.cs" />
     <Compile Include="Configuration\ICmsConfigurator.cs" />
+    <Compile Include="Configuration\ICmsContainer.cs" />
+    <Compile Include="Configuration\ICmsContainerProvider.cs" />
+    <Compile Include="Configuration\RenderServiceAttribute.cs" />
     <Compile Include="Renderers\ICmsRenderService.cs" />
     <Compile Include="Renderers\CmsRenderService.cs" />
     <Compile Include="Search\CmsDocumentField.cs" />

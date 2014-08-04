@@ -10,9 +10,19 @@ namespace MicroCms.Storage
 {
     public class MemoryCmsDocumentService : MemoryCmsEntityService<CmsDocument>, ICmsDocumentService
     {
+        public MemoryCmsDocumentService()
+            : this(new ConcurrentDictionary<Guid, CmsDocument>())
+        {
+        }
+
+        public MemoryCmsDocumentService(ConcurrentDictionary<Guid, CmsDocument> entities)
+            : base(entities)
+        {
+        }
+
         public override IEnumerable<CmsTitle> GetAll()
         {
-            var search = Cms.GetArea().Search;
+            var search = Cms.CreateContext().Search;
             if (search != null)
                 return search.GetAll();
 
@@ -21,7 +31,7 @@ namespace MicroCms.Storage
 
         public override IEnumerable<CmsTitle> GetByTag(string tag)
         {
-            var search = Cms.GetArea().Search;
+            var search = Cms.CreateContext().Search;
             if (search != null)
                 return search.SearchDocuments(CmsDocumentField.Tag, tag);
 
@@ -31,7 +41,7 @@ namespace MicroCms.Storage
         public override void Save(CmsDocument entity)
         {
             base.Save(entity);
-            var search = Cms.GetArea().Search;
+            var search = Cms.CreateContext().Search;
             if (search != null)
             {
                 search.AddOrUpdateDocuments(entity);
@@ -41,7 +51,7 @@ namespace MicroCms.Storage
         public override CmsDocument Delete(Guid id)
         {
             var document = base.Delete(id);
-            var search = Cms.GetArea().Search;
+            var search = Cms.CreateContext().Search;
             if (search != null)
                 search.DeleteDocuments(document);
             return document;

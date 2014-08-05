@@ -51,11 +51,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonInfo.cs">
+      <Link>Properties\CommonInfo.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnityCmsContainer.cs" />
     <Compile Include="UnityCmsExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="MicroCms.Unity.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

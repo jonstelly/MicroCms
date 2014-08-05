@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MicroCms.WebApi")]
-[assembly: AssemblyDescription("Enables Web API support for the MicroCms CMS framework")]
+[assembly: AssemblyDescription("Provides Web API support for the MicroCms CMS framework")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("MicroCms.WebApi")]
 [assembly: AssemblyTrademark("")]

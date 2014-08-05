@@ -36,16 +36,6 @@ namespace MicroCms.Unity
             return _Container.Resolve(type, name);
         }
 
-        public IEnumerable<T> ResolveAll<T>()
-        {
-            return _Container.ResolveAll<T>();
-        }
-
-        public void Teardown(object @object)
-        {
-            _Container.Teardown(@object);
-        }
-
         public void Dispose()
         {
             _Container.Dispose();

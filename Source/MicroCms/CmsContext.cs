@@ -12,7 +12,7 @@ namespace MicroCms
 {
     public class CmsContext : IDisposable
     {
-        internal CmsContext(ICmsContainerProvider containerProvider)
+        protected internal CmsContext(ICmsContainerProvider containerProvider)
         {
             if (containerProvider == null)
                 throw new ArgumentNullException("containerProvider");

@@ -72,6 +72,10 @@
       <Project>{156abb76-b6ec-478d-b5b4-ffe5c0e107f8}</Project>
       <Name>MicroCms</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MicroCms.Tests\MicroCms.Tests.csproj">
+      <Project>{FCD0F5D8-693E-450F-A1C1-D62C76AE8886}</Project>
+      <Name>MicroCms.Tests</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

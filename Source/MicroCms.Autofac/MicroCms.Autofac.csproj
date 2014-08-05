@@ -44,7 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonInfo.cs">
+      <Link>Properties\CommonInfo.cs</Link>
+    </Compile>
     <Compile Include="AutofacCmsContainer.cs" />
+    <Compile Include="AutofacCmsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

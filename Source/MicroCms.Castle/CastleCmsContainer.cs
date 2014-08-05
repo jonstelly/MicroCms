@@ -29,16 +29,6 @@ namespace MicroCms.Castle
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T> ResolveAll<T>()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Teardown(object @object)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Dispose()
         {
             throw new NotImplementedException();

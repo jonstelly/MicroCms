@@ -11,23 +11,14 @@ using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using Lucene.Net.Store;
 using Lucene.Net.Store.Azure;
-using MicroCms.Azure;
 using MicroCms.Azure.Configuration;
 using MicroCms.Configuration;
-using MicroCms.Lucene;
 using MicroCms.Lucene.Configuration;
-using MicroCms.Markdown;
-using MicroCms.Renderers;
-using MicroCms.Search;
-using MicroCms.SourceCode;
-using MicroCms.Storage;
 using MicroCms.Unity;
 using MicroCms.Views;
 using MicroCms.WebApi;
-using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.Practices.Unity;
 using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace MicroCms
 {

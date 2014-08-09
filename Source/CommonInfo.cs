@@ -1,1 +1,1 @@
-using System.Reflection;  [assembly: AssemblyCopyright("Copyright © Jon Stelly - 2014")] [assembly: AssemblyCompany("Jon Stelly")]  [assembly: AssemblyVersion("0.9.16.*")] [assembly: AssemblyFileVersion("0.9.16.0")] [assembly: AssemblyInformationalVersion("0.9.16-alpha")]
+using System.Reflection;  [assembly: AssemblyCopyright("Copyright © Jon Stelly - 2014")] [assembly: AssemblyCompany("Jon Stelly")]  [assembly: AssemblyVersion("0.9.17.*")] [assembly: AssemblyFileVersion("0.9.17.0")] [assembly: AssemblyInformationalVersion("0.9.17-alpha")]

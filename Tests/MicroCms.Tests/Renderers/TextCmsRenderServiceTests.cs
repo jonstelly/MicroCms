@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using System.Text;
 using MicroCms.Renderers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace MicroCms.Tests.Renderers
 {
-    [TestClass]
-    public class TextCmsRenderServiceTests
+    public class TextCmsRenderServiceTests : CmsUnityTests
     {
-        [TestMethod]
+        [Fact]
         public void ValidateBasicRender()
         {
-            using (var context = Cms.CreateContext())
+            using (var context = CreateContext())
             {
                 var result = new TextCmsRenderService().Render(context, new CmsPart(CmsTypes.Text, "Hello, World"));
-                Assert.IsNotNull(result);
+                Assert.NotNull(result);
             }
         }
          

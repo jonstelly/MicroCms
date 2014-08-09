@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using MicroCms.Configuration;
 using MicroCms.Renderers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace MicroCms.Tests.Configuration
 {
-    [TestClass]
     public class RenderServiceAttributeTests
     {
         [RenderService("first")]
@@ -28,14 +27,14 @@ namespace MicroCms.Tests.Configuration
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void UnitTest()
         {
             var renderServices = RenderServiceAttribute.GetMappings(typeof (RenderServiceAttributeTests).Assembly);
-            Assert.IsNotNull(renderServices);
-            Assert.AreEqual(2, renderServices.Count);
-            Assert.AreEqual(typeof (TestMultipleRenderService), renderServices["first"]);
-            Assert.AreEqual(typeof (TestMultipleRenderService), renderServices["second"]);
+            Assert.NotNull(renderServices);
+            Assert.Equal(2, renderServices.Count);
+            Assert.Equal(typeof (TestMultipleRenderService), renderServices["first"]);
+            Assert.Equal(typeof (TestMultipleRenderService), renderServices["second"]);
         }
          
     }

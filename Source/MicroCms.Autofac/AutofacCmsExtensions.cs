@@ -5,7 +5,8 @@ using System.Text;
 using Autofac;
 using MicroCms.Configuration;
 
-namespace MicroCms.Autofac
+// ReSharper disable once CheckNamespace
+namespace MicroCms
 {
     public static class AutofacCmsExtensions
     {
@@ -28,7 +29,10 @@ namespace MicroCms.Autofac
 
             protected override void RegisterType(Type from, Type to, string name = null, params object[] parameters)
             {
-                var registration = _Builder.RegisterType(to);
+                var registration = _Builder
+                    .RegisterType(to)
+                    .InstancePerLifetimeScope()
+                    .PropertiesAutowired();
                 
                 registration = name == null
                     ? registration.As(@from)

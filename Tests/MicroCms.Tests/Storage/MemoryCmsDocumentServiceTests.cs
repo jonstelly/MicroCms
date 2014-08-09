@@ -3,28 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MicroCms.Storage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace MicroCms.Tests.Storage
 {
-    [TestClass]
-    public class MemoryCmsDocumentServiceTests
+    public class MemoryCmsDocumentServiceTests : CmsUnityTests
     {
-        [TestMethod]
+        [Fact]
         public void GetAllDocumentsSucceeds()
         {
-            var service = new MemoryCmsDocumentService();
-            var first = new CmsDocument("first", new CmsPart(CmsTypes.Text, "first"));
-            var second = new CmsDocument("second", new CmsPart(CmsTypes.Text, "second"));
-            service.Save(first);
-            service.Save(second);
-            var titles = service.GetAll().ToList();
-            Assert.IsNotNull(titles);
-            Assert.AreEqual(2, titles.Count);
-            var firstLoaded = titles.Single(t => t.Id == first.Id);
-            var secondLoaded = titles.Single(t => t.Id == second.Id);
-            Assert.AreEqual(first.Title, firstLoaded.Title);
-            Assert.AreEqual(second.Title, secondLoaded.Title);
+            using (var context = CreateContext())
+            {
+                var first = new CmsDocument("first", new CmsPart(CmsTypes.Text, "first"));
+                var second = new CmsDocument("second", new CmsPart(CmsTypes.Text, "second"));
+                context.Documents.Save(first);
+                context.Documents.Save(second);
+                var titles = context.Documents.GetAll().ToList();
+                Assert.NotNull(titles);
+                Assert.Equal(2, titles.Count);
+                var firstLoaded = titles.Single(t => t.Id == first.Id);
+                var secondLoaded = titles.Single(t => t.Id == second.Id);
+                Assert.Equal(first.Title, firstLoaded.Title);
+                Assert.Equal(second.Title, secondLoaded.Title);
+            }
         }
          
     }

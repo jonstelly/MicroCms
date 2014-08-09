@@ -5,51 +5,59 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MicroCms.Configuration;
 using MicroCms.Storage;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace MicroCms.Tests.Storage
 {
-    [TestClass]
-    public class FSCmsDocumentServiceTests
+    public class FSCmsDocumentServiceTests : CmsUnityTests
     {
-        private FSCmsDocumentService CreateService()
+        private readonly DirectoryInfo _Directory = new DirectoryInfo(@".\" + Guid.NewGuid());
+
+        protected override void SharedConfiguration(ICmsConfigurator configurator)
         {
-            return new FSCmsDocumentService(new DirectoryInfo(@".\" + Guid.NewGuid()));
+            base.SharedConfiguration(configurator);
+            configurator.UseFileSystemStorage(_Directory);
         }
 
-        [TestMethod]
+        [Fact]
         public void SaveSucceeds()
         {
-            var fs = CreateService();
-            var doc = new CmsDocument("test");
-            fs.Save(doc);
-            var loaded = fs.Find(doc.Id);
-            Assert.IsNotNull(loaded);
-            Assert.AreEqual(doc.Title, loaded.Title);
+            using (var context = CreateContext())
+            {
+                var doc = new CmsDocument("test");
+                context.Documents.Save(doc);
+                var loaded = context.Documents.Find(doc.Id);
+                Assert.NotNull(loaded);
+                Assert.Equal(doc.Title, loaded.Title);
+            }
         }
 
-        [TestMethod]
+        [Fact]
         public void GetAllSucceeds()
         {
-            var fs = CreateService();
-            fs.Save(new CmsDocument("test"));
-            var docs = fs.GetAll();
-            Assert.IsNotNull(docs);
-            Assert.AreEqual(1, docs.Count());
+            using (var context = CreateContext())
+            {
+                context.Documents.Save(new CmsDocument("test"));
+                var docs = context.Documents.GetAll();
+                Assert.NotNull(docs);
+                Assert.Equal(1, docs.Count());
+            }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(FileNotFoundException))]
+        [Fact]
         public void DeleteSucceeds()
         {
-            var fs = CreateService();
-            var doc = new CmsDocument("test"); 
-            fs.Save(doc);
-            var loaded = fs.Find(doc.Id);
-            Assert.IsNotNull(loaded);
-            fs.Delete(doc.Id);
-            fs.Find(doc.Id);
+            using (var context = CreateContext())
+            {
+                var doc = new CmsDocument("test");
+                context.Documents.Save(doc);
+                var loaded = context.Documents.Find(doc.Id);
+                Assert.NotNull(loaded);
+                context.Documents.Delete(doc.Id);
+                Assert.Throws<FileNotFoundException>(() => context.Documents.Find(doc.Id));
+            }
         }
     }
 }

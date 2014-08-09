@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MicroCms.Views;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace MicroCms.Tests
 {
-    [TestClass]
-    public class CmsViewTests
+    public class CmsViewTests : CmsUnityTests
     {
-        [TestMethod]
+        [Fact]
         public void RenderSucceeds()
         {
-            using (var context = Cms.CreateContext())
+            using (var context = CreateContext())
             {
                 var view = new CmsContentView("example");
                 var xml = view.Render(context, new CmsDocument("doc", new CmsPart(CmsTypes.Text, "Hello"))).Single();
-                Assert.IsNotNull(xml);
-                Assert.AreEqual("<div>Hello</div>", xml.ToString());
+                Assert.NotNull(xml);
+                Assert.Equal("<div>Hello</div>", xml.ToString());
             }
         }
     }

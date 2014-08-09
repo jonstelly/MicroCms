@@ -5,28 +5,27 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using MicroCms.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace MicroCms.Client.Tests
 {
-    [TestClass]
-    public class MicroCmsClientTests
+    public class MicroCmsClientTests : IUseFixture<WebApiFixture>
     {
-        private static readonly Uri _WebApiUrl = new Uri(Startup.WebUrl, "api/cms/");
+        private static readonly Uri _WebApiUrl = new Uri(WebApiFixture.WebUrl, "api/cms/");
 
-        [TestMethod]
+        [Fact]
         public void GetDocumentsSucceeds()
         {
             using (var client = new MicroCmsClient(_WebApiUrl))
             {
                 var documents = client.GetDocumentsAsync().Result;
-                Assert.IsNotNull(documents);
+                Assert.NotNull(documents);
                 Debug.WriteLine("{0} documents", documents.Length);
-                Assert.AreNotEqual(0, documents.Length);
+                Assert.NotEqual(0, documents.Length);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void PostDocumentSucceeds()
         {
             using (var client = new MicroCmsClient(_WebApiUrl))
@@ -39,33 +38,32 @@ namespace MicroCms.Client.Tests
 
                 var url = client.PostDocumentAsync(document).Result;
                 
-                Assert.IsNotNull(url);
+                Assert.NotNull(url);
 
                 var loaded = client.GetDocumentAsync(Guid.Parse(url.AbsoluteUri.Split('/').Last())).Result;
-                Assert.IsNotNull(loaded);
-                Assert.AreEqual(document.Title, loaded.Title);
+                Assert.NotNull(loaded);
+                Assert.Equal(document.Title, loaded.Title);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void PutDocumentSucceeds()
         {
             using (var client = new MicroCmsClient(_WebApiUrl))
             {
-                var document = CmsTesting.ExampleDocument;
+                var document = Fixture.ExampleDocument;
                 document.Tags.Add("PutTagAddition");
                 client.PutDocumentAsync(document).Wait();
 
                 var loaded = client.GetDocumentAsync(document.Id).Result;
-                Assert.IsNotNull(loaded);
-                Assert.AreEqual(document.Id, loaded.Id);
-                Assert.AreEqual(1, loaded.Tags.Count);
-                Assert.AreEqual("PutTagAddition", loaded.Tags.First());
+                Assert.NotNull(loaded);
+                Assert.Equal(document.Id, loaded.Id);
+                Assert.Equal(1, loaded.Tags.Count);
+                Assert.Equal("PutTagAddition", loaded.Tags.First());
             }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(HttpRequestException), "Response status code does not indicate success: 404 (Not Found).")]
+        [Fact]
         public void DeleteDocumentSucceeds()
         {
             using (var client = new MicroCmsClient(_WebApiUrl))
@@ -76,33 +74,43 @@ namespace MicroCms.Client.Tests
                 }));
 
                 var url = client.PostDocumentAsync(document).Result;
-                Assert.IsNotNull(url);
+                Assert.NotNull(url);
 
                 var id = Guid.Parse(url.AbsoluteUri.Split('/').Last());
                 client.DeleteDocumentAsync(id).Wait();
 
                 //Verify that the document was deleted
-                try
+                Assert.Throws<HttpRequestException>(() =>
                 {
-                    var loaded = client.GetDocumentAsync(id).Result;
-                }
-                catch (AggregateException exception)
-                {
-                    throw exception.InnerException;
-                }
+                    try
+                    {
+                        var loaded = client.GetDocumentAsync(id).Result;
+                    }
+                    catch (AggregateException exception)
+                    {
+                        throw exception.InnerException;
+                    }
+                });
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void GetViewsSucceeds()
         {
             using (var client = new MicroCmsClient(_WebApiUrl))
             {
                 var views = client.GetViewsAsync().Result;
-                Assert.IsNotNull(views);
+                Assert.NotNull(views);
                 Debug.WriteLine("{0} views", views.Length);
-                Assert.AreNotEqual(0, views.Length);
+                Assert.NotEqual(0, views.Length);
             }
+        }
+
+        private WebApiFixture Fixture { get; set; }
+
+        public void SetFixture(WebApiFixture fixture)
+        {
+            Fixture = fixture;
         }
     }
 }

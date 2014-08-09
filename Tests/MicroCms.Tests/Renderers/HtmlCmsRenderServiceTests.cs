@@ -4,20 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MicroCms.Renderers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace MicroCms.Tests.Renderers
 {
-    [TestClass]
-    public class HtmlCmsRenderServiceTests
+    public class HtmlCmsRenderServiceTests : CmsUnityTests
     {
-        [TestMethod]
+        [Fact]
         public void ValidateBasicRender()
         {
-            using (var context = Cms.CreateContext())
+            using (var context = CreateContext())
             {
                 var result = new HtmlCmsRenderService().Render(context, new CmsPart(CmsTypes.Html, "<html><head></head><body><h1>Hello, HTML</h1></body></html>"));
-                Assert.IsNotNull(result);
+                Assert.NotNull(result);
             }
         }
          

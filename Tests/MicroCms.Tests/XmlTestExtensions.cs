@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace MicroCms.Tests
 {
@@ -12,7 +12,7 @@ namespace MicroCms.Tests
     {
         public static void AssertXml(this XElement element, string xml)
         {
-            Assert.AreEqual(xml, element.ToString(SaveOptions.DisableFormatting));
+            Assert.Equal(xml, element.ToString(SaveOptions.DisableFormatting));
         }
     }
 }

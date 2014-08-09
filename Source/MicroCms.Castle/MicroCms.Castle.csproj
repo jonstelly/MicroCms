@@ -31,6 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\..\Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core">
       <HintPath>..\..\packages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
@@ -54,6 +60,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Key.snk">
+      <Link>Key.snk</Link>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

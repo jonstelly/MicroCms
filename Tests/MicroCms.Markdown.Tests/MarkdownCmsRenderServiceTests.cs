@@ -6,43 +6,56 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using MicroCms.Configuration;
 using MicroCms.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace MicroCms.Markdown.Tests
 {
-    [TestClass]
-    public class MarkdownCmsRenderServiceTests
+    public class MarkdownCmsRenderServiceTests : CmsUnityTests
     {
-        [TestMethod]
+        private void WithSourceCode(ICmsConfigurator configurator)
+        {
+            configurator
+                .UseMarkdownRenderer()
+                .UseSourceCodeRenderer();
+        }
+
+        private void WithoutSourceCode(ICmsConfigurator configurator)
+        {
+            configurator
+                .UseMarkdownRenderer();
+        }
+
+        [Fact]
         public void ValidateHeadingRender()
         {
-            using (var context = Cms.CreateContext())
+            using (var context = CreateContext(WithoutSourceCode))
             {
-                var result = new MarkdownCmsRenderService().Render(context, new CmsPart(CmsTypes.Markdown, "#Hello, World"));
-                Assert.IsNotNull(result);
+                var result = context.Render(new CmsPart(CmsTypes.Markdown, "#Hello, World"));
+                Assert.NotNull(result);
                 result.AssertXml("<div><h1>Hello, World</h1></div>");
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ValidateHeadingRenderWithAttributes()
         {
-            using (var context = Cms.CreateContext())
+            using (var context = CreateContext(WithoutSourceCode))
             {
                 var result = new MarkdownCmsRenderService().Render(context, new CmsPart(CmsTypes.Markdown, "#Hello, World", new
                 {
                     @class = "example"
                 }));
-                Assert.IsNotNull(result);
+                Assert.NotNull(result);
                 result.AssertXml(@"<div class=""example""><h1>Hello, World</h1></div>");
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ValidateCodeRender()
         {
-            using (var context = Cms.CreateContext())
+            using (var context = CreateContext(WithSourceCode))
             {
                 var result = new MarkdownCmsRenderService().Render(context, new CmsPart(CmsTypes.Markdown, @"
     {{CSharp}}
@@ -55,7 +68,7 @@ namespace MicroCms.Markdown.Tests
 
         public string Name { get; set; }
     }"));
-                Assert.IsNotNull(result);
+                Assert.NotNull(result);
                 result.AssertXml(@"<div style=""color:Black;background-color:White;""><pre>
 <span style=""color:Blue;"">public</span> <span style=""color:Blue;"">class</span> Thing : IDisposable
 {
@@ -71,20 +84,20 @@ namespace MicroCms.Markdown.Tests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ValidateParagraphRender()
         {
-            using (var context = Cms.CreateContext())
+            using (var context = CreateContext(WithoutSourceCode))
             {
                 var result = new MarkdownCmsRenderService().Render(context, new CmsPart(CmsTypes.Markdown, @"Hello, World"));
                 result.AssertXml("<div><p>Hello, World</p></div>");
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ValidateOrderedListRender()
         {
-            using (var context = Cms.CreateContext())
+            using (var context = CreateContext(WithoutSourceCode))
             {
                 var result = new MarkdownCmsRenderService().Render(context, new CmsPart(CmsTypes.Markdown, @"1. First
 2. Second
@@ -97,10 +110,10 @@ namespace MicroCms.Markdown.Tests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ValidateUnorderedListRender()
         {
-            using (var context = Cms.CreateContext())
+            using (var context = CreateContext(WithoutSourceCode))
             {
                 var result = new MarkdownCmsRenderService().Render(context, new CmsPart(CmsTypes.Markdown, @"* First
 * Second

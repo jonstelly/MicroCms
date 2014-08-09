@@ -16,6 +16,11 @@ namespace MicroCms.Configuration
             RegisterType(typeof (CmsContext), typeof (CmsContext));
         }
 
+        protected virtual IEnumerable<PropertyInfo> GetInjectableProperties(Type type)
+        {
+            return type.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.CanWrite);
+        }
+
         public virtual ICmsConfigurator UseDocService<TDocService>(params object[] parameters)
             where TDocService : ICmsDocumentService
         {

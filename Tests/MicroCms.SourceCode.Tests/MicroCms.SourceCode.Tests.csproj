@@ -16,6 +16,8 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,9 +46,16 @@
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\packages\Moq.4.2.1408.0717\lib\net40\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="xunit">
+      <HintPath>..\..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -54,16 +63,10 @@
         <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
       </ItemGroup>
     </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
-      </ItemGroup>
-    </Otherwise>
+    <Otherwise />
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SourceCodeCmsRenderServiceTests.cs" />
-    <Compile Include="SourceCodeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Source\MicroCms.SourceCode\MicroCms.SourceCode.csproj">
@@ -79,7 +82,7 @@
       <Name>MicroCms</Name>
     </ProjectReference>
     <ProjectReference Include="..\MicroCms.Tests\MicroCms.Tests.csproj">
-      <Project>{FCD0F5D8-693E-450F-A1C1-D62C76AE8886}</Project>
+      <Project>{fcd0f5d8-693e-450f-a1c1-d62c76ae8886}</Project>
       <Name>MicroCms.Tests</Name>
     </ProjectReference>
   </ItemGroup>
@@ -106,6 +109,13 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

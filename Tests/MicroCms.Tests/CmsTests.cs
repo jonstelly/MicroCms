@@ -1,42 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MicroCms.Configuration;
 using MicroCms.Views;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace MicroCms.Tests
 {
-    [TestClass]
-    public class CmsTests
+    public class CmsTests : CmsUnityTests
     {
-        [TestMethod]
+        [Fact]
         public void CreateContextSucceeds()
         {
-            using (var context = Cms.CreateContext())
+            using (var context = CreateContext())
             {
-                Assert.IsNotNull(context);
+                Assert.NotNull(context);
             }
         }
         
-        [TestMethod]
+        [Fact]
         public void RenderSimpleTextPartSucceeds()
         {
-            using (var context = Cms.CreateContext())
+            using (var context = CreateContext())
             {
                 var xml = context.Render(new CmsPart(CmsTypes.Text, "Hello"));
-                Assert.IsNotNull(xml);
-                Assert.AreEqual("<div>Hello</div>", xml.ToString());
+                Assert.NotNull(xml);
+                Assert.Equal("<div>Hello</div>", xml.ToString());
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void RenderViewAndPartsSucceeds()
         {
-            using (var context = Cms.CreateContext())
+            using (var context = CreateContext())
             {
                 var xml = context.Render(new CmsContentView("test"), new CmsPart(CmsTypes.Text, "Hello"));
-                Assert.IsNotNull(xml);
-                Assert.AreEqual("<div>Hello</div>", xml.ToString());
+                Assert.NotNull(xml);
+                Assert.Equal("<div>Hello</div>", xml.ToString());
             }
         }
     }

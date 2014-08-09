@@ -10,36 +10,36 @@ namespace MicroCms.Autofac
 {
     public class AutofacCmsContainer : ICmsContainer
     {
-        public AutofacCmsContainer(IContainer container)
+        public AutofacCmsContainer(ILifetimeScope scope)
         {
-            _Container = container;
+            _Scope = scope;
         }
 
-        private readonly IContainer _Container;
+        private readonly ILifetimeScope _Scope;
 
         public T Resolve<T>()
         {
-            return _Container.Resolve<T>();
+            return _Scope.Resolve<T>();
         }
 
         public T Resolve<T>(string name)
         {
-            return _Container.ResolveNamed<T>(name);
+            return _Scope.ResolveNamed<T>(name);
         }
 
         public object Resolve(Type type)
         {
-            return _Container.Resolve(type);
+            return _Scope.Resolve(type);
         }
 
         public object Resolve(Type type, string name)
         {
-            return _Container.ResolveNamed(name, type);
+            return _Scope.ResolveNamed(name, type);
         }
 
         public void Dispose()
         {
-            _Container.Dispose();
+            _Scope.Dispose();
         }
     }
 }

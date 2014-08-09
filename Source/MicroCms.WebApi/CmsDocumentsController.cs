@@ -9,13 +9,14 @@ using System.Web.Http;
 
 namespace MicroCms.WebApi
 {
-    public abstract class CmsDocumentsController : ApiController
+    public abstract class CmsDocumentsController : CmsApiController
     {
         [Route("", Name="GetCmsDocumentsApi")]
         [HttpGet]
         public virtual IEnumerable<CmsDocument> Get()
         {
-            return Cms.CreateContext().Documents.GetAll().Select(t => new CmsDocument
+
+            return CmsContext.Documents.GetAll().Select(t => new CmsDocument
             {
                 Id = t.Id,
                 Title = t.Title,
@@ -29,7 +30,7 @@ namespace MicroCms.WebApi
         {
             try
             {
-                return Cms.CreateContext().Documents.Find(id);
+                return CmsContext.Documents.Find(id);
             }
             catch (Exception exception)
             {
@@ -42,7 +43,7 @@ namespace MicroCms.WebApi
         [HttpGet]
         public virtual IEnumerable<CmsDocument> GetByPath(string path)
         {
-            return Cms.CreateContext().Documents.GetByTag(path).Select(t => new CmsDocument
+            return CmsContext.Documents.GetByTag(path).Select(t => new CmsDocument
             {
                 Id = t.Id,
                 Title = t.Title,
@@ -59,7 +60,7 @@ namespace MicroCms.WebApi
             if (document.Id != Guid.Empty)
                 throw new ArgumentOutOfRangeException("document", "Attempt to post a non-transient document");
 
-            Cms.CreateContext().Documents.Save(document);
+            CmsContext.Documents.Save(document);
             var response = Request.CreateResponse(HttpStatusCode.Created, document);
             string uri = Url.Link("GetCmsDocumentApi", new { id = document.Id });
             response.Headers.Location = new Uri(uri);
@@ -77,7 +78,7 @@ namespace MicroCms.WebApi
             if (document.Id != id)
                 throw new ArgumentOutOfRangeException("document", "document Id doesn't match id parameter");
 
-            Cms.CreateContext().Documents.Save(document);
+            CmsContext.Documents.Save(document);
             var response = Request.CreateResponse(HttpStatusCode.OK, document);
             string uri = Url.Link("GetCmsDocumentApi", new { id = document.Id });
             response.Headers.Location = new Uri(uri);
@@ -90,7 +91,7 @@ namespace MicroCms.WebApi
         {
             if (id == Guid.Empty)
                 throw new ArgumentOutOfRangeException("id", "invalid Document Id");
-            Cms.CreateContext().Documents.Delete(id);
+            CmsContext.Documents.Delete(id);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }

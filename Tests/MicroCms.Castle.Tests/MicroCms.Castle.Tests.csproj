@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{156ABB76-B6EC-478D-B5B4-FFE5C0E107F8}</ProjectGuid>
+    <ProjectGuid>{4D18612E-4999-4F7F-90D4-DAE946E0A745}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MicroCms</RootNamespace>
-    <AssemblyName>MicroCms</AssemblyName>
+    <RootNamespace>MicroCms.Castle.Tests</RootNamespace>
+    <AssemblyName>MicroCms.Castle.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
@@ -31,73 +31,43 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\..\Key.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\packages\Castle.Core.3.3.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\..\packages\Castle.Windsor.3.3.0\lib\net45\Castle.Windsor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="xunit">
+      <HintPath>..\..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\CommonInfo.cs">
-      <Link>Properties\CommonInfo.cs</Link>
-    </Compile>
-    <Compile Include="AttributesExtensions.cs" />
-    <Compile Include="Cms.cs" />
-    <Compile Include="CmsContext.cs" />
-    <Compile Include="CmsContextExtensions.cs" />
-    <Compile Include="CmsJson.cs" />
-    <Compile Include="CmsDocument.cs" />
-    <Compile Include="CmsEntity.cs" />
-    <Compile Include="CmsPart.cs" />
-    <Compile Include="CmsView.cs" />
-    <Compile Include="CmsTitle.cs" />
-    <Compile Include="CmsTypes.cs" />
-    <Compile Include="Configuration\CmsConfigurator.cs" />
-    <Compile Include="Configuration\CmsConfiguratorExtensions.cs" />
-    <Compile Include="Configuration\CmsContainerProvider.cs" />
-    <Compile Include="Configuration\ICmsConfigurator.cs" />
-    <Compile Include="Configuration\ICmsContainer.cs" />
-    <Compile Include="Configuration\ICmsContainerProvider.cs" />
-    <Compile Include="Configuration\RenderServiceAttribute.cs" />
-    <Compile Include="Renderers\ICmsRenderService.cs" />
-    <Compile Include="Renderers\CmsRenderService.cs" />
-    <Compile Include="Search\CmsDocumentField.cs" />
-    <Compile Include="Search\ICmsSearchService.cs" />
-    <Compile Include="Storage\FSCmsDocumentService.cs" />
-    <Compile Include="Storage\FSCmsEntityService.cs" />
-    <Compile Include="Storage\FSCmsViewService.cs" />
-    <Compile Include="Storage\ICmsDocumentService.cs" />
-    <Compile Include="Storage\ICmsEntityService.cs" />
+    <Compile Include="CastleCmsContainerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderers\HtmlCmsRenderService.cs" />
-    <Compile Include="Renderers\TextCmsRenderService.cs" />
-    <Compile Include="Storage\ICmsViewService.cs" />
-    <Compile Include="Storage\MemoryCmsDocumentService.cs" />
-    <Compile Include="Storage\MemoryCmsEntityService.cs" />
-    <Compile Include="Storage\MemoryCmsViewService.cs" />
-    <Compile Include="XmlExtensions.cs" />
-    <Compile Include="XmlParser.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Key.snk">
-      <Link>Key.snk</Link>
-    </None>
-    <None Include="MicroCms.nuspec" />
+    <ProjectReference Include="..\..\Source\MicroCms.Castle\MicroCms.Castle.csproj">
+      <Project>{70bc0aee-d8c8-46f0-af05-a73ecc3c1631}</Project>
+      <Name>MicroCms.Castle</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\MicroCms\MicroCms.csproj">
+      <Project>{156abb76-b6ec-478d-b5b4-ffe5c0e107f8}</Project>
+      <Name>MicroCms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MicroCms.Tests\MicroCms.Tests.csproj">
+      <Project>{fcd0f5d8-693e-450f-a1c1-d62c76ae8886}</Project>
+      <Name>MicroCms.Tests</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

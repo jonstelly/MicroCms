@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using MicroCms.Tests;
 using Xunit;
 
 namespace MicroCms.Client.Tests
@@ -22,6 +21,20 @@ namespace MicroCms.Client.Tests
                 Assert.NotNull(documents);
                 Debug.WriteLine("{0} documents", documents.Length);
                 Assert.NotEqual(0, documents.Length);
+            }
+        }
+
+        [Fact]
+        public void GetDocumentsByTagSucceeds()
+        {
+            using (var client = new MicroCmsClient(_WebApiUrl))
+            {
+                var document = new CmsDocument("PostedDocument");
+                document.Tags.Add("DocumentByTag");
+                var documents = client.GetDocumentsAsync("DocumentByTag").Result;
+                Assert.NotNull(documents);
+                Debug.WriteLine("{0} documents", documents.Length);
+                Assert.NotEqual(1, documents.Length);
             }
         }
 
@@ -103,6 +116,68 @@ namespace MicroCms.Client.Tests
                 Assert.NotNull(views);
                 Debug.WriteLine("{0} views", views.Length);
                 Assert.NotEqual(0, views.Length);
+            }
+        }
+
+        [Fact]
+        public void PostViewSucceeds()
+        {
+            using (var client = new MicroCmsClient(_WebApiUrl))
+            {
+                var view = new CmsView("PostedView");
+
+                var url = client.PostViewAsync(view).Result;
+
+                Assert.NotNull(url);
+
+                var loaded = client.GetViewAsync(Guid.Parse(url.AbsoluteUri.Split('/').Last())).Result;
+                Assert.NotNull(loaded);
+                Assert.Equal(view.Title, loaded.Title);
+            }
+        }
+
+        [Fact]
+        public void PutViewSucceeds()
+        {
+            using (var client = new MicroCmsClient(_WebApiUrl))
+            {
+                var view = Fixture.ExampleView;
+                view.Tags.Add("PutTagAddition");
+                client.PutViewAsync(view).Wait();
+
+                var loaded = client.GetViewAsync(view.Id).Result;
+                Assert.NotNull(loaded);
+                Assert.Equal(view.Id, loaded.Id);
+                Assert.Equal(1, loaded.Tags.Count);
+                Assert.Equal("PutTagAddition", loaded.Tags.First());
+            }
+        }
+
+        [Fact]
+        public void DeleteViewSucceeds()
+        {
+            using (var client = new MicroCmsClient(_WebApiUrl))
+            {
+                var view = new CmsView("DeletedDocument");
+
+                var url = client.PostViewAsync(view).Result;
+                Assert.NotNull(url);
+
+                var id = Guid.Parse(url.AbsoluteUri.Split('/').Last());
+                client.DeleteViewAsync(id).Wait();
+
+                //Verify that the view was deleted
+                Assert.Throws<HttpRequestException>(() =>
+                {
+                    try
+                    {
+                        var loaded = client.GetViewAsync(id).Result;
+                    }
+                    catch (AggregateException exception)
+                    {
+                        throw exception.InnerException;
+                    }
+                });
             }
         }
 

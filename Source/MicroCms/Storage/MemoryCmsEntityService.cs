@@ -43,7 +43,13 @@ namespace MicroCms.Storage
 
         public virtual IEnumerable<CmsTitle> GetAll()
         {
-            return _Entities.Values.Select(entity => new CmsTitle(entity.Id, entity.Title));
+            return _Entities.Values.Select(entity =>
+            {
+                var ret = new CmsTitle(entity.Id, entity.Title);
+                if (entity.Tags.Count > 0)
+                    ret.Tags.AddRange(entity.Tags);
+                return ret;
+            });
         }
 
         public virtual IEnumerable<CmsTitle> GetByTag(string tag)

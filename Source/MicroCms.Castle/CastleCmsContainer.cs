@@ -27,16 +27,6 @@ namespace MicroCms.Castle
             return _Container.Resolve<T>(name);
         }
 
-        public object Resolve(Type type)
-        {
-            return _Container.Resolve(type);
-        }
-
-        public object Resolve(Type type, string name)
-        {
-            return _Container.Resolve(name, type);
-        }
-
         public void Dispose()
         {
             _Container.Dispose();

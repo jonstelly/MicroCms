@@ -5,11 +5,18 @@ using Autofac;
 using MicroCms.Configuration;
 using MicroCms.Tests;
 using MicroCms.Tests.Configuration;
+using Xunit;
 
 namespace MicroCms.Autofac.Tests
 {
     public class AutofacCmsContainerTests : CmsContainerTests
     {
+        [Fact]
+        public void NullConfigureCmsThrows()
+        {
+            Assert.Throws<ArgumentNullException>(() => ((ContainerBuilder)null).ConfigureCms());
+        }
+
         protected virtual void SharedConfiguration(ICmsConfigurator configurator)
         {
             configurator

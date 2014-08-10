@@ -27,16 +27,6 @@ namespace MicroCms.Autofac
             return _Scope.ResolveNamed<T>(name);
         }
 
-        public object Resolve(Type type)
-        {
-            return _Scope.Resolve(type);
-        }
-
-        public object Resolve(Type type, string name)
-        {
-            return _Scope.ResolveNamed(name, type);
-        }
-
         public void Dispose()
         {
             _Scope.Dispose();

@@ -54,7 +54,10 @@ namespace MicroCms.Storage
             foreach (var file in BaseDirectory.GetFiles("*.json").OrderBy(f => f.CreationTime))
             {
                 var entity = CmsJson.Deserialize<TEntity>(File.ReadAllText(file.FullName));
-                yield return new CmsTitle(entity.Id, entity.Title);
+                var ret = new CmsTitle(entity.Id, entity.Title);
+                if (entity.Tags.Count > 0)
+                    ret.Tags.AddRange(entity.Tags);
+                yield return ret;
             }
         }
 

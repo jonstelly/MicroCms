@@ -15,7 +15,6 @@ using MicroCms.Azure.Configuration;
 using MicroCms.Configuration;
 using MicroCms.Lucene.Configuration;
 using MicroCms.Unity;
-using MicroCms.Views;
 using MicroCms.WebApi;
 using Microsoft.Practices.Unity;
 using Microsoft.WindowsAzure.Storage;
@@ -64,14 +63,10 @@ namespace MicroCms
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (UseAzure)
             {
-                //Azure & Lucene
-                var cacheDirectory = new RAMDirectory();
-                var azureStorageAccount = CloudStorageAccount.Parse("UseDevelopmentStorage=true");
-                
-                //Configure for Azure
+                var azureStorageAccount = CloudStorageAccount.Parse("UseDevelopmentStorage=true");                
                 configuration
                     .UseAzureStorage(azureStorageAccount.CreateCloudBlobClient(), "cms")
-                    .UseLuceneSearch(new AzureDirectory(azureStorageAccount, "cms-index", cacheDirectory));
+                    .UseLuceneSearch(new AzureDirectory(azureStorageAccount, "cms-index", new RAMDirectory()));
             }
             else
             {
@@ -85,8 +80,8 @@ namespace MicroCms
             {
                 if (!context.Documents.GetAll().Any())
                 {
-                    var rowView = new CmsContentView("RowView", "<div class=\"row\">{0}</div>");
-                    var sidebarView = new CmsContentView("SidebarView", "<div>{0}</div>");
+                    var rowView = new CmsView("RowView", "<div class=\"row\">{0}</div>");
+                    var sidebarView = new CmsView("SidebarView", "<div>{0}</div>");
                     context.Views.Save(rowView);
                     context.Views.Save(sidebarView);
                     var document = new CmsDocument("Example Rows",

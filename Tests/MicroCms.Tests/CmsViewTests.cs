@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MicroCms.Views;
 using Xunit;
 
 namespace MicroCms.Tests
@@ -14,7 +13,7 @@ namespace MicroCms.Tests
         {
             using (var context = CreateContext())
             {
-                var view = new CmsContentView("example");
+                var view = new CmsView("example");
                 var xml = view.Render(context, new CmsDocument("doc", new CmsPart(CmsTypes.Text, "Hello"))).Single();
                 Assert.NotNull(xml);
                 Assert.Equal("<div>Hello</div>", xml.ToString());

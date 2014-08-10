@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using MicroCms.Configuration;
 using MicroCms.Tests;
 using Xunit;
 
 namespace MicroCms.Markdown.Tests
 {
-    public class MarkdownCmsRenderServiceTests : CmsUnityTests
+    public class MarkdownCmsRenderServiceTests : CmsRenderServiceTests<MarkdownCmsRenderService>
     {
         private void WithSourceCode(ICmsConfigurator configurator)
         {
@@ -49,6 +44,33 @@ namespace MicroCms.Markdown.Tests
                 }));
                 Assert.NotNull(result);
                 result.AssertXml(@"<div class=""example""><h1>Hello, World</h1></div>");
+            }
+        }
+
+        [Fact]
+        public void CodeRendersWithoutSourceCodeRenderer()
+        {
+            using (var context = CreateContext(WithoutSourceCode))
+            {
+                var result = new MarkdownCmsRenderService().Render(context, new CmsPart(CmsTypes.Markdown, @"
+    {{CSharp}}
+    public class Thing : IDisposable
+    {
+        public Thing(string name)
+        {
+            Name = name;
+        }
+
+        public string Name { get; set; }
+    }"));
+                Assert.NotNull(result);
+                result.AssertXml(@"<div><p>public string Name { get; set; }</p>
+<p>public string Name { get; set; }</p>
+<p>}</p>
+<p>public string Name { get; set; }</p>
+<p>public string Name { get; set; }</p>
+<p>}</p>
+</div>");
             }
         }
 
@@ -124,6 +146,13 @@ namespace MicroCms.Markdown.Tests
 <li>Third</li>
 </ul></div>");
             }
+        }
+
+        protected override string ContentType { get { return CmsTypes.Markdown; } }
+
+        protected override MarkdownCmsRenderService CreateRenderer()
+        {
+            return new MarkdownCmsRenderService();
         }
     }
 }

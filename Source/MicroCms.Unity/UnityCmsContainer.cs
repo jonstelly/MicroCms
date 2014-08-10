@@ -26,16 +26,6 @@ namespace MicroCms.Unity
             return _Container.Resolve<T>(name);
         }
 
-        public object Resolve(Type type)
-        {
-            return _Container.Resolve(type);
-        }
-
-        public object Resolve(Type type, string name)
-        {
-            return _Container.Resolve(type, name);
-        }
-
         public void Dispose()
         {
             _Container.Dispose();

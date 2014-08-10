@@ -4,14 +4,14 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Linq;
-using MicroCms.Views;
 
 namespace MicroCms
 {
-    [KnownType(typeof(CmsContentView))]
-    public abstract class CmsView : CmsEntity
+    public class CmsView : CmsEntity
     {
-        protected CmsView(string title, string documentFormat = "{0}", string partFormat = "{0}")
+        public static readonly CmsView Default = new CmsView("Default");
+
+        public CmsView(string title, string documentFormat = "{0}", string partFormat = "{0}")
         {
             Title = title;
             DocumentFormat = documentFormat;
@@ -27,9 +27,15 @@ namespace MicroCms
             return documents.Select(d => RenderDocument(context, d));
         }
 
-        protected abstract XElement RenderDocument(CmsContext context, CmsDocument document);
+        protected virtual XElement RenderDocument(CmsContext context, CmsDocument document)
+        {
+            return XmlParser.ParseSafe(String.Format(DocumentFormat, String.Join("", document.Parts.Select(p => RenderPart(context, p)))));
+        }
 
-        protected abstract XElement RenderPart(CmsContext context, CmsPart part);
+        protected virtual XElement RenderPart(CmsContext context, CmsPart part)
+        {
+            return XmlParser.ParseSafe(String.Format(PartFormat, context.Render(part)));
+        }
 
         public string DocumentFormat { get; set; }
         public string PartFormat { get; set; }

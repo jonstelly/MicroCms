@@ -82,7 +82,10 @@ namespace MicroCms.Azure
                 if (blob != null)
                 {
                     var entity = Read(blob);
-                    yield return new CmsTitle(entity.Id, entity.Title);
+                    var ret = new CmsTitle(entity.Id, entity.Title);
+                    if (entity.Tags.Count > 0)
+                        ret.Tags.AddRange(entity.Tags);
+                    yield return ret;
                 }
             }
         }

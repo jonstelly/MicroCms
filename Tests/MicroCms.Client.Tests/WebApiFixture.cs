@@ -6,18 +6,12 @@ using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using Lucene.Net.Store;
 using MicroCms.Configuration;
-using MicroCms.Lucene;
 using MicroCms.Lucene.Configuration;
-using MicroCms.Markdown;
-using MicroCms.SourceCode;
-using MicroCms.Storage;
-using MicroCms.Tests;
 using MicroCms.Unity;
-using MicroCms.Views;
 using MicroCms.WebApi;
 using Microsoft.Owin.Hosting;
 using Microsoft.Practices.Unity;
-using Xunit;
+using Newtonsoft.Json;
 using Owin;
 
 namespace MicroCms.Client.Tests
@@ -45,7 +39,7 @@ namespace MicroCms.Client.Tests
             {
                 ExampleDocument = new CmsDocument("Example");
                 context.Documents.Save(ExampleDocument);
-                ExampleView = new CmsContentView("Example");
+                ExampleView = new CmsView("Example");
                 context.Views.Save(ExampleView);
             }
 
@@ -62,6 +56,7 @@ namespace MicroCms.Client.Tests
                 // Configure Web API for self-host. 
                 var config = new HttpConfiguration();
                 //config.Services.Replace(typeof(IAssembliesResolver), new MicroCmsApiResolver());
+                config.Formatters.JsonFormatter.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
 
                 // Web API configuration and services
                 config.Formatters.JsonFormatter.SerializerSettings = CmsJson.Settings;
@@ -78,16 +73,6 @@ namespace MicroCms.Client.Tests
                     });
 
                 appBuilder.UseWebApi(config);
-            }
-        }
-
-        private class MicroCmsApiResolver : DefaultAssembliesResolver
-        {
-            public override ICollection<Assembly> GetAssemblies()
-            {
-                var assemblies = base.GetAssemblies();
-                assemblies.Add(typeof (CmsDocumentsController).Assembly);
-                return assemblies;
             }
         }
 

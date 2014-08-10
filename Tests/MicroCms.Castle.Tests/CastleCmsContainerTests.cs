@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Castle.Windsor;
 using MicroCms.Configuration;
 using MicroCms.Tests;
 using MicroCms.Tests.Configuration;
-using Microsoft.Practices.Unity;
 using Xunit;
 
-namespace MicroCms.Unity.Tests
+namespace MicroCms.Castle.Tests
 {
-    public class UnityCmsContainerTests : CmsContainerTests
+    public class CastleCmsContainerTests : CmsContainerTests
     {
         [Fact]
         public void NullConfigureCmsThrows()
         {
-            Assert.Throws<ArgumentNullException>(() => ((IUnityContainer) null).ConfigureCms());
+            Assert.Throws<ArgumentNullException>(() => ((IWindsorContainer)null).ConfigureCms());
         }
 
         protected virtual void SharedConfiguration(ICmsConfigurator configurator)
@@ -27,12 +27,19 @@ namespace MicroCms.Unity.Tests
 
         protected override CmsContext CreateContext(Action<ICmsConfigurator> configure = null)
         {
-            var unity = new UnityContainer();
-            var configurator = unity.ConfigureCms();
+            var container = new WindsorContainer();
+            var configurator = container.ConfigureCms();
             SharedConfiguration(configurator);
             if (configure != null)
                 configure(configurator);
-            return new TestCmsContext(new CmsContainerProvider(() => new UnityCmsContainer(unity)));
+            return new TestCmsContext(new CmsContainerProvider(() =>
+            {
+                var child = new WindsorContainer
+                {
+                    Parent = container
+                };
+                return new CastleCmsContainer(child);
+            }));
         }
     }
 }

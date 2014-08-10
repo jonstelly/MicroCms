@@ -28,7 +28,7 @@ namespace MicroCms.Tests.Configuration
         }
 
         [Fact]
-        public void UnitTest()
+        public void GetMultipleMappingsSucceeds()
         {
             var renderServices = RenderServiceAttribute.GetMappings(typeof (RenderServiceAttributeTests).Assembly);
             Assert.NotNull(renderServices);

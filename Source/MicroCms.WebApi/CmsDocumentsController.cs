@@ -39,11 +39,11 @@ namespace MicroCms.WebApi
             }
         }
 
-        [Route("{path}", Name="GetCmsDocumentsByPathApi")]
+        [Route("{tag}", Name="GetCmsDocumentsByTagApi")]
         [HttpGet]
-        public virtual IEnumerable<CmsDocument> GetByPath(string path)
+        public virtual IEnumerable<CmsDocument> GetByTag(string tag)
         {
-            return CmsContext.Documents.GetByTag(path).Select(t => new CmsDocument
+            return CmsContext.Documents.GetByTag(tag).Select(t => new CmsDocument
             {
                 Id = t.Id,
                 Title = t.Title,

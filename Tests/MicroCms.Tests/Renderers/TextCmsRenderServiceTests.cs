@@ -6,7 +6,7 @@ using Xunit;
 
 namespace MicroCms.Tests.Renderers
 {
-    public class TextCmsRenderServiceTests : CmsUnityTests
+    public class TextCmsRenderServiceTests : CmsRenderServiceTests<TextCmsRenderService>
     {
         [Fact]
         public void ValidateBasicRender()
@@ -17,6 +17,12 @@ namespace MicroCms.Tests.Renderers
                 Assert.NotNull(result);
             }
         }
-         
+
+        protected override string ContentType { get { return CmsTypes.Text; } }
+
+        protected override TextCmsRenderService CreateRenderer()
+        {
+            return new TextCmsRenderService();
+        }
     }
 }

@@ -18,8 +18,10 @@ namespace MicroCms.Client
             if (cmsApiUrl == null)
                 throw new ArgumentNullException("cmsApiUrl");
 
-            _Client = new HttpClient();
-            _Client.BaseAddress = cmsApiUrl;
+            _Client = new HttpClient
+            {
+                BaseAddress = cmsApiUrl
+            };
             _Client.DefaultRequestHeaders.Accept.Clear();
             _Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -32,10 +34,10 @@ namespace MicroCms.Client
             return await GetEntityAsync<CmsDocument>(id);
         }
 
-        public async Task<CmsDocument[]> GetDocumentsAsync(string path = null)
+        public async Task<CmsDocument[]> GetDocumentsAsync(string tag = null)
         {
-            Debug.WriteLine("GetDocumentsAsync({0})", (object)path);
-            return await GetEntitiesAsync<CmsDocument>(path);
+            Debug.WriteLine("GetDocumentsAsync({0})", (object)tag);
+            return await GetEntitiesAsync<CmsDocument>(tag);
         }
 
         public async Task<Uri> PostDocumentAsync(CmsDocument document)
@@ -68,16 +70,16 @@ namespace MicroCms.Client
             return await GetEntitiesAsync<CmsView>(path);
         }
 
-        public async Task<Uri> PostViewAsync(CmsView View)
+        public async Task<Uri> PostViewAsync(CmsView view)
         {
-            Debug.WriteLine("PostViewAsync({0})", View);
-            return await PostEntityAsync(View);
+            Debug.WriteLine("PostViewAsync({0})", view);
+            return await PostEntityAsync(view);
         }
 
-        public async Task PutViewAsync(CmsView View)
+        public async Task PutViewAsync(CmsView view)
         {
-            Debug.WriteLine("PutViewAsync({0})", View);
-            await PutEntityAsync(View);
+            Debug.WriteLine("PutViewAsync({0})", view);
+            await PutEntityAsync(view);
         }
 
         public async Task DeleteViewAsync(Guid id)

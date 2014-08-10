@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MicroCms.Configuration;
-using MicroCms.Views;
 using Xunit;
 
 namespace MicroCms.Tests
@@ -34,7 +32,7 @@ namespace MicroCms.Tests
         {
             using (var context = CreateContext())
             {
-                var xml = context.Render(new CmsContentView("test"), new CmsPart(CmsTypes.Text, "Hello"));
+                var xml = context.Render(new CmsView("test"), new CmsPart(CmsTypes.Text, "Hello"));
                 Assert.NotNull(xml);
                 Assert.Equal("<div>Hello</div>", xml.ToString());
             }

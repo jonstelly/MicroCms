@@ -10,7 +10,5 @@ namespace MicroCms.Configuration
     {
         T Resolve<T>();
         T Resolve<T>(string name);
-        object Resolve(Type type);
-        object Resolve(Type type, string name);
     }
 }

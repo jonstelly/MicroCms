@@ -57,6 +57,7 @@
       <Link>Properties\CommonInfo.cs</Link>
     </Compile>
     <Compile Include="CastleCmsContainer.cs" />
+    <Compile Include="CastleCmsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

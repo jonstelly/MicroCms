@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.WebPages;
-using System.Xml.Linq;
 using MicroCms;
-using MicroCms.Views;
 
 // ReSharper disable once CheckNamespace
 namespace System
@@ -21,7 +17,7 @@ namespace System
 
         public static IHtmlString RenderCms(this HtmlHelper html, CmsDocument document, CmsView view = null)
         {
-            return html.GetCmsContext().Render(view ?? CmsContentView.Default, document.Parts.ToArray()).ToHtml();
+            return html.GetCmsContext().Render(view ?? CmsView.Default, document.Parts.ToArray()).ToHtml();
         }
     }
 }

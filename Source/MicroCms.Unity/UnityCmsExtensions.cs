@@ -53,7 +53,8 @@ namespace MicroCms
 
             public override void PreBuildUp(IBuilderContext context)
             {
-                if (!context.BuildKey.Type.FullName.StartsWith("Microsoft.Practices"))
+                //if (!context.BuildKey.Type.FullName.StartsWith("Microsoft.Practices"))
+                if(context.BuildKey.Type.FullName.StartsWith("MicroCms."))
                 {
                     PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(context.BuildKey.Type);
 

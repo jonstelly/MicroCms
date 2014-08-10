@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MicroCms.Configuration;
 using MicroCms.Renderers;
 using Xunit;
 
 namespace MicroCms.Tests.Renderers
 {
-    public class HtmlCmsRenderServiceTests : CmsUnityTests
+    public class HtmlCmsRenderServiceTests : CmsRenderServiceTests<HtmlCmsRenderService>
     {
+        protected override string ContentType { get { return CmsTypes.Html; } }
+
+        protected override HtmlCmsRenderService CreateRenderer()
+        {
+            return new HtmlCmsRenderService();
+        }
+
         [Fact]
         public void ValidateBasicRender()
         {
@@ -19,6 +27,5 @@ namespace MicroCms.Tests.Renderers
                 Assert.NotNull(result);
             }
         }
-         
     }
 }

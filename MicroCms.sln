@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroCms", "Source\MicroCms\MicroCms.csproj", "{156ABB76-B6EC-478D-B5B4-FFE5C0E107F8}"
 EndProject
@@ -73,6 +73,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroCms.Autofac.Tests", "Tests\MicroCms.Autofac.Tests\MicroCms.Autofac.Tests.csproj", "{88D17A5E-AB6C-473C-8DEB-1768B840CEA4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroCms.Castle.Tests", "Tests\MicroCms.Castle.Tests\MicroCms.Castle.Tests.csproj", "{4D18612E-4999-4F7F-90D4-DAE946E0A745}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroCms.Redis", "Source\MicroCms.Redis\MicroCms.Redis.csproj", "{D6369CD7-CDD8-4C16-BC4B-E4326B15A8D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroCms.Redis.Tests", "Tests\MicroCms.Redis.Tests\MicroCms.Redis.Tests.csproj", "{E6A80793-CD33-4A70-9FF0-DC563121936D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -172,6 +176,14 @@ Global
 		{4D18612E-4999-4F7F-90D4-DAE946E0A745}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D18612E-4999-4F7F-90D4-DAE946E0A745}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D18612E-4999-4F7F-90D4-DAE946E0A745}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6369CD7-CDD8-4C16-BC4B-E4326B15A8D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6369CD7-CDD8-4C16-BC4B-E4326B15A8D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6369CD7-CDD8-4C16-BC4B-E4326B15A8D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6369CD7-CDD8-4C16-BC4B-E4326B15A8D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6A80793-CD33-4A70-9FF0-DC563121936D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6A80793-CD33-4A70-9FF0-DC563121936D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6A80793-CD33-4A70-9FF0-DC563121936D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6A80793-CD33-4A70-9FF0-DC563121936D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -199,5 +211,7 @@ Global
 		{297026B7-077A-4281-9A6C-CF950AACFEC0} = {15F218D3-C118-4088-A0D5-BD8A212FCBF9}
 		{88D17A5E-AB6C-473C-8DEB-1768B840CEA4} = {15F218D3-C118-4088-A0D5-BD8A212FCBF9}
 		{4D18612E-4999-4F7F-90D4-DAE946E0A745} = {15F218D3-C118-4088-A0D5-BD8A212FCBF9}
+		{D6369CD7-CDD8-4C16-BC4B-E4326B15A8D4} = {DACE21E8-DA16-4B60-A766-FA80D4E18E76}
+		{E6A80793-CD33-4A70-9FF0-DC563121936D} = {DACE21E8-DA16-4B60-A766-FA80D4E18E76}
 	EndGlobalSection
 EndGlobal

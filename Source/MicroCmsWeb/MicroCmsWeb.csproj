@@ -349,6 +349,10 @@
       <Project>{b4b7a5ca-1435-4c01-8e16-a2d08e3d9b40}</Project>
       <Name>MicroCms.Mvc</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MicroCms.Redis\MicroCms.Redis.csproj">
+      <Project>{d6369cd7-cdd8-4c16-bc4b-e4326b15a8d4}</Project>
+      <Name>MicroCms.Redis</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MicroCms.SourceCode\MicroCms.SourceCode.csproj">
       <Project>{9E613596-47B8-46F6-89EE-5886E79A3600}</Project>
       <Name>MicroCms.SourceCode</Name>

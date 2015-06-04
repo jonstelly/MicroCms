@@ -9,10 +9,16 @@ namespace MicroCms.Redis.Configuration
 {
 	public static class RedisConfigurationExtensions
 	{
-        public static ICmsConfigurator UseRedisStorage(this ICmsConfigurator configurator, string configuration = "")
+		/// <summary>
+		/// Configuration for using Redis as a storage option
+		/// </summary>
+		/// <param name="configurator"></param>
+		/// <param name="connectionString">should be in the format server:port (defaults to 127.0.0.1:6379)</param>
+		/// <returns></returns>
+        public static ICmsConfigurator UseRedisStorage(this ICmsConfigurator configurator, string connectionString = "")
         {
-			configurator.UseDocService<RedisCmsDocumentService>(configuration);
-			configurator.UseViewService<RedisCmsViewService>(configuration);
+			configurator.UseDocService<RedisCmsDocumentService>(connectionString);
+			configurator.UseViewService<RedisCmsViewService>(connectionString);
             return configurator;
         }
 	}

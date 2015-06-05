@@ -15,7 +15,7 @@ namespace MicroCms.Redis.Tests
 	{
 		protected override void ConfigureDocumentService(ICmsConfigurator configurator)
 		{
-			configurator.UseRedisStorage("");
+			configurator.UseRedisStorage();
 		}
 	}
 

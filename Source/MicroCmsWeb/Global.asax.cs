@@ -15,6 +15,7 @@ using MicroCms.Azure.Configuration;
 using MicroCms.Configuration;
 using MicroCms.Lucene.Configuration;
 using MicroCms.Redis.Configuration;
+using MicroCms.Sql.Configuration;
 using MicroCms.Unity;
 using MicroCms.WebApi;
 using Microsoft.Practices.Unity;
@@ -44,6 +45,7 @@ namespace MicroCms
         private static IContainer _Container;
 		private const bool UseAzure = false;
 		private const bool UseRedis = false;
+		private const bool UseSql = false;
 
         private void ConfigureCms()
         {
@@ -70,12 +72,19 @@ namespace MicroCms
                     .UseAzureStorage(azureStorageAccount.CreateCloudBlobClient(), "cms")
                     .UseLuceneSearch(new AzureDirectory(azureStorageAccount, "cms-index", new RAMDirectory()));
             }
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+			// ReSharper disable once ConditionIsAlwaysTrueOrFalse
 			else if (UseRedis)
-            {
+			{
 				configuration
 					.UseRedisStorage()
 					.UseLuceneSearch(new SimpleFSDirectory(new DirectoryInfo(Path.Combine(cmsDirectory.FullName, "Index"))));
+			}
+			// ReSharper disable once ConditionIsAlwaysTrueOrFalse
+			else if (UseSql)
+			{
+				configuration
+					.UseSqlStorage()
+					.UseSqlSearch();
 			}
 			else
             {

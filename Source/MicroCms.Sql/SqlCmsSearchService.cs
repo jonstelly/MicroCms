@@ -11,6 +11,13 @@ namespace MicroCms.Sql
 {
     public class SqlCmsSearchService : ICmsSearchService, IDisposable
     {
+		private readonly ISqlCmsDbContext _sqlCmsDbContext;
+
+		public SqlCmsSearchService(ISqlCmsDbContext sqlCmsDbContext)
+	    {
+		    this._sqlCmsDbContext = sqlCmsDbContext;
+	    }
+
         public IEnumerable<CmsTitle> SearchDocuments(string queryText)
         {
             return SearchDocuments(new CmsDocumentField[] {CmsDocumentField.Title, CmsDocumentField.Value}, queryText);
@@ -29,57 +36,60 @@ namespace MicroCms.Sql
             return SearchDocuments(criteriaList);
         }
 
-        public IEnumerable<CmsTitle> SearchDocuments(IEnumerable<SearchCriteria> searchCriteriaSet)
-        {
-			using (var db = new SqlCmsDbContext())
-            {
-	            var query = from e in db.Entities
-                            where e.Type == SqlCmsDocumentService.ENTITY_TYPE
-                            select e;
+	    public IEnumerable<CmsTitle> SearchDocuments(IEnumerable<SearchCriteria> searchCriteriaSet)
+	    {
+		    var query = from e in _sqlCmsDbContext.Entities
+			    where e.Type == SqlCmsDocumentService.ENTITY_TYPE
+			    select e;
 
-                var predicate = PredicateBuilder.False<Entity>();
-                foreach (var searchCriteria in searchCriteriaSet)
-                {
-	                var searchCriteriaItem = searchCriteria;
-                    switch (searchCriteria.Field)
-                    {
-                        case CmsDocumentField.Id:
-							predicate = (searchCriteriaItem.IsRequired)
-								? predicate.And(e => e.Id == Guid.Parse(searchCriteriaItem.QueryText))
-								: predicate.Or(e => e.Id == Guid.Parse(searchCriteriaItem.QueryText));
-                            break;
+		    var predicate = PredicateBuilder.False<Entity>();
+		    foreach (var searchCriteria in searchCriteriaSet)
+		    {
+			    var searchCriteriaItem = searchCriteria;
+			    switch (searchCriteria.Field)
+			    {
+				    case CmsDocumentField.Id:
+					    predicate = (searchCriteriaItem.IsRequired)
+						    ? predicate.And(e => e.Id == Guid.Parse(searchCriteriaItem.QueryText))
+						    : predicate.Or(e => e.Id == Guid.Parse(searchCriteriaItem.QueryText));
+					    break;
 
-                        case CmsDocumentField.Tag:
-							predicate = (searchCriteriaItem.IsRequired)
-								? predicate.And(e => e.EntityTags.Any(et => et.Tag.TagValue.Equals(searchCriteriaItem.QueryText, StringComparison.InvariantCultureIgnoreCase)))
-								: predicate.Or(e => e.EntityTags.Any(et => et.Tag.TagValue.Equals(searchCriteriaItem.QueryText, StringComparison.InvariantCultureIgnoreCase)));
-                            break;
+				    case CmsDocumentField.Tag:
+					    predicate = (searchCriteriaItem.IsRequired)
+						    ? predicate.And(
+							    e =>
+								    e.EntityTags.Any(
+									    et => et.Tag.TagValue.Equals(searchCriteriaItem.QueryText, StringComparison.InvariantCultureIgnoreCase)))
+						    : predicate.Or(
+							    e =>
+								    e.EntityTags.Any(
+									    et => et.Tag.TagValue.Equals(searchCriteriaItem.QueryText, StringComparison.InvariantCultureIgnoreCase)));
+					    break;
 
-                        case CmsDocumentField.Title:
-							predicate = (searchCriteriaItem.IsRequired)
-								? predicate.And(e => e.Title.ToLower().Contains(searchCriteriaItem.QueryText.ToLower()))
-								: predicate.Or(e => e.Title.ToLower().Contains(searchCriteriaItem.QueryText.ToLower()));
-                            break;
+				    case CmsDocumentField.Title:
+					    predicate = (searchCriteriaItem.IsRequired)
+						    ? predicate.And(e => e.Title.ToLower().Contains(searchCriteriaItem.QueryText.ToLower()))
+						    : predicate.Or(e => e.Title.ToLower().Contains(searchCriteriaItem.QueryText.ToLower()));
+					    break;
 
-                        case CmsDocumentField.Value:
-							predicate = (searchCriteriaItem.IsRequired)
-								? predicate.And(e => e.Contents.ToLower().Contains(searchCriteriaItem.QueryText.ToLower()))
-								: predicate.Or(e => e.Contents.ToLower().Contains(searchCriteriaItem.QueryText.ToLower()));
-                            break;
-                    }
-                }
-                query = query.AsExpandable().Where(predicate);
-                var matchingEntities = query.ToList();
+				    case CmsDocumentField.Value:
+					    predicate = (searchCriteriaItem.IsRequired)
+						    ? predicate.And(e => e.Contents.ToLower().Contains(searchCriteriaItem.QueryText.ToLower()))
+						    : predicate.Or(e => e.Contents.ToLower().Contains(searchCriteriaItem.QueryText.ToLower()));
+					    break;
+			    }
+		    }
+		    query = query.AsExpandable().Where(predicate);
+		    var matchingEntities = query.ToList();
 
-				foreach (var entityEntity in matchingEntities)
-                {
-                    var title = new CmsTitle(entityEntity.Id, entityEntity.Title);
-                    yield return title;
-                }
-            }
-        }
+		    foreach (var entityEntity in matchingEntities)
+		    {
+			    var title = new CmsTitle(entityEntity.Id, entityEntity.Title);
+			    yield return title;
+		    }
+	    }
 
-        public IEnumerable<CmsTitle> GetAll()
+	    public IEnumerable<CmsTitle> GetAll()
         {
             return SearchDocuments(new List<SearchCriteria>());
         }

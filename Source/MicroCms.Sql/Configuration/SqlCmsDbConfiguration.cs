@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.SqlServer;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,9 +19,9 @@ namespace MicroCms.Sql.Configuration
 	/// including the connection string, will still work. See https://msdn.microsoft.com/en-us/data/jj680699
 	/// for more details.
 	/// </summary>
-	public class SqlConfiguration : DbConfiguration
+	public class SqlCmsDbConfiguration : DbConfiguration
 	{
-		public SqlConfiguration()
+		public SqlCmsDbConfiguration()
 		{
 			SetDefaultConnectionFactory(new LocalDbConnectionFactory("v11.0"));
 		}

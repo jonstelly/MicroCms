@@ -4,16 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using MicroCms.Sql.Configuration;
 
 namespace MicroCms.Sql.DataAccess
 {
-	class SqlCmsDbContext : DbContext 
+	[DbConfigurationType(typeof(SqlCmsDbConfiguration))] 
+	public class SqlCmsDbContext : DbContext, ISqlCmsDbContext
 	{
-		public DbSet<Entity> Entities { get; set; }
-		public DbSet<Tag> Tags { get; set; }
-		public DbSet<EntityTag> EntityTags { get; set; }
+		public virtual DbSet<Entity> Entities { get; set; }
+		public virtual DbSet<Tag> Tags { get; set; }
+		public virtual DbSet<EntityTag> EntityTags { get; set; }
 
-		public SqlCmsDbContext()
+		public SqlCmsDbContext(string nameOrConnectionString) : base(nameOrConnectionString)
 		{
 			// Hack to prevent runtime error:
 			// System.InvalidOperationException: No Entity Framework provider found for the ADO.NET provider

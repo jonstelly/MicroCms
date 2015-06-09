@@ -54,10 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\SqlConfiguration.cs" />
+    <Compile Include="Configuration\SqlCmsDbConfiguration.cs" />
     <Compile Include="Configuration\SqlConfigurationExtensions.cs" />
     <Compile Include="DataAccess\Entity.cs" />
     <Compile Include="DataAccess\EntityTag.cs" />
+    <Compile Include="DataAccess\ISqlCmsDbContext.cs" />
     <Compile Include="DataAccess\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchCriteria.cs" />

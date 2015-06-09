@@ -52,7 +52,7 @@ namespace MicroCms
             var rootFolder = Server.MapPath("~/");
             var cmsDirectory = new DirectoryInfo(Path.Combine(rootFolder, @"App_Data\Cms"));
 
-            if (cmsDirectory.Exists)
+            if (cmsDirectory.Exists && !UseSql)
             {
                 cmsDirectory.Delete(true);
             }
@@ -82,9 +82,17 @@ namespace MicroCms
 			// ReSharper disable once ConditionIsAlwaysTrueOrFalse
 			else if (UseSql)
 			{
+				// To configure db via web.config, uncomment entityFramework section and connection string and pass in connection string
+				// name to ICmsConfigurator; e.g. .UseSqlStorage("DefaultConnection")
+				if (!cmsDirectory.Exists)
+					cmsDirectory.Create();
+				string connectionString =
+					string.Format(
+						@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={0}\{1}.mdf;Initial Catalog={1};Integrated Security=True;MultipleActiveResultSets=true",
+						cmsDirectory.FullName, "MicroCmsSqlDb");
 				configuration
-					.UseSqlStorage()
-					.UseSqlSearch();
+					.UseSqlStorage(connectionString)
+					.UseSqlSearch(connectionString);
 			}
 			else
             {

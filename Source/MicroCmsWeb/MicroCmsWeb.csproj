@@ -357,6 +357,10 @@
       <Project>{9E613596-47B8-46F6-89EE-5886E79A3600}</Project>
       <Name>MicroCms.SourceCode</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MicroCms.Sql\MicroCms.Sql.csproj">
+      <Project>{bd6e6aa7-107c-475e-b36c-64f83fb0403d}</Project>
+      <Name>MicroCms.Sql</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MicroCms.Unity\MicroCms.Unity.csproj">
       <Project>{8EFC8FC3-7B7C-4DC4-879A-FDD3583B639C}</Project>
       <Name>MicroCms.Unity</Name>

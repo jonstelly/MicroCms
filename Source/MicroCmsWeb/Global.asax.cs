@@ -15,6 +15,7 @@ using MicroCms.Azure.Configuration;
 using MicroCms.Configuration;
 using MicroCms.Lucene.Configuration;
 using MicroCms.Redis.Configuration;
+using MicroCms.Sql.Configuration;
 using MicroCms.Unity;
 using MicroCms.WebApi;
 using Microsoft.Practices.Unity;
@@ -44,13 +45,14 @@ namespace MicroCms
         private static IContainer _Container;
 		private const bool UseAzure = false;
 		private const bool UseRedis = false;
+		private const bool UseSql = false;
 
         private void ConfigureCms()
         {
             var rootFolder = Server.MapPath("~/");
             var cmsDirectory = new DirectoryInfo(Path.Combine(rootFolder, @"App_Data\Cms"));
 
-            if (cmsDirectory.Exists)
+            if (cmsDirectory.Exists && !UseSql)
             {
                 cmsDirectory.Delete(true);
             }
@@ -70,12 +72,27 @@ namespace MicroCms
                     .UseAzureStorage(azureStorageAccount.CreateCloudBlobClient(), "cms")
                     .UseLuceneSearch(new AzureDirectory(azureStorageAccount, "cms-index", new RAMDirectory()));
             }
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+			// ReSharper disable once ConditionIsAlwaysTrueOrFalse
 			else if (UseRedis)
-            {
+			{
 				configuration
 					.UseRedisStorage()
 					.UseLuceneSearch(new SimpleFSDirectory(new DirectoryInfo(Path.Combine(cmsDirectory.FullName, "Index"))));
+			}
+			// ReSharper disable once ConditionIsAlwaysTrueOrFalse
+			else if (UseSql)
+			{
+				// To configure db via web.config, uncomment entityFramework section and connection string and pass in connection string
+				// name to ICmsConfigurator; e.g. .UseSqlStorage("DefaultConnection")
+				if (!cmsDirectory.Exists)
+					cmsDirectory.Create();
+				string connectionString =
+					string.Format(
+						@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={0}\{1}.mdf;Initial Catalog={1};Integrated Security=True;MultipleActiveResultSets=true",
+						cmsDirectory.FullName, "MicroCmsSqlDb");
+				configuration
+					.UseSqlStorage(connectionString)
+					.UseSqlSearch(connectionString);
 			}
 			else
             {

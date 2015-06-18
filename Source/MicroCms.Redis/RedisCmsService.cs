@@ -9,14 +9,14 @@ namespace MicroCms.Redis
 {
 	public class RedisCmsService
 	{
-		private const string ConfigurationDefault = "127.0.0.1:6379";
+		private const string ConnactionStringDefault = "127.0.0.1:6379"; // default to localhost and standard Redis port
 
 		private readonly ConnectionMultiplexer _redisConnection;
 
-		public RedisCmsService(string configuration = "")
+		public RedisCmsService(string connectionString = "")
 		{
-			configuration = (string.IsNullOrWhiteSpace(configuration)) ? ConfigurationDefault : configuration;
-			_redisConnection = ConnectionMultiplexer.Connect(configuration);
+			connectionString = (string.IsNullOrWhiteSpace(connectionString)) ? ConnactionStringDefault : connectionString;
+			_redisConnection = ConnectionMultiplexer.Connect(connectionString);
 		}
 
 		public string Get(string key)

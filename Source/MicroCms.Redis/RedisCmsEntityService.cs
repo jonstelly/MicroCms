@@ -12,12 +12,9 @@ namespace MicroCms.Redis
 	{
 		protected readonly RedisCmsService RedisCmsService;
 
-		protected RedisCmsEntityService(string configuration)
+		protected RedisCmsEntityService(string connectionString)
 		{
-			//if (string.IsNullOrEmpty(configuration))
-			//	throw new ArgumentNullException("configuration");
-
-			RedisCmsService = new RedisCmsService(configuration);
+			RedisCmsService = new RedisCmsService(connectionString);
 		}
 
 		public virtual TEntity Find(Guid id)
